@@ -1,3 +1,6 @@
+<?php
+    include "./hv-html-engine/hv-html-engine.php";
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -9,6 +12,9 @@
 <body>
     <?php
         echo "Hallo Welt";
+
+        new Table(1,1,1,1,1,1,1,1);
+
     ?>
 </body>
 </html>
