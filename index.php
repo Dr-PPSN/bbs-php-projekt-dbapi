@@ -1,7 +1,15 @@
 <?php
     include "./hv-html-engine/hv-html-engine.php";
-    $example = array(
+    $hv_html_engine = new HV_HTML_Engine();
+    $example1 = array(
         array("Name" => "John", "Age" => 25
+        ),
+        array("Name" => "Mary", "Age" => 30
+        ),
+        array("Name" => "Peter", "Age" => 35
+        ));
+    $example2 = array(
+        array($hv_html_engine->getA("Name as Link", "NameAsLink", "N1", "", "https://www.google.de") => "John", $hv_html_engine->getA("Age as Link", "AgeAsLink", "A1", "", "https://www.google.de") => 25
         ),
         array("Name" => "Mary", "Age" => 30
         ),
@@ -19,10 +27,11 @@
 <body>
     <?php
         echo "Hallo Welt<br>";
-        $hv_html_engine = new HV_HTML_Engine();
         echo $hv_html_engine->getA("Test", false, "", "", "https://www.google.de");
         echo "<br><br><br>";
-        echo $hv_html_engine->getTable($example, "", "", "", "", "");
+        echo $hv_html_engine->getTable($example1, "myClass", "myID", "", "", "", "myTHClass", "myTDClass");
+        echo "<br><br><br>";
+        echo $hv_html_engine->getTable($example2, "myClass2", "myID2", "", "", "", "myTHClass", "myTDClass");
     ?>
 </body>
 </html>
