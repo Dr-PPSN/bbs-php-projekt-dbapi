@@ -1,5 +1,12 @@
 <?php
     include "./hv-html-engine/hv-html-engine.php";
+    $example = array(
+        array("Name" => "John", "Age" => 25
+        ),
+        array("Name" => "Mary", "Age" => 30
+        ),
+        array("Name" => "Peter", "Age" => 35
+        ));
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -11,10 +18,11 @@
 </head>
 <body>
     <?php
-        echo "Hallo Welt";
-
-        new Table(1,1,1,1,1,1,1,1);
-
+        echo "Hallo Welt<br>";
+        $hv_html_engine = new HV_HTML_Engine();
+        echo $hv_html_engine->getA("Test", false, "", "", "https://www.google.de");
+        echo "<br><br><br>";
+        echo $hv_html_engine->getTable($example, "", "", "", "", "");
     ?>
 </body>
 </html>
