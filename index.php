@@ -9,7 +9,7 @@
         array("Name" => "Peter", "Age" => 35
         ));
     $example2 = array(
-        array($hv_html_engine->getA("Name as Link", "NameAsLink", "N1", "", "https://www.google.de") => "John", $hv_html_engine->getA("Age as Link", "AgeAsLink", "A1", "", "https://www.google.de") => 25
+        array($hv_html_engine->getA("Name as Link", "NameAsLink", "N1", "margin:0px 10px 2px 0px;", "https://www.google.de") => "John", $hv_html_engine->getA("Age as Link", "AgeAsLink", "A1", "", "https://www.google.de") => 25
         ),
         array("Name" => "Mary", "Age" => 30
         ),
@@ -32,6 +32,8 @@
         echo $hv_html_engine->getTable($example1, "myClass", "myID", "", "", "", "myTHClass", "myTDClass");
         echo "<br><br><br>";
         echo $hv_html_engine->getTable($example2, "myClass2", "myID2", "", "", "", "myTHClass", "myTDClass");
+        echo "<br><br><br>";
+        echo $hv_html_engine->getP("Test Satz um zu gucken ob dieser Paragraph funktioniert", "myPclass", "myPid", "");
     ?>
 </body>
 </html>
