@@ -3,9 +3,9 @@ require_once("hv-html.php");
 
 class HV_P extends HV_HTML
 {
-    public function __construct($text, $class, $id, $style, $src , $orderBy, $orderDirection)
+    public function __construct($text, $class, $id, $style)
     {
-        parent::__construct($text, "", $class, $id, $style, $src, $orderBy, $orderDirection);
+        parent::__construct($text, "", $class, $id, $style, "", "", "");
     }
     public function getP()
     {

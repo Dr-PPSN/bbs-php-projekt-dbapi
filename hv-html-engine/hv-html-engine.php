@@ -14,8 +14,8 @@ class HV_HTML_Engine{
         $a = new HV_A($text, $class, $id, $style, $href);
         return $a->getA();
     }
-    public function getP($text, $class, $id, $style, $src){
-        $p = new HV_P($text, $class, $id, $style, $src, "", "");
+    public function getP($text, $class, $id, $style){
+        $p = new HV_P($text, $class, $id, $style);
         return $p->getP();
     }
 }
