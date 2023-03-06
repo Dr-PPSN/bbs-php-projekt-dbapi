@@ -14,39 +14,54 @@ class HV_Table extends HV_HTML{
     public function setTdClass($tdClass){
         $this->tdClass = $tdClass;
     }
-    public function getTable()
-    {
-        $table = "<table";
-        if($this->class != ""){
-            $table .= " class='$this->class'";
+    function getTable() {
+        // Prüfen, ob das übergebene Array ein 2D-Array ist
+        if (!is_array($this->array2D) || empty($this->array2D)) {
+            return;
         }
-        if($this->id != ""){
-            $table .= " id='$this->id'";
-        }
-        if($this->style != ""){
-            $table .= " style='$this->style'";
-        }
-        $table .= ">";
-        foreach($this->array2D as $key => $value){
-            if($key == 0){
-                $table .= "<tr>";
-                foreach($value as $key2 => $value2){
-                    $table .= "<th";
-                    if($this->thClass != ""){
-                        $table .= " class='$this->thClass'";
-                    }
-                    $table .= ">$key2</th>";
-                }
-                $table .= "</tr>";
+    
+        // Wenn $orderBy und $orderDirection angegeben wurden, sortiere das Array
+        if ($this->orderBy && in_array($this->orderDirection, ['ASC', 'DESC'])) {
+            $sortedArray = array();
+            foreach ($this->array2D as $key => $row) {
+                $sortedArray[$key] = $row[$this->orderBy];
             }
-            $table .= "<tr>";
-            foreach($value as $key2 => $value2){
-                $table .= "<td class='$this->tdClass'>$value2</td>";
-            }
-            $table .= "</tr>";
+            array_multisort($sortedArray, $this->orderDirection == 'ASC' ? SORT_ASC : SORT_DESC, $this->array2D);
         }
-        $table .= "</table>";
+    
+        // Erstelle die Tabelle
+        $table = '<table';
+        if ($this->class) {
+            $table .= ' class="' . $this->class . '"';
+        }
+        if ($this->id) {
+            $table .= ' id="' . $this->id . '"';
+        }
+        if ($this->style) {
+            $table .= ' style="' . $this->style . '"';
+        }
+        $table .= '>';
+    
+        // Erstelle die Tabellenüberschrift
+        $table .= '<thead><tr>';
+        foreach ($this->array2D[0] as $key => $value) {
+            $table .= '<th>' . $value . '</th>';
+        }
+        $table .= '</tr></thead>';
+    
+        // Erstelle die Tabellenzeilen
+        $table .= '<tbody>';
+        foreach ($this->array2D as $row) {
+            $table .= '<tr>';
+            foreach ($row as $value) {
+                $table .= '<td id="' . $this->id . '" class="' . $this->class . '" style="' . $this->style . '">' . $value . '</td>';
+            }
+            $table .= '</tr>';
+        }
+        $table .= '</tbody>';
+    
+        $table .= '</table>';
         return $table;
-    }
+    }    
 }
 ?>

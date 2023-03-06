@@ -1,20 +1,15 @@
 <?php
     include "./hv-html-engine/hv-html-engine.php";
     $hv_html_engine = new HV_HTML_Engine();
-    $example1 = array(
-        array("Name" => "John", "Age" => 25
-        ),
-        array("Name" => "Mary", "Age" => 30
-        ),
-        array("Name" => "Peter", "Age" => 35
-        ));
-    $example2 = array(
-        array($hv_html_engine->getA("Name as Link", "NameAsLink", "N1", "margin:0px 10px 2px 0px;", "https://www.google.de") => "John", $hv_html_engine->getA("Age as Link", "AgeAsLink", "A1", "", "https://www.google.de") => 25
-        ),
-        array("Name" => "Mary", "Age" => 30
-        ),
-        array("Name" => "Peter", "Age" => 35
-        ));
+
+    $array2D = array(
+        array("ID", "Name", "Alter"),
+        array("1", "Hans", "20"),
+        array("2", "Peter", "30"),
+        array("3", "Klaus", "40"),
+        array("4", "Kai", "50"),
+        array("5", "Max", "60"),
+    );
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -26,14 +21,88 @@
 </head>
 <body>
     <?php
-        echo "Hallo Welt<br>";
-        echo $hv_html_engine->getA("Test", false, "", "", "https://www.google.de");
-        echo "<br><br><br>";
-        echo $hv_html_engine->getTable($example1, "myClass", "myID", "", "", "", "myTHClass", "myTDClass");
-        echo "<br><br><br>";
-        echo $hv_html_engine->getTable($example2, "myClass2", "myID2", "", "", "", "myTHClass", "myTDClass");
-        echo "<br><br><br>";
-        echo $hv_html_engine->getP("Test Satz um zu gucken ob dieser Paragraph funktioniert", "myPclass", "myPid", "");
+        // echo $hv_html_engine->getTable($array2D, "myClass", "myID", "", "1", "DESC", "thClass", "tdClass");
+        // echo "<br><br>";
+        echo $hv_html_engine->getTable($array2D, "", "", "", "", "", "", "");
+        echo "<br><br><br><br>";
+        echo createTable($array2D, "myClass", "myID", "", "1", "DESC");
+
+        function createTable($array2D, $class, $id, $style, $orderBy, $orderDirection) {
+            // Prüfen, ob das übergebene Array ein 2D-Array ist
+            if (!is_array($array2D) || empty($array2D) || !is_array($array2D[0])) {
+                return;
+            }
+
+            // Erstelle die Tabellenüberschrift
+            $keys = array_keys($array2D[0]);
+            $tableHead = '<thead><tr>';
+            foreach ($keys as $key) {
+                $tableHead .= '<th>' . $array2D[0][$key] . '</th>';
+            }
+            $tableHead .= '</tr></thead>';
+
+            // Entferne die erste Zeile des 2D-Arrays
+            array_shift($array2D);
+
+            // Wenn $orderBy und $orderDirection angegeben wurden, sortiere das Array
+            if ($orderBy && in_array($orderDirection, ['ASC', 'DESC'])) {
+                $sortedArray = array();
+                foreach ($array2D as $key => $row) {
+                    $sortedArray[$key] = $row[$orderBy];
+                }
+                array_multisort($sortedArray, $orderDirection == 'ASC' ? SORT_ASC : SORT_DESC, $array2D);
+            }
+
+            // Erstelle die Tabellenzeilen
+            $tableBody = '<tbody>';
+            foreach ($array2D as $row) {
+                $tableBody .= '<tr>';
+                foreach ($row as $value) {
+                    $tableBody .= '<td>' . $value . '</td>';
+                }
+                $tableBody .= '</tr>';
+            }
+            $tableBody .= '</tbody>';
+
+            // Erstelle die Tabelle
+            $table = '<table';
+            if ($class) {
+                $table .= ' class="' . $class . '"';
+            }
+            if ($id) {
+                $table .= ' id="' . $id . '"';
+            }
+            if ($style) {
+                $table .= ' style="' . $style . '"';
+            }
+            $table .= '>' . $tableHead . $tableBody . '</table>';
+
+            return $table;
+        }
+
+        
+        
     ?>
 </body>
 </html>
+<?php
+// Engine Wiki
+//
+// create a new HV_HTML_Engine
+// $hv_html_engine = new HV_HTML_Engine();
+//
+// create a new table
+// $hv_html_engine->getTable($array2D, $class, $id, $style, $orderBy, $orderDirection, $thClass, $tdClass);
+//
+// create a new a
+// $hv_html_engine->getA($text, $class, $id, $style, $href);
+//
+// create a new p
+// $hv_html_engine->getP($text, $class, $id, $style);
+//
+// create a new button
+// $hv_html_engine->getButton($text, $class, $id, $style);
+//
+// create a new img
+// $hv_html_engine->getImg($class, $id, $style, $src);
+?>
