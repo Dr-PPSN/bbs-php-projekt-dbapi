@@ -1,5 +1,0 @@
-Client ID
-a2da2da1b33dca433b0eaf0e122dac7e
-
-Client Secret (API Key)
-7347b817504c2125ebc7a5713bd96158
