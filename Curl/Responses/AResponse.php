@@ -14,6 +14,10 @@ abstract class AResponse {
      */
     protected int $i_statusCode;
 
+    public function getResponseString(): string {
+        return $this->s_responseString;
+    }
+
     public function getStatusCode(): int {
         return $this->i_statusCode;
     }

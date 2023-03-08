@@ -20,7 +20,7 @@ class JsonResponse extends AResponse {
     public function decode(): array|string {
         $_retArr = json_decode($this->s_responseString, true);
         /*TODO: Exception-Handling*/
-        if (false === $_retArr) throw new InvalidArgumentException('AAAAAAAA', 1);
+        if (false === $_retArr) throw new InvalidArgumentException('String ist kein JSON!', 1);
         return $_retArr;
     }
 }
