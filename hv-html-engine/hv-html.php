@@ -3,7 +3,7 @@
 class HV_HTML
 {
     protected $text = "";
-    protected $array2D = "";
+    protected $tableData = "";
     protected $class = "";
     protected $id = "";
     protected $style = "";
@@ -14,7 +14,7 @@ class HV_HTML
     public function __construct($text, $array2D, $class, $id, $style, $href, $orderBy, $orderDirection)
     {
         $this->text = $text;
-        $this->array2D = $array2D;
+        $this->tableData = $array2D;
         $this->class = $class;
         $this->id = $id;
         $this->style = $style;

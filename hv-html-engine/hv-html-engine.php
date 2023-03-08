@@ -6,8 +6,8 @@ require_once("hv-button.php");
 require_once("hv-img.php");
 
 class HV_HTML_Engine{
-    public function getTable($array2D, $class, $id, $style, $orderBy, $orderDirection, $thClass, $tdClass){
-        $table = new HV_Table($array2D, $class, $id, $style, $orderBy, $orderDirection);
+    public function getTable($tableData, $class, $id, $style, $orderBy, $orderDirection, $thClass, $tdClass){
+        $table = new HV_Table($tableData, $class, $id, $style, $orderBy, $orderDirection);
         $table->setThClass($thClass);
         $table->setTdClass($tdClass);
         return $table->getTable();
