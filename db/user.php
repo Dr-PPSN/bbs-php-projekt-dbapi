@@ -1,33 +1,62 @@
 <?php
 require_once "sql.php";
+
+if (isset($_POST['btnCreateUser'])) {
+    createUser($_POST['userName'], $_POST['password']);
+}
+else if (isset($_POST['btnLogin'])) {
+    if(checkLogin($_POST['userName'], $_POST['password'])){
+        $notification = "Erfolgreich eingeloggt";
+        $_SESSION['userName'] = $_POST['userName'];
+    }
+    else{
+        $notification = "Fehler beim einloggen";
+    }
+}
+
 function createUser($userName, $password){
-    if (!checkUserName($userName) && !checkPassword($password)) {
-        global $notification;
+
+    //TODO: Check if user already exists
+
+    global $notification;
+    $x = checkUserName($userName);
+    if($x[0]["userName"] == $userName && !checkPassword($password)) {
         $notification = "Benutzername ungültig oder Passwort zu kurz";
         return;
     }
-    $pepper = "P1H2P3e4t5r6i7e8";
-    $salt = random_string(12);
-    $password = hash("sha256",$salt . $password . $pepper); // Damit das  Passwort schön Gewürzt ist und gut schmeckt
-    $sql = "INSERT INTO user (userName, password, salt, favorite_stations) VALUES ('$userName', '$password', '$salt', null)";
-    executeSQL($sql);
-}
-function checkLogin($userName, $password){
-    if(checkUserName($userName)){
-        $salt = executeSQL("SELECT salt FROM user WHERE userName = '$userName'");
-        $password = executeSQL("SELECT password FROM user WHERE userName = '$userName'");
-        //TODO: unhash password
-        
+    else{
+        $pepper = "P1H2P3e4t5r6i7e8";
+        $salt = random_string(12);
+        $password = hash("sha256",$salt . $password . $pepper); // Damit das  Passwort schön Gewürzt ist und gut schmeckt
+        $sql = "INSERT INTO user (userName, password, salt, favorite_stations) VALUES ('$userName', '$password', '$salt', null)";
+        executeSQL($sql);
+        $notification = "Benutzer erfolgreich erstellt";
     }
 }
-function checkUserName($userName){
-    if(strlen($userName) < 25 && strlen($userName) > 3){
-        $sql = "SELECT userName FROM user WHERE userName = '$userName'";
-        return executeSQL($sql);
+function checkLogin($userName, $password){
+    if(checkUserName($userName)[0]["userName"] == $userName){
+        $result = executeSQL("SELECT * FROM user WHERE userName = '$userName'");
+        $pepper = "P1H2P3e4t5r6i7e8";
+        $salt = $result[0]["salt"];
+        $hashedPassword = $result[0]["password"];
+        if($hashedPassword == hash("sha256",$salt . $password . $pepper)){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     else{
         return false;
     }
+}
+function checkUserName($userName){
+    if(strlen($userName) < 25 && strlen($userName) > 2){
+        $sql = "SELECT userName FROM user WHERE userName = '$userName'";
+        $result = executeSQL($sql);
+        return $result;
+    }   
+    return false;
 }
 function checkPassword($password){
     if (strlen($password) < 65 && strlen($password) > 4) {
