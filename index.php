@@ -1,11 +1,28 @@
 <?php
-    include "./hv-html-engine/hv-html-engine.php";
+    //includes
+    require_once "./hv-html-engine/hv-html-engine.php";
+    require_once 'db/DB.php';
+    require_once 'db/sql.php';
+    require_once 'db/user.php';
+
+    //variables
     $hv_html_engine = new HV_HTML_Engine();
 
-    $array2D = [  ['id' => 1, 'name' => 'Alice', 'age' => 25],
-    ['id' => 2, 'name' => 'Bob', 'age' => 30],
-    ['id' => 3, 'name' => 'Charlie', 'age' => 20],
-  ];
+    //functions calls
+    checkPHPVersion();
+    
+    //if´s
+    if (isset($notification)) {
+        echo("<br>".$notification);
+    }
+
+    //functions
+    function checkPHPVersion() {
+        if (version_compare(phpversion(), '8.1.0', '<')) {
+          echo 'PHP Version is too old. Please update to 8.1.0 or higher.';
+          exit();
+        }
+      }
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -16,13 +33,7 @@
     <title>BBS Projekt BahnAPI</title>
 </head>
 <body>
-    <?php
-        // echo $hv_html_engine->getTable($array2D, "myClass", "myID", "", "1", "DESC", "thClass", "tdClass");
-        // echo "<br><br>";
-        echo $hv_html_engine->getTable($array2D, "tableClass", "tableID", "", "age", "ASC", "THCLASS", "TDCLASS");
-        echo "<br><br><br><br>";
-        
-    ?>
+    
 </body>
 </html>
 <?php
@@ -45,4 +56,29 @@
 //
 // create a new img
 // $hv_html_engine->getImg($class, $id, $style, $src);
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Register / Login Wiki
+//
+// Register form:
+// <form action="index.php" method="post">
+//     <label for="userName">Benutzername</label>
+//     <input type="text" name="userName" id="userName"><br>
+//     <label for="password">Passwort</label>
+//     <input type="password" name="password" id="password"><br>
+//     <input type="submit" name="btnCreateUser" value="Benutzer erstellen">
+//     <br>
+//     <input type="submit" name="btnReset" value="DB zurücksetzen">
+// </form>
+
+// Login form:
+// <form action="index.php" method="post">
+//     <label for="userName">Benutzername</label>
+//     <input type="text" name="userName" id="userName"><br>
+//     <label for="password">Passwort</label>
+//     <input type="password" name="password" id="password"><br>
+//     <input type="submit" name="btnLogin" value="Einloggen">
+// </form>
+//
+// Wenn der User eingeloggt ist, wird der Name in der Session gespeichert -> $_SESSION['userName']
 ?>
