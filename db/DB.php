@@ -5,6 +5,9 @@ require_once 'config.php';
 $conn = getDBConnection();
 selectDB();
 
+if (isset($_POST['btnReset'])) {
+  resetDB();
+}
 
 function getDBConnection() {
   $conn = new mysqli(MYSQL_HOST, MYSQL_BENUTZER, MYSQL_KENNWORT);
