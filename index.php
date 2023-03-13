@@ -1,4 +1,5 @@
 <?php
+    session_start();
     //includes
     require_once "./hv-html-engine/hv-html-engine.php";
     require_once 'db/DB.php';
@@ -13,9 +14,9 @@
     
     //if´s
     if (isset($notification)) {
-        echo("<div style='background:pink; position:fixed; bottom:0px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+        echo("<div style='background:orange; position:fixed; bottom:0px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
     }
-
+    
     //functions
     function checkPHPVersion() {
         if (version_compare(phpversion(), '8.1.0', '<')) {
@@ -56,11 +57,11 @@
             <?php
               if (isset($_SESSION['userName'])) {
                 echo("<p class='h3'>Hallo ".$_SESSION['userName']."</p>");
-                echo("<a class='btn btn-outline-dark ml-4' href='logout.php'>Logout</a>");
+                echo("<a class='btn btn-outline-dark ml-4 text-white' href='db/logout.php' style='background-color: rgba(240,12,12,255);'>Logout</a>");
               } 
               else {
                 echo("<a type='button' class='btn btn-outline-dark mr-5' data-toggle='modal' data-target='#loginModal'>Login</a>");
-                echo("<a type='button' class='btn btn-outline-dark mr-3 text-white' style='background-color: rgba(240,12,12,255);' data-toggle='modal' data-target='#loginModal'>Registrieren</a>");
+                echo("<a type='button' class='btn btn-outline-dark mr-3 text-white' style='background-color: rgba(240,12,12,255);' data-toggle='modal' data-target='#registrierenModal'>Registrieren</a>");
               }
             ?>
           </div>
@@ -77,31 +78,75 @@
         </div>
     </div>
     <!-- /Content -->
+    <!-- footer -->
+    <div class="row fixed-bottom" style="background-color: rgba(240,12,12,255);">
+      <hr>
+      <div class="col-md-4 col-sm-4 col-xs-4 d-flex align-items-center justify-content-center mt-2">
+        <p class="text-white">© 2023 - BBS PHP Projekt Bahn-API</p>
+      </div>
+      <div class="col-md-8 col-sm-8 col-xs-8 d-flex align-items-center justify-content-center mt-2">
+        <p class="text-white">Kai, Dennis und Robert</p>
+      </div>
+    </div>
+    <!-- /footer -->
     <!-- Modal Login -->
     <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Login</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
           </div>
-          <div class="modal-body align-items-center">
-            <form action="index.php" method="post">
-                <label for="userName">Benutzername</label>
-                <input type="text" name="userName" id="userName"><br>
-                <label for="password">Passwort</label>
-                <input type="password" name="password" id="password"><br>
-          </div>
+          <form action="index.php" method="post">
+            <div class="modal-body">
+              <div class="form-group row">
+                <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>
+                <div class="col-sm-8 d-flex justify-content-center align-items-center">
+                  <input type="text" class="form-control mt-2 w-75" id="userName" name="userName" placeholder="User Name">
+                </div>
+                <div class="col-sm-4 d-flex justify-content-center align-items-center">Passwort:</div>
+                <div class="col-sm-8 d-flex justify-content-center align-items-center">
+                  <input class="form-control mt-2 w-75" type="password" name="password" id="password" placeholder="Passwort">
+                </div>
+              </div>
+            </div>
           <div class="modal-footer">
-            <input type="submit" name="btnCreateUser" value="Benutzer erstellen">
+            <input type="submit" class="btn btn-outline-dark text-white" name="btnLogin" value="Login" style="background-color: rgba(240,12,12,255);">
             </form>
           </div>
         </div>
       </div>
     </div>
     <!-- /Modal Login -->
+    <!-- Modal Registrieren -->
+    <div class="modal fade" id="registrierenModal" tabindex="-1" role="dialog" aria-labelledby="registrierenModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Registrieren</h5>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
+          </div>
+          <form action="index.php" method="post">
+            <div class="modal-body">
+              <div class="form-group row">
+                <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>
+                <div class="col-sm-8 d-flex justify-content-center align-items-center">
+                  <input type="text" class="form-control mt-2 w-75" id="userName" name="userName" placeholder="User Name">
+                </div>
+                <div class="col-sm-4 d-flex justify-content-center align-items-center">Passwort:</div>
+                <div class="col-sm-8 d-flex justify-content-center align-items-center">
+                  <input class="form-control mt-2 w-75" type="password" name="password" id="password" placeholder="Passwort">
+                </div>
+              </div>
+            </div>
+          <div class="modal-footer">
+            <input type="submit" class="btn btn-outline-dark text-white" name="btnCreateUser" value="Registrieren" style="background-color: rgba(240,12,12,255);">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Modal Registrieren -->
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
@@ -151,4 +196,9 @@
 // </form>
 //
 // Wenn der User eingeloggt ist, wird der Name in der Session gespeichert -> $_SESSION['userName']
+
+// Um die Datenbank zurück zu setzten, muss einfach nur das GET Parameter "resetDB" gesetzt werden
+// Beispiel: http://localhost/index.php?resetDB
+// Beispiel: http://localhost:3000/index.php?resetDB <-- für mich (Kai)
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ?>
