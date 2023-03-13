@@ -2,7 +2,7 @@
 require_once "sql.php";
 
 if (isset($_POST['btnCreateUser'])) {
-    createUser($_POST['userName'], $_POST['password']);
+    @createUser($_POST['userName'], $_POST['password']);
 }
 else if (isset($_POST['btnLogin'])) {
     if(checkLogin($_POST['userName'], $_POST['password'])){
@@ -15,12 +15,9 @@ else if (isset($_POST['btnLogin'])) {
 }
 
 function createUser($userName, $password){
-
-    //TODO: Check if user already exists
-
     global $notification;
     $x = checkUserName($userName);
-    if($x[0]["userName"] == $userName && !checkPassword($password)) {
+    if($x[0]["userName"] == $userName || !checkPassword($password)) {
         $notification = "Benutzername ungültig oder Passwort zu kurz";
         return;
     }
