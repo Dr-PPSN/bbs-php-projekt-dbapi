@@ -13,6 +13,9 @@ else if (isset($_POST['btnLogin'])) {
         $notification = "Fehler beim einloggen";
     }
 }
+else if (isset($_SESSION['userName'])){
+    $notification = "Erfolgreich eingeloggt";
+}
 
 function createUser($userName, $password){
     global $notification;
