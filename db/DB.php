@@ -5,7 +5,7 @@ require_once 'config.php';
 $conn = getDBConnection();
 selectDB();
 
-if (isset($_POST['btnReset'])) {
+if (isset($_GET['resetDB'])) {
   resetDB();
 }
 
