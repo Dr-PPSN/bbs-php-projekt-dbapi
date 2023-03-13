@@ -2,7 +2,7 @@
 require_once "sql.php";
 
 if (isset($_POST['btnCreateUser'])) {
-    @createUser($_POST['userName'], $_POST['password']);
+    createUser($_POST['userName'], $_POST['password']);
 }
 else if (isset($_POST['btnLogin'])) {
     if(checkLogin($_POST['userName'], $_POST['password'])){
@@ -17,7 +17,7 @@ else if (isset($_POST['btnLogin'])) {
 function createUser($userName, $password){
     global $notification;
     $x = checkUserName($userName);
-    if($x[0]["userName"] == $userName || !checkPassword($password)) {
+    if(isset($x[0]["userName"]) && $x[0]["userName"] == $userName || !checkPassword($password)) {
         $notification = "Benutzername ungültig oder Passwort zu kurz";
         return;
     }
@@ -31,7 +31,8 @@ function createUser($userName, $password){
     }
 }
 function checkLogin($userName, $password){
-    if(checkUserName($userName)[0]["userName"] == $userName){
+    $x = checkUserName($userName);
+    if(isset($x[0]["userName"]) && $x[0]["userName"] == $userName){
         $result = executeSQL("SELECT * FROM user WHERE userName = '$userName'");
         $pepper = "P1H2P3e4t5r6i7e8";
         $salt = $result[0]["salt"];
