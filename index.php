@@ -14,7 +14,7 @@
     
     //if´s
     if (isset($notification)) {
-        echo("<div style='background:orange; position:fixed; bottom:0px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+        echo("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
     }
     
     //functions
@@ -33,10 +33,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BBS Projekt BahnAPI</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style/style.css">
   </head>
 <body class="bg-white">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white" style="border-bottom: 2px rgba(240,12,12,255) solid;">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom">
       <div class="container-fluid">
         <!-- Left side -->
           <a class="navbar-brand align-items-center" href="index.php">
@@ -57,11 +58,11 @@
             <?php
               if (isset($_SESSION['userName'])) {
                 echo("<p class='h3'>Hallo ".$_SESSION['userName']."</p>");
-                echo("<a class='btn btn-outline-dark ml-4 text-white' href='db/logout.php' style='background-color: rgba(240,12,12,255);'>Logout</a>");
+                echo("<a class='btn btn-outline-dark ml-4 text-white DbahnBackground' href='db/logout.php'>Logout</a>");
               } 
               else {
                 echo("<a type='button' class='btn btn-outline-dark mr-5' data-toggle='modal' data-target='#loginModal'>Login</a>");
-                echo("<a type='button' class='btn btn-outline-dark mr-3 text-white' style='background-color: rgba(240,12,12,255);' data-toggle='modal' data-target='#registrierenModal'>Registrieren</a>");
+                echo("<a type='button' class='btn btn-outline-dark mr-3 text-white DbahnBackground' data-toggle='modal' data-target='#registrierenModal'>Registrieren</a>");
               }
             ?>
           </div>
@@ -79,7 +80,7 @@
     </div>
     <!-- /Content -->
     <!-- footer -->
-    <div class="row fixed-bottom" style="background-color: rgba(240,12,12,255);">
+    <div class="row fixed-bottom DbahnBackground">
       <hr>
       <div class="col-md-4 col-sm-4 col-xs-4 d-flex align-items-center justify-content-center mt-2">
         <p class="text-white">© 2023 - BBS PHP Projekt Bahn-API</p>
@@ -111,7 +112,7 @@
               </div>
             </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark text-white" name="btnLogin" value="Login" style="background-color: rgba(240,12,12,255);">
+            <input type="submit" class="btn btn-outline-dark text-white DbahnBackground" name="btnLogin" value="Login">
             </form>
           </div>
         </div>
@@ -140,7 +141,7 @@
               </div>
             </div>
           <div class="modal-footer">
-            <input type="submit" class="btn btn-outline-dark text-white" name="btnCreateUser" value="Registrieren" style="background-color: rgba(240,12,12,255);">
+            <input type="submit" class="btn btn-outline-dark text-white DbahnBackground" name="btnCreateUser" value="Registrieren">
             </form>
           </div>
         </div>
