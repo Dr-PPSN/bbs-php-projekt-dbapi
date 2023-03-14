@@ -72,10 +72,29 @@
     <!-- /Navbar -->
     <!-- Content -->
     <div class="container-fluid">
-        <div class="row mt-4">
-            <div class="col-12">
-                <h1>Main Content</h1>
+      <div class="row mt-4 bg-info">
+        <div class="col-12 d-flex justify-content-center bg-warning">
+          <br>
+        </div>
+      </div>
+        <div class="row mt-4 bg-info">
+          <div class="col-3 d-flex justify-content-center">
+            <div class="row bg-danger">
+              <div class="col-10 d-flex justify-content-center bg-success">
+                <br>
+              </div>
             </div>
+          </div>
+          <div class="col-6 d-flex justify-content-center bg-warning">
+            <form action="" method="GET">
+              <h1 class="my-3">Bahnhof-Suche</h1>
+              <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-3">
+              <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-3">
+              <input type="date" placeholder="Datum" name="date" id="date" class="form-control mb-3">
+              <input type="submit" value="Suchen" class="btn btn-primary mb-3">
+            </form>
+          </div>
+          <div class="col-3"></div>
         </div>
     </div>
     <!-- /Content -->
