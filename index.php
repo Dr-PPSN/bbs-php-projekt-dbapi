@@ -71,30 +71,23 @@
     </nav>
     <!-- /Navbar -->
     <!-- Content -->
-    <div class="container-fluid">
-      <div class="row mt-4 bg-info">
-        <div class="col-12 d-flex justify-content-center bg-warning">
-          <br>
-        </div>
-      </div>
-        <div class="row mt-4 bg-info">
-          <div class="col-3 d-flex justify-content-center">
-            <div class="row bg-danger">
-              <div class="col-10 d-flex justify-content-center bg-success">
-                <br>
-              </div>
-            </div>
+    <div class="container-fluid bg-ice1">
+        <div class="row pt-4">
+          <div class="col-12 d-flex justify-content-center">
+            <br>
           </div>
-          <div class="col-6 d-flex justify-content-center bg-warning">
+        </div>
+        <div class="row pt-4">
+          <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
+          <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
             <form action="" method="GET">
-              <h1 class="my-3">Bahnhof-Suche</h1>
-              <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-3">
-              <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-3">
-              <input type="date" placeholder="Datum" name="date" id="date" class="form-control mb-3">
-              <input type="submit" value="Suchen" class="btn btn-primary mb-3">
+              <h1 class="my-4 DbahnText">Bahnhof-Suche</h1>
+              <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
+              <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-4">
+              <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
             </form>
           </div>
-          <div class="col-3"></div>
+          <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
         </div>
     </div>
     <!-- /Content -->
