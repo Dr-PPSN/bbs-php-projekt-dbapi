@@ -1,11 +1,22 @@
 :root {
     --DbahnRot: rgba(240,12,12,255)
 }
+.DbahnBorder {
+    border: 6px solid var(--DbahnRot);
+}
 .DbahnBorderBottom {
     border-bottom: 2px solid var(--DbahnRot);
 }
 .DbahnBackground {
     background-color: var(--DbahnRot);
+}
+.DbahnText {
+    color: var(--DbahnRot);
+    -webkit-text-stroke: 1px white;
+}
+.kastenBG {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px;
 }
 #fehlerMeldung {
     background:orange;
@@ -14,4 +25,10 @@
     left:0px;
     z-index:999;
     padding:12px;
+}
+.bg-ice1 {
+    background-image: url(/assets/pics/ice1.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
