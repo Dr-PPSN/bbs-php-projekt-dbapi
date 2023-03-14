@@ -1,0 +1,17 @@
+:root {
+    --DbahnRot: rgba(240,12,12,255)
+}
+.DbahnBorderBottom {
+    border-bottom: 2px solid var(--DbahnRot);
+}
+.DbahnBackground {
+    background-color: var(--DbahnRot);
+}
+#fehlerMeldung {
+    background:orange;
+    position:fixed;
+    bottom:20px;
+    left:0px;
+    z-index:999;
+    padding:12px;
+}
