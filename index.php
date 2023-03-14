@@ -37,7 +37,7 @@
   </head>
 <body class="bg-white">
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
       <div class="container-fluid">
         <!-- Left side -->
           <a class="navbar-brand align-items-center" href="index.php">
@@ -71,6 +71,7 @@
     </nav>
     <!-- /Navbar -->
     <!-- Content -->
+    <!-- Bahnhof suche -->
     <div class="container-fluid bg-ice1">
         <div class="row pt-4">
           <div class="col-12 d-flex justify-content-center">
@@ -81,7 +82,7 @@
           <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
           <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
             <form action="" method="GET">
-              <h1 class="my-4 DbahnText">Bahnhof-Suche</h1>
+              <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
               <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
               <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-4">
               <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
@@ -90,6 +91,32 @@
           <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
         </div>
     </div>
+    <!-- /Bahnhof suche -->
+    <!-- rote linie 1 -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center DbahnBackground">
+          <br>
+        </div>
+      </div>
+    </div>
+    <!-- /rote linie 1 -->
+    <!-- Fahrplan suche -->
+    <div class="container-fluid bg-ice1">
+        <div class="row pb-4 mb-5">
+          <div class="col-md-3 col-sm-0 d-flex align-self-end"></div>
+          <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
+            <form action="" method="GET">
+              <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
+              <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
+              <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-4">
+              <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
+            </form>
+          </div>
+          <div class="col-md-3 col-sm-0 d-flex align-self-end"></div>
+        </div>
+    </div>
+    <!-- /Fahrplan suche -->
     <!-- /Content -->
     <!-- footer -->
     <div class="row fixed-bottom DbahnBackground">
@@ -160,7 +187,7 @@
       </div>
     </div>
     <!-- /Modal Registrieren -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 </body>
 </html>

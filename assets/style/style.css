@@ -2,7 +2,9 @@
     --DbahnRot: rgba(240,12,12,255)
 }
 .DbahnBorder {
-    border: 6px solid var(--DbahnRot);
+    border-left: 6px solid var(--DbahnRot);
+    border-top: 6px solid var(--DbahnRot);
+    border-right: 6px solid var(--DbahnRot);
 }
 .DbahnBorderBottom {
     border-bottom: 2px solid var(--DbahnRot);
@@ -16,7 +18,11 @@
 }
 .kastenBG {
     background-color: rgba(255,255,255,0.8);
-    border-radius: 10px;
+    border-radius: 10px 10px 0px 0px;
+}
+.kastenBG2 {
+    background-color: rgba(255,255,255,0.8);
+    border-radius: 10px 0px 0px 10px;
 }
 #fehlerMeldung {
     background:orange;
