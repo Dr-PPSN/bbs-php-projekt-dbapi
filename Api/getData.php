@@ -7,6 +7,8 @@ function getResponseType(string $responseType): string {
     switch ($responseType) {
       case 'json':
         return 'application/json';
+      case 'ris+json':
+        return 'application/vnd.de.db.ris+json';
       case 'xml':
         return 'application/xml';
       default:

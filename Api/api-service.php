@@ -1,24 +1,32 @@
 <?php
 
 require_once 'getData.php';
+require_once 'helper.php';
 
-function getStationData(int $stationID): array|string {
-  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/station-data/v2/stations/" . $stationID);
-  if (false === $data) {
+
+function searchStopPlace(string $searchString): array|string {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/ris-stations/v1/stop-places/by-name/" . $searchString, 'ris+json');
+  if (false === $data || $data === '') {
     return false;
   } else {
-    // TODO: Pick relevant data from $data
     return $data;
   }
 }
 
+function getStationData(int $stationID): array|string {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/station-data/v2/stations/" . $stationID);
+  if (false === $data || $data === '') {
+    return false;
+  } else {
+    return $data;
+  }
+}
 
 function getStationPictureURL(int $stationID): array|string {
   $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/api.railway-stations.org/photoStationById/de/" . $stationID);
-  if (false === $data) {
+  if (false === $data || $data === '') {
     return false;
   } else {
-    // TODO: Pick relevant data from $data
     return $data;
   }
 }
@@ -26,19 +34,19 @@ function getStationPictureURL(int $stationID): array|string {
 
 function getFahrplan(int $evaNr, string $date, string $hour): array|string {
   $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/" . $evaNr . "/" . $date . "/" . $hour, 'xml');
-  if (false === $data) {
+  if (false === $data || $data === '') {
     return false;
   } else {
-    // TODO: Pick relevant data from $data
     return $data;
   }
 }
 
-
-var_dump(getStationData(3881));
+printPretty(searchStopPlace("Hamburg"));
 echo "<br><br>";  // linebreak go br
-var_dump(getStationPictureURL(3881));
+printPretty(getStationData(3881));
 echo "<br><br>";
-var_dump(getFahrplan(8010224, 230308, 14));
+printPretty(getStationPictureURL(3881));
+echo "<br><br>";
+printPretty(getFahrplan(8010224, 230419, 20));
 
 ?>
