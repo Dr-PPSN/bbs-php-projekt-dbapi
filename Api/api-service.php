@@ -41,12 +41,4 @@ function getFahrplan(int $evaNr, string $date, string $hour): array|string {
   }
 }
 
-printPretty(searchStopPlace("Hamburg"));
-echo "<br><br>";  // linebreak go br
-printPretty(getStationData(3881));
-echo "<br><br>";
-printPretty(getStationPictureURL(3881));
-echo "<br><br>";
-printPretty(getFahrplan(8010224, 230419, 20));
-
 ?>
