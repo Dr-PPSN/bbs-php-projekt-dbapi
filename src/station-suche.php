@@ -6,31 +6,33 @@ require_once '../db/DB.php';
 require_once '../db/sql.php';
 require_once '../db/user.php';
 require_once '../api/api-service.php';
+require_once './helper.php';
 
 //variables
 $hv_html_engine = new HV_HTML_Engine();
-$suchergebnisse = searchStopPlace($_GET['searchStation']);
 
 //functions calls
-checkPHPVersion();
+if (phpVersionZuAlt()) {
+  exit();
+}
 
 //if´s
+if (isset($_GET['searchStation'])) {
+  $suchergebnisse = searchStopPlace($_GET['searchStation']);
+} else {
+  echo 'Keine Suchanfrage erhalten.';
+  routeZurIndex();
+}
+
 if (isset($notification)) {
   echo ("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: " . $notification . "</div>");
 }
 
-//functions
-function checkPHPVersion()
-{
-  if (version_compare(phpversion(), '8.1.0', '<')) {
-    echo 'PHP Version is too old. Please update to 8.1.0 or higher.';
-    exit();
-  }
-}
 ?>
 
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
