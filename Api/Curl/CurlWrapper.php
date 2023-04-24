@@ -95,3 +95,5 @@ class CurlWrapper{
         curl_close($this->r_curl);
     }
 }
+
+?>

@@ -1,9 +1,14 @@
 <?php
-final class Autoloader {
-    public static function register(): void {
+final class Autoloader
+{
+    public static function register(): void
+    {
         spl_autoload_register(function ($class) {
-            $file = str_replace('\\', DIRECTORY_SEPARATOR, $class).'.php';
+            echo $class . "<br>";
+            $file = __DIR__ . DIRECTORY_SEPARATOR . str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
+            echo $file;
             if (file_exists($file)) {
+                echo "file exists";
                 require $file;
                 return true;
             }
@@ -12,6 +17,7 @@ final class Autoloader {
     }
 }
 
+echo __DIR__ . '<br>';
 Autoloader::register();
 
 ?>
