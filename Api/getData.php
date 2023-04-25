@@ -1,7 +1,7 @@
 <?php
 
 require_once '../autoloader.php';
-require_once '../config.php';
+require_once 'api-config.php';
 
 function getResponseType(string $responseType): string {
     switch ($responseType) {

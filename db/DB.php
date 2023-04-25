@@ -1,8 +1,6 @@
 <?php
 // Funktionen für DB-Operationen
-$configPath = dirname(__FILE__) . '/../config/config.php';
-$configPath = realpath($configPath);
-require_once $configPath;
+require_once 'config.php';
 
 $conn = getDBConnection();
 selectDB();
