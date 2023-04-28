@@ -15,7 +15,7 @@ class HV_StationsDetails extends HV_HTML
   }
   public function getDetails()
   {
-    printPretty($this->staionData);
+    // printPretty($this->staionData);
     $details = "<div" . $this->getMainTagAttributes() . ">";
     $details .= "<h1>" . $this->staionData["name"] . "</h1>";
     $details .= $this->_getDetails();
