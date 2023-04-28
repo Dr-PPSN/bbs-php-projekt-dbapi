@@ -1,6 +1,7 @@
 <?php
 
 require_once("hv-html.php");
+require_once '../Api/helper.php';
 
 class HV_Suchergebnisse extends HV_HTML
 {
@@ -8,33 +9,32 @@ class HV_Suchergebnisse extends HV_HTML
 
   public function __construct($items, $class, $id, $style)
   {
-    $this->items = $items;
+    $this->items = $items["stopPlaces"];
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
   public function getList()
   {
-    $list = "<div";
-    if ($this->class != "") {
-      $list .= " class='" . $this->class . "'";
-    }
-    if ($this->id != "") {
-      $list .= " id='" . $this->id . "'";
-    }
-    if ($this->style != "") {
-      $list .= " style='" . $this->style . "'";
-    }
-    $list .= ">" . $this->getItems() . "</div>";
+    $list = "<ul" . $this->getMainTagAttributes() . ">";
+    $list .= $this->getItems();
+    $list .= "</ul>";
     return $list;
   }
 
   private function getItems(): string
   {
-    $items = "";
+    $listObjects = "";
     foreach ($this->items as $item) {
-      echo $item;
-      // $items .= "<div>" . $item . "</div>";
+      $evaNumber = $item["evaNumber"];
+      if (isset($item["stationID"])) {
+        $stationID = $item["stationID"];
+      }
+      $name = $item["names"]["DE"]["nameLong"];
+      $listObject = "<div class='suchergebnisItem'>";
+      $listObject .= "<a href='hv-fahrplan.php?stationID=" . $stationID . "&evaNumber=" . $evaNumber . "'>" . $name . "</a>";
+      $listObject .= "</div>";
+      $listObjects .= "<li>" . $listObject . "</li>";
     }
-    return $items;
+    return $listObjects;
   }
 }
 

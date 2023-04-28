@@ -22,6 +22,24 @@ class HV_HTML
         $this->orderBy = $orderBy;
         $this->orderDirection = $orderDirection;
     }
+
+    protected function getMainTagAttributes()
+    {
+        $mainAttributes = "";
+        if ($this->class != "") {
+            $mainAttributes .= " class='" . $this->class . "'";
+        }
+        if ($this->id != "") {
+            $mainAttributes .= " id='" . $this->id . "'";
+        }
+        if ($this->style != "") {
+            $mainAttributes .= " style='" . $this->style . "'";
+        }
+        if ($this->href != "") {
+            $mainAttributes .= " href='" . $this->href . "'";
+        }
+        return $mainAttributes;
+    }
 }
 
 ?>
