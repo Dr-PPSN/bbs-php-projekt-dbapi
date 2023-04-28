@@ -1,0 +1,17 @@
+:root {
+  --DbahnRot: rgba(240,12,12,255)
+}
+
+.suchergebnisse {
+  list-style-type: none;
+  margin-bottom: 100px;
+}
+
+.suchergebnisItem {
+  border: 1px solid rgb(255, 0, 0);
+  border-radius: 10px;
+  margin: 5px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
