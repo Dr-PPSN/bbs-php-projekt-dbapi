@@ -38,3 +38,18 @@
     background-position: center;
     background-repeat: no-repeat;
 }
+
+.bg-station {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.icon {
+    width: 15px;
+    height: 15px;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 5px;
+    margin-right: 5px;
+}

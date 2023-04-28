@@ -1,0 +1,25 @@
+.stationData {
+  display: flex;
+}
+
+.detail-sub-header {
+  font-size: 1.5em;
+  font-weight: bold;
+  display: block;
+}
+
+.adress {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.has-wifi {
+  display: flex;
+}
+
+.oeffnungszeiten {
+}
+
+.oeffnungszeiten-tage {
+  margin-right: 10px;
+}

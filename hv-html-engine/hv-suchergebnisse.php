@@ -1,7 +1,7 @@
 <?php
 
 require_once("hv-html.php");
-require_once '../Api/helper.php';
+require_once '../api/helper.php';
 
 class HV_Suchergebnisse extends HV_HTML
 {
@@ -30,7 +30,7 @@ class HV_Suchergebnisse extends HV_HTML
       }
       $name = $item["names"]["DE"]["nameLong"];
       $listObject = "<div class='suchergebnisItem'>";
-      $listObject .= "<a href='hv-fahrplan.php?stationID=" . $stationID . "&evaNumber=" . $evaNumber . "'>" . $name . "</a>";
+      $listObject .= "<a href='station-details.php?stationID=" . $stationID . "&evaNumber=" . $evaNumber . "'>" . $name . "</a>";
       $listObject .= "</div>";
       $listObjects .= "<li>" . $listObject . "</li>";
     }

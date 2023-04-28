@@ -15,4 +15,37 @@ function routeZurIndex() {
   exit();
 }
 
+function bauePictureUrlZusammen($stationPictureURLObj): string {
+  $photoBaseUrl = $stationPictureURLObj['photoBaseUrl'];
+  $path = $stationPictureURLObj['stations'][0]['photos'][0]['path'];
+  return $photoBaseUrl . $path;
+}
+
+function dayToDeutsch($day): string {
+  switch ($day) {
+    case 'monday':
+      return 'Montag';
+    case 'tuesday':
+      return 'Dienstag';
+    case 'wednesday':
+      return 'Mittwoch';
+    case 'thursday':
+      return 'Donnerstag';
+    case 'friday':
+      return 'Freitag';
+    case 'saturday':
+      return 'Samstag';
+    case 'sunday':
+      return 'Sonntag';
+    case 'holiday':
+      return 'Feiertag';
+    default:
+      return '';
+  }
+}
+
+function getIcon($iconFilename): string {
+  return '<img class="icon" src="../assets/pics/' . $iconFilename . '">';
+}
+
 ?>
