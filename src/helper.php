@@ -48,4 +48,20 @@ function getIcon($iconFilename): string {
   return '<img class="icon" src="../assets/pics/' . $iconFilename . '">';
 }
 
+function getAktuellesDatumUndStunde(): array {
+  $timestamp = time();
+  $datum = date("ymd", $timestamp);
+  $stunde = date("H", $timestamp);
+  return array($datum, $stunde);
+}
+
+function getMainEvaNumber($evaNumbers) {
+  foreach ($evaNumbers as $evaNumber) {
+    if (isset($evaNumber["isMain"]) && $evaNumber["isMain"] == true) {
+      return $evaNumber["number"];
+    }
+  }
+  return null;
+}
+
 ?>

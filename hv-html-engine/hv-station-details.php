@@ -10,7 +10,7 @@ class HV_StationsDetails extends HV_HTML
 
   public function __construct($staionData, $class, $id, $style)
   {
-    $this->staionData = $staionData["result"][0];
+    $this->staionData = $staionData;
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
   public function getDetails()

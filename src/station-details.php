@@ -2,12 +2,19 @@
 session_start();
 require_once "../hv-html-engine/hv-html-engine.php";
 require_once "../hv-html-engine/hv-station-details.php";
+require_once "../hv-html-engine/hv-fahrplan.php";
 require_once '../db/DB.php';
 require_once '../db/sql.php';
 require_once '../db/user.php';
 require_once '../api/api-service.php';
 require_once './helper.php';
 require_once '../api/helper.php';
+
+function getAktuellenFahrplan($stationData): array|string {
+  $evaNumber = getMainEvaNumber($stationData["evaNumbers"]);
+  [$datum, $stunde] = getAktuellesDatumUndStunde();
+  return getFahrplan($evaNumber, $datum, $stunde);
+}
 
 //variables
 $hv_html_engine = new HV_HTML_Engine();
@@ -20,7 +27,13 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['stationID'])) {
   $stationData = getStationData($_GET['stationID']);
+  $stationData = $stationData["result"][0];
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($_GET['stationID']));
+  $aktuellerFahrplan = getAktuellenFahrplan($stationData);
+
+  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, "fahrplan", "", "");
+  $fahrplan->getFahrplan();
+  $details = new HV_StationsDetails($stationData, "stations-details", "", "");
 } else {
   routeZurIndex();
 }
@@ -93,18 +106,26 @@ if (isset($notification)) {
       </div>
     </div>
     <div class="row pt-4">
-      <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end">
+      <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end">
       </div>
       
       <!-- TODO: hier Abfahrtszeiten eintragen -->
 
-      <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
-        <?php
-        $details = new HV_StationsDetails($stationData, "stations-details", "", "");
-        echo $details->getDetails();
-        ?>
+      <div class="col-md-8 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
+        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
+          <?php
+          echo $fahrplan->getFahrplan();
+          // echo $details->getDetails();
+          ?>
+        </div>
+        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
+          <?php
+          // echo $fahrplan->getFahrplan();
+          echo $details->getDetails();
+          ?>
+        </div>
       </div>
-      <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
+      <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>
   </div>
   <!-- /station details -->
