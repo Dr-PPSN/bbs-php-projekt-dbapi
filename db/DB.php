@@ -12,18 +12,17 @@ if (isset($_GET['resetDB'])) {
 }
 
 function getDBConnection() {
+  global $notification;
   try{
     $conn = new mysqli(MYSQL_HOST, MYSQL_BENUTZER, MYSQL_KENNWORT);
     if ($conn->connect_error) {
-      global $notification;
-      echo "Connection failed: " . $conn->connect_error; 
+      $notification = "Connection failed: " . $conn->connect_error; 
       exit();
     }
     return $conn;
   }
   catch(Exception $e){
-    global $notification;
-    echo "Connection failed: " . $e->getMessage(); 
+    $notification = "Connection failed: " . $e->getMessage(); 
   }
 }
 
