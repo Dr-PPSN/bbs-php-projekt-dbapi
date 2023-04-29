@@ -3,20 +3,28 @@
 require_once 'config.php';
 
 $conn = getDBConnection();
-selectDB();
+if($conn != null){
+  selectDB();
+}
 
 if (isset($_GET['resetDB'])) {
   resetDB();
 }
 
 function getDBConnection() {
-  $conn = new mysqli(MYSQL_HOST, MYSQL_BENUTZER, MYSQL_KENNWORT);
-  if ($conn->connect_error) {
-    global $notification;
-    $notification = "Connection failed: " . $conn->connect_error; 
-    exit();
+  try{
+    $conn = new mysqli(MYSQL_HOST, MYSQL_BENUTZER, MYSQL_KENNWORT);
+    if ($conn->connect_error) {
+      global $notification;
+      echo "Connection failed: " . $conn->connect_error; 
+      exit();
+    }
+    return $conn;
   }
-  return $conn;
+  catch(Exception $e){
+    global $notification;
+    echo "Connection failed: " . $e->getMessage(); 
+  }
 }
 
 function selectDB() {
