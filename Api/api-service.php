@@ -22,6 +22,15 @@ function getStationData(int $stationID): array|string {
   }
 }
 
+function getFacilityStatus(int $stationID): array|string {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/fasta/v2/stations/" . $stationID);
+  if (false === $data || $data === '') {
+    return false;
+  } else {
+    return $data;
+  }
+}
+
 function getStationPictureURL(int $stationID): array|string {
   $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/api.railway-stations.org/photoStationById/de/" . $stationID);
   if (false === $data || $data === '') {

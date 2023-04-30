@@ -28,12 +28,14 @@ if (phpVersionZuAlt()) {
 if (isset($_GET['stationID'])) {
   $stationData = getStationData($_GET['stationID']);
   $stationData = $stationData["result"][0];
+  $facilityStatus = getFacilityStatus($_GET['stationID']);
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($_GET['stationID']));
   $aktuellerFahrplan = getAktuellenFahrplan($stationData);
 
-  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, "fahrplan", "", "");
-  $fahrplan->getFahrplan();
-  $details = new HV_StationsDetails($stationData, "stations-details", "", "");
+  $fahrplanAenderungen = null;
+  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, $fahrplanAenderungen, "fahrplan", "", "");
+  $details = new HV_StationsDetails($stationData, $facilityStatus, "stations-details", "", "");
+  $details->getDetails();
 } else {
   routeZurIndex();
 }

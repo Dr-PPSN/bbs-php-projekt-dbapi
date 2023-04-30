@@ -8,16 +8,17 @@ class HV_Fahrplan extends HV_HTML
 {
   protected $stationName = "";
   protected $fahrplan = array();
+  protected $fahrplanAenderungen;
 
-  public function __construct($fahrplanData, $class, $id, $style)
+  public function __construct($fahrplanData, $fahrplanAenderungen, $class, $id, $style)
   {
     $this->stationName = $fahrplanData["@attributes"]["station"];
     $this->fahrplan = $fahrplanData;
+    $this->fahrplanAenderungen = $fahrplanAenderungen;
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
   public function getFahrplan()
   {
-    // printPretty($this->fahrplan);
     $fahrplan = "<div" . $this->getMainTagAttributes() . ">";
     $fahrplan .= "<h1>Fahrplan</h1>";
     $fahrplan .= $this->_getFahrplan();
@@ -48,7 +49,6 @@ class HV_Fahrplan extends HV_HTML
     } else {
       $abfahrt = null;
     }
-
     // printPretty($zug);
 
     return "";

@@ -7,15 +7,16 @@ require_once '../src/helper.php';
 class HV_StationsDetails extends HV_HTML
 {
   protected $staionData = array();
+  protected $facilityData = array();
 
-  public function __construct($staionData, $class, $id, $style)
+  public function __construct($staionData, $facilityStatus, $class, $id, $style)
   {
     $this->staionData = $staionData;
+    $this->facilityData = $facilityStatus;
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
   public function getDetails()
   {
-    // printPretty($this->staionData);
     $details = "<div" . $this->getMainTagAttributes() . ">";
     $details .= "<h1>" . $this->staionData["name"] . "</h1>";
     $details .= $this->_getDetails();
@@ -27,6 +28,7 @@ class HV_StationsDetails extends HV_HTML
     $result = "<div>";
     $result .= $this->getAdress();
     $result .= $this->getOeffnungszeiten();
+    $result .= $this->getHasElevator();
     $result .= $this->getWeitereInformationen();
     $result .= "</div>";
     return $result;
@@ -68,26 +70,50 @@ class HV_StationsDetails extends HV_HTML
     $result .= "</div>";
     return $result;
   }
-
-  protected function getWeitereInformationen(): string {
-    $result = "<div class='weitere-informationen'>";
-    $result .= "<span class='detail-sub-header'>Weitere Informationen</span>";
-    $result .= $this->getHasWifi();
-    $result .= $this->hasSteplessAccess();
-    $result .= "</div>";
+  
+  protected function getHasElevator() {
+    $result = "";
+    $hasElevator = $this->_getHasElevator();
+    if ($hasElevator !== "") {
+      $result = "<div class='weitere-informationen'>";
+      $result .= "<span class='detail-sub-header'>Fahrstuhl</span>";
+      $result .= $hasElevator;
+      $result .= "</div>";
+    }
     return $result;
   }
 
-  protected function hasSteplessAccess() {
-    if (isset($this->staionData["hasSteplessAccess"])) {
-      $result = "<div class='has-stepless-access'>";
-      $result .= getIcon("rollstuhl.png");
-      $result .= "<span>hat Fahrsuhl</span>";
+  protected function getWeitereInformationen(): string {
+    $weitereInformationen = $this->_getWeitereInformationen();
+    if (count($weitereInformationen) > 0) {
+      $result = "<div class='weitere-informationen'>";
+      $result .= "<span class='detail-sub-header'>Weitere Informationen</span>";
+      foreach ($weitereInformationen as $weitereInformation) {
+        $result .= $weitereInformation;
+      }  
       $result .= "</div>";
-      return $result;
-    } else {
-      return "";
     }
+    return $result;
+  }
+
+  private function _getWeitereInformationen(): array {
+    $result = [];
+    $result []= $this->getHasWifi();
+    // TODO: hier noch was ausdenken
+    return $result;
+  }
+
+  private function _getHasElevator() {
+    $result = "";
+    foreach ($this->facilityData["facilities"] as $facility) {
+      if ((isset($facility["type"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
+        $result .= "<div class='has-elevator'>";
+        $result .= getIcon("aufzug.png");
+        $result .= "<span>" . $facility["description"] . "</span>";
+        $result .= "</div>";
+      }
+    }
+    return $result;
   }
   
   protected function getHasWifi(): string {
