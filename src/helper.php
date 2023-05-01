@@ -44,8 +44,8 @@ function dayToDeutsch($day): string {
   }
 }
 
-function getIcon($iconFilename): string {
-  return '<img class="icon" src="../assets/pics/' . $iconFilename . '">';
+function getIcon(string $iconFilename, string $title = ''): string {
+  return '<img class="icon" src="../assets/pics/' . $iconFilename . '" title="'. $title . '">';
 }
 
 function getAktuellesDatumUndStunde(): array {
