@@ -49,7 +49,7 @@ class HV_StationsDetails extends HV_HTML
   }
 
   protected function getAdress(): string {
-    $result = "<div class='adress'>";
+    $result = "<div class='detail-section'>";
     $result .= "<span class='detail-sub-header'>Adresse</span>";
     if (isset($this->stationData["mailingAddress"])) {
       $mailingAdress = $this->stationData["mailingAddress"];
@@ -65,7 +65,7 @@ class HV_StationsDetails extends HV_HTML
   }
 
   protected function getOeffnungszeiten() {
-    $result = "<div class='oeffnungszeiten'>";
+    $result = "<div class='detail-section'>";
     $result .= "<span class='detail-sub-header'>Öffnungszeiten</span>";
 
     if (isset($this->stationData["DBinformation"])) {
@@ -89,7 +89,7 @@ class HV_StationsDetails extends HV_HTML
     $result = "";
     $hasElevator = $this->_getHasElevator();
     if ($hasElevator !== "") {
-      $result = "<div class='weitere-informationen'>";
+      $result = "<div class='detail-section'>";
       $result .= "<span class='detail-sub-header'>Fahrstuhl</span>";
       $result .= $hasElevator;
       $result .= "</div>";
@@ -113,7 +113,7 @@ class HV_StationsDetails extends HV_HTML
   protected function getWeitereInformationen(): string {
     $weitereInformationen = $this->_getWeitereInformationen();
     if (count($weitereInformationen) > 0) {
-      $result = "<div class='weitere-informationen'>";
+      $result = "<div class='detail-section'>";
       $result .= "<span class='detail-sub-header'>Weitere Informationen</span>";
       foreach ($weitereInformationen as $weitereInformation) {
         $result .= $weitereInformation;

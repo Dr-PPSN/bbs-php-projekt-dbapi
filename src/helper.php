@@ -74,4 +74,16 @@ function formatFahrplanZeit(string $datumZeit): string {
   }
 }
 
+function getAnkunftAus(string $fromPath): string {
+  $array = explode("|", $fromPath);
+  $first_element = $array[0];
+  return $first_element;
+}
+
+function getAbfahrtNach(string $toPath): string {
+  $array = explode("|", $toPath);
+  $last_element = end($array);
+  return $last_element;
+}
+
 ?>

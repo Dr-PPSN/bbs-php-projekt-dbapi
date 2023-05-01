@@ -11,7 +11,7 @@ class HV_Fahrplan extends HV_HTML
   protected bool $istAktuelleZeit = false;
   protected $fahrplan = array();
   protected $stationName = "";
-  protected $fahrplanAenderungen = array();
+  // protected $fahrplanAenderungen = array();
 
   public function __construct(int $evaNumber, array | null $dateTime, $class, $id, $style)
   {
@@ -29,7 +29,7 @@ class HV_Fahrplan extends HV_HTML
   protected function init() {
     [$datum, $stunde] = $this->dateTime;
     $this->fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
-    $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
+    // $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
     $this->stationName = $this->fahrplan["@attributes"]["station"];
   }
 
@@ -43,6 +43,15 @@ class HV_Fahrplan extends HV_HTML
     } else {
       $fahrplan .= "<h1>Fahrplan</h1>";
     }
+    $fahrplan .= "
+      <div class='row'>
+        <div class='col-2 fahrplan-header' style='padding-left: 50px'>Ankunft</div>
+        <div class='col-3 fahrplan-header'><center>aus</center></div>
+        <div class='col-2 fahrplan-header'><center>Zug</center></div>
+        <div class='col-3 fahrplan-header'><center>nach</center></div>
+        <div class='col-2 fahrplan-header abfahrt' style='padding-right: 50px'>Abfahrt</div>
+      </div>
+    ";
     $fahrplan .= $this->_getFahrplan();
     $fahrplan .= "</div>";
     return $fahrplan;
@@ -82,17 +91,55 @@ class HV_Fahrplan extends HV_HTML
     
     $result = "<li class='fahrplanItem'>";
     $result .= "
-      <div class='d-flex justify-content-between'>
-        <div class='gleis'>Gleis " . $ankunftGleis . "</div>
-        <span class='zugBezeichnung'>
+      <div class='row' style='margin-top: -4px;''>
+        <div class='col-2 zugZeiten'>" . formatFahrplanZeit($ankunftZeit) . "</div>";
+    
+    if (isset($ankunftRoute)) {
+      $result .= "
+        <span class='col-3 von-nach'>" . getAnkunftAus($ankunftRoute) . "</span>";
+    } else {
+      $result .= "
+        <span class='col-3 von-nach'></span>";
+    }
+
+    $result .= "
+        <span class='col-2 zugBezeichnung'>
           <b>" . $zugBezeichnung . "</b>
-        </span>
-        <div class='gleis'>Gleis " . $abfahrtGleis . "</div>
+        </span>";
+
+    if (isset($abfahrtRoute)) {
+      $result .= "
+        <span class='col-3 von-nach'>" . getAbfahrtNach($abfahrtRoute) . "</span>";
+    } else {
+      $result .= "
+        <span class='col-3 von-nach'></span>";
+    }
+    $result .= "
+        <div class='col-2 zugZeiten abfahrt'>" . formatFahrplanZeit($abfahrtZeit) . "</div>
       </div>";
     
-    $result .= "<div class='zugZeiten d-flex justify-content-between'>";
-    $result .= "<span class='zeit'>" . formatFahrplanZeit($ankunftZeit) . "</span>";
-    $result .= "<span class='abfahrtZeit'>" . formatFahrplanZeit($abfahrtZeit) . "</span>";
+    $result .= "<div class='row gleis-row'>";
+    if (isset($ankunftRoute)) {
+      $result .= "
+        <div class='col-2'>
+          <div class='gleis'>Gleis " . $ankunftGleis . "
+          </div>
+        </div>";
+    } else {
+      $result .= "
+        <div class='col-2'></div>";
+    }
+    $result .= "<div class='col-8'></div>";
+    if (isset($abfahrtRoute)) {
+      $result .= "
+        <div class='col-2 abfahrt'>
+          <div class='gleis'>Gleis " . $abfahrtGleis . "
+          </div>
+        </div>";
+    } else {
+      $result .= "
+        <div class='col-2'></div>";
+    }
     $result .= "</div>";
 
     $result .= "</li>";

@@ -133,7 +133,7 @@ if (isset($notification)) {
           </div>
         </div>
         <div class="row mt-4">
-          <div class="col-md-12 col-sm-12 pl-5">
+          <div class="col-md-12 col-sm-12 pl-5 pr-5">
             <!-- TODO: Input für andere Zeiten -->
             <?php
             echo $fahrplan->getFahrplan();

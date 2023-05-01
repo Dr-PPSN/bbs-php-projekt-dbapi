@@ -5,30 +5,54 @@
 }
 
 .fahrplanItem {
-  border: 1px solid rgb(255, 0, 0);
+  border: 1px solid var(--DbahnRot);
   border-radius: 10px;
   margin: 5px;
   padding: 7px 15px;
   background-color: rgba(255, 255, 255, 0.8);
 }
 
+.gleis-row {
+  margin-bottom: 5px;
+}
+
 .gleis {
-  margin: 0px 10px;
-  display: flex;
+  display: inline-block;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgb(255, 0, 0);
+  border: 1px solid var(--DbahnRot);
   border-radius: 5px;
   padding: 2px 5px;
   font-weight: 500;
-  background-color: rgb(179, 0, 0);
+  background-color: var(--DbahnRot);
   margin-top: 5px;
+  color: white;
 }
 
 .zugZeiten {
   font-size: 2rem;
 }
 
+.abfahrt {
+  text-align-last: right;
+}
+
 .zugBezeichnung {
   font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fahrplan-header {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.von-nach {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  font-weight: 500;
 }

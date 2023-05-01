@@ -8,17 +8,13 @@
   display: block;
 }
 
-.adress {
+.detail-section {
   margin-right: 10px;
   margin-bottom: 10px;
 }
 
 .has-wifi {
   display: flex;
-}
-
-.oeffnungszeiten {
-  margin-bottom: 10px;
 }
 
 .oeffnungszeiten-tage {
