@@ -38,7 +38,7 @@ if (isset($_GET['stationID'])) {
 
   $details = new HV_StationsDetails($stationData, $facilityStatus, "stations-details", "", "");
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, $fahrplanAenderungen, "fahrplan", "", "");
+  $fahrplan = new HV_Fahrplan('Aktueller Fahrplan', $aktuellerFahrplan, $fahrplanAenderungen, "fahrplan", "", "");
 } else {
   routeZurIndex();
 }
@@ -62,6 +62,12 @@ if (isset($notification)) {
   <link rel="stylesheet" href="../assets/style/style.css">
   <link rel="stylesheet" href="../assets/style/stationdetails.css">
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+  <style>
+    .bg-station-pic {
+        background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
+        background-size: cover;
+    }
+  </style>
   <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 </head>
 
