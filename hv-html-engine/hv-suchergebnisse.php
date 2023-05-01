@@ -40,7 +40,7 @@ class HV_Suchergebnisse extends HV_HTML
       $name = $item["names"]["DE"]["nameLong"];
 
       $listObject = "<div class='suchergebnisItem'>";
-      if (isset($stationID)) {
+      if (isset($item["stationID"])) {
         $stationID = $item["stationID"];
         $icon = getIcon('bahnhof.png', 'Bahnhof');
         $link = "station-details.php?stationID=" . $stationID;

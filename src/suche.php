@@ -50,7 +50,7 @@ if (isset($notification)) {
   <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
     <div class="container-fluid">
       <!-- Left side -->
-      <a class="navbar-brand align-items-center" href="index.php">
+      <a class="navbar-brand align-items-center" href="../index.php">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Deutsche_Bahn_AG-Logo.svg/1024px-Deutsche_Bahn_AG-Logo.svg.png"
           height="28" alt="DB Logo" loading="lazy" />
@@ -88,34 +88,24 @@ if (isset($notification)) {
     </div>
     <div class="row pt-4">
       <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
-      <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
+      <div class="col-md-6 col-sm-12  justify-content-center DbahnBorder kastenBG">
         <form action="" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
           <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
+
+        <div class="bahnhof-suche-ergebnisse">
+          <?php
+          echo $stopPlaces->getList();
+          ?>
+        </div>
       </div>
+    
       <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>
   </div>
   <!-- /Bahnhof suche -->
-  <!-- rote linie 1 -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 d-flex justify-content-center DbahnBackground">
-        <br>
-      </div>
-    </div>
-  </div>
-  <!-- /rote linie 1 -->
-
-  <!-- Bahnhof suche Ergebnisse -->
-  <div class="bahnhof-suche-ergebnisse">
-    <?php
-    echo $stopPlaces->getList();
-    ?>
-  </div>
-  <!-- /Bahnhof suche Ergebnisse -->
 
   <!-- /Content -->
 

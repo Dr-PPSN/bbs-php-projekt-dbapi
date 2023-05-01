@@ -62,7 +62,7 @@ if (isset($notification)) {
   <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
     <div class="container-fluid">
       <!-- Left side -->
-      <a class="navbar-brand align-items-center" href="index.php">
+      <a class="navbar-brand align-items-center" href="../index.php">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Deutsche_Bahn_AG-Logo.svg/1024px-Deutsche_Bahn_AG-Logo.svg.png"
           height="28" alt="DB Logo" loading="lazy" />
@@ -147,7 +147,7 @@ if (isset($notification)) {
           <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
           <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
         </div>
-        <form action="index.php" method="post">
+        <form action="../index.php" method="post">
           <div class="modal-body">
             <div class="form-group row">
               <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>
@@ -178,7 +178,7 @@ if (isset($notification)) {
           <h5 class="modal-title" id="exampleModalCenterTitle">Registrieren</h5>
           <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
         </div>
-        <form action="index.php" method="post">
+        <form action="../index.php" method="post">
           <div class="modal-body">
             <div class="form-group row">
               <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>

@@ -91,30 +91,6 @@
         </div>
     </div>
     <!-- /Bahnhof suche -->
-    <!-- rote linie 1 -->
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-12 d-flex justify-content-center DbahnBackground">
-          <br>
-        </div>
-      </div>
-    </div>
-    <!-- /rote linie 1 -->
-    <!-- Fahrplan suche -->
-    <div class="container-fluid bg-ice1">
-        <div class="row pb-4 mb-5">
-          <div class="col-md-3 col-sm-0 d-flex align-self-end"></div>
-          <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
-            <form action="" method="GET">
-              <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
-              <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
-              <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
-            </form>
-          </div>
-          <div class="col-md-3 col-sm-0 d-flex align-self-end"></div>
-        </div>
-    </div>
-    <!-- /Fahrplan suche -->
     <!-- /Content -->
     <!-- footer -->
     <div class="row fixed-bottom DbahnBackground">

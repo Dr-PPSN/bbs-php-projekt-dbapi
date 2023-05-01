@@ -162,7 +162,7 @@ if (isset($notification)) {
           <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
           <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
         </div>
-        <form action="index.php" method="post">
+        <form action="../index.php" method="post">
           <div class="modal-body">
             <div class="form-group row">
               <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>
@@ -193,7 +193,7 @@ if (isset($notification)) {
           <h5 class="modal-title" id="exampleModalCenterTitle">Registrieren</h5>
           <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
         </div>
-        <form action="index.php" method="post">
+        <form action="../index.php" method="post">
           <div class="modal-body">
             <div class="form-group row">
               <div class="col-sm-4 d-flex justify-content-center align-items-center">Benutzer Name:</div>
