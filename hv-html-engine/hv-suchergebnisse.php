@@ -39,7 +39,6 @@ class HV_Suchergebnisse extends HV_HTML
     foreach ($this->items as $item) {
       $name = $item["names"]["DE"]["nameLong"];
 
-      $listObject = "<div class='suchergebnisItem'>";
       if (isset($item["stationID"])) {
         $stationID = $item["stationID"];
         $icon = getIcon('bahnhof.png', 'Bahnhof');
@@ -49,9 +48,10 @@ class HV_Suchergebnisse extends HV_HTML
         $icon = getIcon('bench.png', 'Haltestelle');
         $link = "haltestelle-details.php?evaNumber=" . $evaNumber;
       }
-      $listObject .= $icon;
-      $listObject .= "<a href='" . $link . "'>" . $name . "</a>";
-      $listObject .= "</div>";
+      $listObject = "<a class='searchResultLink' href='" . $link . "'>";
+      $listObject .= "<div class='suchergebnisItem mt-2'><center>";
+      $listObject .= $icon. $name;
+      $listObject .= "</center></div></a>";
 
       $items .= "<li>" . $listObject . "</li>";
     }
