@@ -37,8 +37,9 @@ class HV_Fahrplan extends HV_HTML
   {
     $fahrplan = "<div" . $this->getMainTagAttributes() . ">";
 
+    [$datum, $stunde] = $this->dateTime;
     if ($this->istAktuelleZeit) {
-      $fahrplan .= "<h1>Aktueller Fahrplan</h1>";
+      $fahrplan .= "<h1>Aktueller Fahrplan heute " . $stunde . "</h1>";
     } else {
       $fahrplan .= "<h1>Fahrplan</h1>";
     }

@@ -95,11 +95,13 @@ if (isset($notification)) {
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
 
+        <!-- Suchergebnisse -->
         <div class="bahnhof-suche-ergebnisse">
           <?php
           echo $stopPlaces->getList();
           ?>
         </div>
+        <!-- /Suchergebnisse -->
       </div>
     
       <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>

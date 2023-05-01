@@ -17,7 +17,12 @@ class HV_Suchergebnisse extends HV_HTML
 
   protected function init(): void
   {
-    $this->items = searchStopPlace($this->searchInput)["stopPlaces"];
+    $suchergebnisse = searchStopPlace($this->searchInput);
+    if ($suchergebnisse !== false) {
+      $this->items = $suchergebnisse["stopPlaces"];
+    } else {
+      $this->items = array();
+    }
   }
 
   public function getList(): string
