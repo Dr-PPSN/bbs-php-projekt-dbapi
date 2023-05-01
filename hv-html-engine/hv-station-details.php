@@ -3,22 +3,36 @@
 require_once("hv-html.php");
 require_once '../api/helper.php';
 require_once '../src/helper.php';
+require_once '../api/api-service.php';
 
 class HV_StationsDetails extends HV_HTML
 {
-  protected $staionData = array();
+  protected int | null $stationID = null;
+  protected int $evaNumber = 0;
+  protected $stationData = array();
   protected $facilityData = array();
 
-  public function __construct($staionData, $facilityStatus, $class, $id, $style)
+  public function __construct(int $stationID, $class, $id, $style)
   {
-    $this->staionData = $staionData;
-    $this->facilityData = $facilityStatus;
+    $this->stationID = $stationID;
+    $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
+
+  protected function init() {
+    $this->stationData = getStationData($this->stationID)["result"][0];
+    $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);
+    $this->facilityData = getFacilityStatus($this->stationID);
+  }
+
+  public function getEvaNumber(): int {
+    return $this->evaNumber;
+  }
+
   public function getDetails()
   {
     $details = "<div" . $this->getMainTagAttributes() . ">";
-    $details .= "<h1>" . $this->staionData["name"] . "</h1>";
+    $details .= "<h1>" . $this->stationData["name"] . "</h1>";
     $details .= $this->_getDetails();
     $details .= "</div>";
     return $details;
@@ -37,8 +51,8 @@ class HV_StationsDetails extends HV_HTML
   protected function getAdress(): string {
     $result = "<div class='adress'>";
     $result .= "<span class='detail-sub-header'>Adresse</span>";
-    if (isset($this->staionData["mailingAddress"])) {
-      $mailingAdress = $this->staionData["mailingAddress"];
+    if (isset($this->stationData["mailingAddress"])) {
+      $mailingAdress = $this->stationData["mailingAddress"];
       $result .= "<span>" . $mailingAdress["street"] . "</span>";
       $result .= "<br>";
       $result .= "<span>" . $mailingAdress["city"] . " " . $mailingAdress["zipcode"] . "</span>";
@@ -54,8 +68,8 @@ class HV_StationsDetails extends HV_HTML
     $result = "<div class='oeffnungszeiten'>";
     $result .= "<span class='detail-sub-header'>Öffnungszeiten</span>";
 
-    if (isset($this->staionData["DBinformation"])) {
-      $oeffnungszeiten = $this->staionData["DBinformation"]["availability"];
+    if (isset($this->stationData["DBinformation"])) {
+      $oeffnungszeiten = $this->stationData["DBinformation"]["availability"];
       $result .= "<table>";
       foreach ($oeffnungszeiten as $day => $times) {
         $tag = dayToDeutsch($day);
@@ -117,7 +131,7 @@ class HV_StationsDetails extends HV_HTML
   }
   
   protected function getHasWifi(): string {
-    if (isset($this->staionData["hasWiFi"])) {
+    if (isset($this->stationData["hasWiFi"])) {
       $result = "<div class='has-wifi'>";
       $result .= getIcon("w-lan.png");
       $result .= "<span>hat WLAN</span>";
@@ -129,7 +143,7 @@ class HV_StationsDetails extends HV_HTML
   }
 
   public function getCoordinates(): array {
-    $evaNumbers = $this->staionData["evaNumbers"];
+    $evaNumbers = $this->stationData["evaNumbers"];
     foreach ($evaNumbers as $evaNumber) {
       if ($evaNumber["isMain"] == true) {
         $longitude = $evaNumber["geographicCoordinates"]["coordinates"][0];

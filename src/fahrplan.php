@@ -2,8 +2,6 @@
 session_start();
 require_once "../hv-html-engine/hv-html-engine.php";
 require_once "../hv-html-engine/hv-station-details.php";
-require_once "../hv-html-engine/hv-fahrplan.php";
-require_once "../hv-html-engine/hv-map.php";
 require_once '../db/DB.php';
 require_once '../db/sql.php';
 require_once '../db/user.php';
@@ -11,25 +9,30 @@ require_once '../api/api-service.php';
 require_once './helper.php';
 require_once '../api/helper.php';
 
+//variables
+$hv_html_engine = new HV_HTML_Engine();
+
 //functions calls
 if (phpVersionZuAlt()) {
   exit();
 }
 
 //if´s
-if (isset($_GET['stationID'])) {
-  $stationID = $_GET['stationID'];
-  $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
-
-  $details = new HV_StationsDetails($stationID, "stations-details", "", "");
-  $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), null, "fahrplan", "", "");
+if (isset($_GET['evaNr'])) {
+  if (isset($_GET['date']) && isset($_GET['hour'])) {
+    $date = $_GET['date'];
+    $hour = $_GET['hour'];
+  } else {
+    [$date, $hour] = getAktuellesDatumUndStunde();
+    echo $date . ' ' . $hour;
+  }
+  $fahrplan = getFahrplan($_GET['evaNr'], $date, $hour);
 } else {
   routeZurIndex();
 }
 
 if (isset($notification)) {
-  echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+  echo ("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: " . $notification . "</div>");
 }
 
 ?>
@@ -46,14 +49,12 @@ if (isset($notification)) {
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link rel="stylesheet" href="../assets/style/style.css">
   <link rel="stylesheet" href="../assets/style/stationdetails.css">
-  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
   <style>
     .bg-station-pic {
-        background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
-        background-size: cover;
+      background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
+      background-size: cover;
     }
   </style>
-  <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 </head>
 
 <body class="bg-white">
@@ -61,7 +62,7 @@ if (isset($notification)) {
   <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
     <div class="container-fluid">
       <!-- Left side -->
-      <a class="navbar-brand align-items-center" href="../index.php">
+      <a class="navbar-brand align-items-center" href="index.php">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Deutsche_Bahn_AG-Logo.svg/1024px-Deutsche_Bahn_AG-Logo.svg.png"
           height="28" alt="DB Logo" loading="lazy" />
@@ -98,26 +99,18 @@ if (isset($notification)) {
       </div>
     </div>
     <div class="row pt-4">
-      <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end">
+      <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end">
       </div>
       
       <!-- TODO: hier Abfahrtszeiten eintragen -->
 
-      <div class="col-md-8 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
-        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
-          
-          <?php
-          echo $map->getMap();
-          echo $fahrplan->getFahrplan();
-          ?>
-        </div>
-        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
-          <?php
-          echo $details->getDetails();
-          ?>
-        </div>
+      <div class="col-md-6 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
+        <?php
+        $details = new HV_StationsDetails($stationData, "stations-details", "", "");
+        echo $details->getDetails();
+        ?>
       </div>
-      <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
+      <div class="col-md-3 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>
   </div>
   <!-- /station details -->
@@ -215,3 +208,54 @@ if (isset($notification)) {
 </body>
 
 </html>
+<?php
+// Engine Wiki
+//
+// create a new HV_HTML_Engine
+// $hv_html_engine = new HV_HTML_Engine();
+//
+// create a new table
+// $hv_html_engine->getTable($array2D, $class, $id, $style, $orderBy, $orderDirection, $thClass, $tdClass);
+//
+// create a new a
+// $hv_html_engine->getA($text, $class, $id, $style, $href);
+//
+// create a new p
+// $hv_html_engine->getP($text, $class, $id, $style);
+//
+// create a new button
+// $hv_html_engine->getButton($text, $class, $id, $style);
+//
+// create a new img
+// $hv_html_engine->getImg($class, $id, $style, $src);
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Register / Login Wiki
+//
+// Register form:
+// <form action="index.php" method="post">
+//     <label for="userName">Benutzername</label>
+//     <input type="text" name="userName" id="userName"><br>
+//     <label for="password">Passwort</label>
+//     <input type="password" name="password" id="password"><br>
+//     <input type="submit" name="btnCreateUser" value="Benutzer erstellen">
+//     <br>
+//     <input type="submit" name="btnReset" value="DB zurücksetzen">
+// </form>
+
+// Login form:
+// <form action="index.php" method="post">
+//     <label for="userName">Benutzername</label>
+//     <input type="text" name="userName" id="userName"><br>
+//     <label for="password">Passwort</label>
+//     <input type="password" name="password" id="password"><br>
+//     <input type="submit" name="btnLogin" value="Einloggen">
+// </form>
+//
+// Wenn der User eingeloggt ist, wird der Name in der Session gespeichert -> $_SESSION['userName']
+
+// Um die Datenbank zurück zu setzten, muss einfach nur das GET Parameter "resetDB" gesetzt werden
+// Beispiel: http://localhost/index.php?resetDB
+// Beispiel: http://localhost:3000/index.php?resetDB <-- für mich (Kai)
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+?>
