@@ -57,7 +57,6 @@ class HV_Fahrplan extends HV_HTML
   }
 
   protected function getZugDaten($zug): string {
-    // $zugID = $zug["@attributes"]["id"];
     $zugBezeichnung = $zug["tl"]["@attributes"]["c"] . " " . $zug["tl"]["@attributes"]["n"];
     
     if (isset($zug["ar"])) {
@@ -80,7 +79,7 @@ class HV_Fahrplan extends HV_HTML
       $abfahrtZeit = "";
     }
     
-    $result = "<li class='zug'>";
+    $result = "<li class='fahrplanItem'>";
     $result .= "<span class='zugBezeichnung'>" . $zugBezeichnung . "</span>";
     $result .= "<div class='zugZeiten'>";
     $result .= "<span class='ankunftZeit'>" . formatFahrplanZeit($ankunftZeit) . "</span>";

@@ -53,6 +53,7 @@ if (isset($notification)) {
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link rel="stylesheet" href="../assets/style/style.css">
   <link rel="stylesheet" href="../assets/style/stationdetails.css">
+  <link rel="stylesheet" href="../assets/style/fahrplan.css">
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
   <style>
     .bg-station-pic {

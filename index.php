@@ -109,7 +109,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
           </div>
           <form action="index.php" method="post">
             <div class="modal-body">
