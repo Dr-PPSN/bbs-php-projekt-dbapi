@@ -58,6 +58,4 @@ class HV_Suchergebnisse extends HV_HTML
     return $items;
   }
 }
-
-
 ?>
