@@ -105,10 +105,8 @@ if (isset($notification)) {
 
       <div class="col-md-8 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
-          
           <?php
           echo $map->getMap();
-          echo $fahrplan->getFahrplan();
           ?>
         </div>
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
