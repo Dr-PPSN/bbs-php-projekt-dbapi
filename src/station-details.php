@@ -16,9 +16,6 @@ function getAktuellenFahrplan($stationData): array|string {
   return getFahrplan($evaNumber, $datum, $stunde);
 }
 
-//variables
-$hv_html_engine = new HV_HTML_Engine();
-
 //functions calls
 if (phpVersionZuAlt()) {
   exit();
@@ -41,7 +38,7 @@ if (isset($_GET['stationID'])) {
 }
 
 if (isset($notification)) {
-  echo ("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: " . $notification . "</div>");
+  echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
 }
 
 ?>
@@ -225,54 +222,3 @@ if (isset($notification)) {
 </body>
 
 </html>
-<?php
-// Engine Wiki
-//
-// create a new HV_HTML_Engine
-// $hv_html_engine = new HV_HTML_Engine();
-//
-// create a new table
-// $hv_html_engine->getTable($array2D, $class, $id, $style, $orderBy, $orderDirection, $thClass, $tdClass);
-//
-// create a new a
-// $hv_html_engine->getA($text, $class, $id, $style, $href);
-//
-// create a new p
-// $hv_html_engine->getP($text, $class, $id, $style);
-//
-// create a new button
-// $hv_html_engine->getButton($text, $class, $id, $style);
-//
-// create a new img
-// $hv_html_engine->getImg($class, $id, $style, $src);
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-// Register / Login Wiki
-//
-// Register form:
-// <form action="index.php" method="post">
-//     <label for="userName">Benutzername</label>
-//     <input type="text" name="userName" id="userName"><br>
-//     <label for="password">Passwort</label>
-//     <input type="password" name="password" id="password"><br>
-//     <input type="submit" name="btnCreateUser" value="Benutzer erstellen">
-//     <br>
-//     <input type="submit" name="btnReset" value="DB zurücksetzen">
-// </form>
-
-// Login form:
-// <form action="index.php" method="post">
-//     <label for="userName">Benutzername</label>
-//     <input type="text" name="userName" id="userName"><br>
-//     <label for="password">Passwort</label>
-//     <input type="password" name="password" id="password"><br>
-//     <input type="submit" name="btnLogin" value="Einloggen">
-// </form>
-//
-// Wenn der User eingeloggt ist, wird der Name in der Session gespeichert -> $_SESSION['userName']
-
-// Um die Datenbank zurück zu setzten, muss einfach nur das GET Parameter "resetDB" gesetzt werden
-// Beispiel: http://localhost/index.php?resetDB
-// Beispiel: http://localhost:3000/index.php?resetDB <-- für mich (Kai)
-//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-?>

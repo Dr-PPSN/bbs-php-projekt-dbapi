@@ -24,7 +24,7 @@ if (isset($_GET['searchStation'])) {
 }
 
 if (isset($notification)) {
-  echo ("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: " . $notification . "</div>");
+  echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
 }
 
 
