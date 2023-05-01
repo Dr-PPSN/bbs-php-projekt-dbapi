@@ -29,7 +29,7 @@ class HV_Suchergebnisse extends HV_HTML
   {
     $items = $this->getItems();
     if ($items === "") {
-      return "<div class='keineErgebnisse'>Keine Ergebnisse gefunden!</div>";
+      return "<div><center>Keine Ergebnisse gefunden!</center></div>";
     } else {
       $list = "<ul" . $this->getMainTagAttributes() . ">";
       $list .= $items;
