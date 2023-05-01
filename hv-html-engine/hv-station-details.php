@@ -83,6 +83,19 @@ class HV_StationsDetails extends HV_HTML
     return $result;
   }
 
+  private function _getHasElevator() {
+    $result = "";
+    foreach ($this->facilityData["facilities"] as $facility) {
+      if ((isset($facility["type"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
+        $result .= "<div class='has-elevator'>";
+        $result .= getIcon("aufzug.png");
+        $result .= "<span>" . $facility["description"] . "</span>";
+        $result .= "</div>";
+      }
+    }
+    return $result;
+  }
+
   protected function getWeitereInformationen(): string {
     $weitereInformationen = $this->_getWeitereInformationen();
     if (count($weitereInformationen) > 0) {
@@ -102,19 +115,6 @@ class HV_StationsDetails extends HV_HTML
     // TODO: hier noch was ausdenken
     return $result;
   }
-
-  private function _getHasElevator() {
-    $result = "";
-    foreach ($this->facilityData["facilities"] as $facility) {
-      if ((isset($facility["type"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
-        $result .= "<div class='has-elevator'>";
-        $result .= getIcon("aufzug.png");
-        $result .= "<span>" . $facility["description"] . "</span>";
-        $result .= "</div>";
-      }
-    }
-    return $result;
-  }
   
   protected function getHasWifi(): string {
     if (isset($this->staionData["hasWiFi"])) {
@@ -132,8 +132,10 @@ class HV_StationsDetails extends HV_HTML
     $evaNumbers = $this->staionData["evaNumbers"];
     foreach ($evaNumbers as $evaNumber) {
       if ($evaNumber["isMain"] == true) {
-        $coordinate = $evaNumber["geographicCoordinates"]["coordinates"];
-        return $coordinate;
+        $longitude = $evaNumber["geographicCoordinates"]["coordinates"][0];
+        $latitude = $evaNumber["geographicCoordinates"]["coordinates"][1];
+        $coordinates = array("latitude" => $latitude, "longitude" => $longitude);
+        return $coordinates;
       }
     }
     return null;
