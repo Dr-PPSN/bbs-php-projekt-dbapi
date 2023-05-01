@@ -15,7 +15,7 @@ class HV_Map extends HV_HTML
   public function getMap()
   {
     if (count($this->coordinates) > 0) {
-      return '<div' . $this->getMainTagAttributes() . '></div>
+      return '<div class="vh-20"' . $this->getMainTagAttributes() . '></div>
       <script>
         var map = new ol.Map({
           target: "' . $this->id . '",

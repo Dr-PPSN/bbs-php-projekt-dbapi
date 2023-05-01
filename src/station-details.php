@@ -27,9 +27,9 @@ if (isset($_GET['stationID'])) {
 
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
 
-  $details = new HV_StationsDetails($stationID, "stations-details", "", "");
+  $details = new HV_StationsDetails($stationID, "stations-details vw-100", "", "");
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan", "", "");
+  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan mt-4", "", "");
   $fahrplan->getFahrplan();
 } else {
   routeZurIndex();
@@ -118,28 +118,28 @@ if (isset($notification)) {
         </form>
 
         <div class="row mb-5">   
-          <div class="col-md-8 col-sm-8 d-flex justify-content-center">
-            
-            <?php
-            echo $map->getMap();
-            ?>
-            <br>
-            
+          <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
+            <div class="w-100">
+              <?php
+              echo $map->getMap();
+              ?>
+              
+              <?php
+              echo $fahrplan->getFahrplan();
+              ?>
+            </div>
           </div>
-          <div class="col-md-4 col-sm-4 mt-5 d-flex justify-content-center">
+          <div class="col-md-3 col-sm-4 mt-3 d-flex justify-content-center">
             <?php
             echo $details->getDetails();
             ?>
           </div>
         </div>
-        <div class="row mt-4">
+        <!-- <div class="row">
           <div class="col-md-12 col-sm-12 pl-5 pr-5">
-            <!-- TODO: Input für andere Zeiten -->
-            <?php
-            echo $fahrplan->getFahrplan();
-            ?>
+            TODO: Input für andere Zeiten
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>
