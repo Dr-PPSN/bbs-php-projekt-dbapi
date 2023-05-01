@@ -111,9 +111,9 @@ if (isset($notification)) {
     <div class="row pt-4">
       <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
       <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG">
-        <form action="" method="GET">
+        <form action="suche.php" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
-          <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
+          <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
