@@ -127,6 +127,7 @@ class HV_StationsDetails extends HV_HTML
     $result = [];
     $result []= $this->getHasWifi();
     // TODO: hier noch was ausdenken
+    // Schließfächer
     return $result;
   }
   
