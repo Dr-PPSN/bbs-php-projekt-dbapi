@@ -29,8 +29,8 @@ class HV_Fahrplan extends HV_HTML
   protected function init() {
     [$datum, $stunde] = $this->dateTime;
     $this->fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
-    $this->stationName = $this->fahrplan["@attributes"]["station"];
     $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
+    $this->stationName = $this->fahrplan["@attributes"]["station"];
   }
 
   public function getFahrplan()
@@ -48,31 +48,47 @@ class HV_Fahrplan extends HV_HTML
   }
   
   protected function _getFahrplan(): string {
-    $result = "<div" . $this->getMainTagAttributes() . ">";
+    $result = "<ul class='fahrplan'>";
     foreach ($this->fahrplan["s"] as $zug) {
       $result .= $this->getZugDaten($zug);
     }
-    $result .= "</div>";
+    $result .= "</ul>";
     return $result;
   }
 
   protected function getZugDaten($zug): string {
+    // $zugID = $zug["@attributes"]["id"];
     $zugBezeichnung = $zug["tl"]["@attributes"]["c"] . " " . $zug["tl"]["@attributes"]["n"];
     
     if (isset($zug["ar"])) {
       $ankunft = $zug["ar"]["@attributes"];
+      $ankunftZeit = $ankunft["pt"];
+      $ankunftGleis = $ankunft["pp"];
+      $ankunftRoute = $ankunft["ppth"];
     } else {
       $ankunft = null;
+      $ankunftZeit = "";
     }
 
     if (isset($zug["dp"])) {
       $abfahrt = $zug["dp"]["@attributes"];
+      $abfahrtZeit = $abfahrt["pt"];
+      $abfahrtGleis = $abfahrt["pp"];
+      $abfahrtRoute = $abfahrt["ppth"];
     } else {
       $abfahrt = null;
+      $abfahrtZeit = "";
     }
-    // printPretty($zug);
-
-    return "";
+    
+    $result = "<li class='zug'>";
+    $result .= "<span class='zugBezeichnung'>" . $zugBezeichnung . "</span>";
+    $result .= "<div class='zugZeiten'>";
+    $result .= "<span class='ankunftZeit'>" . formatFahrplanZeit($ankunftZeit) . "</span>";
+    $result .= "<span> - </span>";
+    $result .= "<span class='abfahrtZeit'>" . formatFahrplanZeit($abfahrtZeit) . "</span>";
+    $result .= "</div>";
+    $result .= "</li>";
+    return $result;
   }
 
 }

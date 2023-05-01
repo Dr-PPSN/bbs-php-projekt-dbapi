@@ -24,6 +24,7 @@ if (isset($_GET['stationID'])) {
   $details = new HV_StationsDetails($stationID, "stations-details", "", "");
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
   $fahrplan = new HV_Fahrplan($details->getEvaNumber(), null, "fahrplan", "", "");
+  $fahrplan->getFahrplan();
 } else {
   routeZurIndex();
 }
@@ -107,6 +108,7 @@ if (isset($notification)) {
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
           <?php
           echo $map->getMap();
+          echo $fahrplan->getFahrplan();
           ?>
         </div>
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
