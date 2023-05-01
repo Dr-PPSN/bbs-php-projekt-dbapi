@@ -53,3 +53,13 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.bg-station-pic {
+    background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.map {
+    height: 400px;
+    width: 100%;
+}

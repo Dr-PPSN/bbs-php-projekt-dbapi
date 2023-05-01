@@ -50,4 +50,13 @@ function getFahrplan(int $evaNr, string $date, string $hour): array|string {
   }
 }
 
+function getFahrplanAenderungen(int $evaNr) {
+  // $data = getData("https://api.deutschebahn.com/timetables/v1/fchg/" . $evaNr, 'xml');
+  // if (false === $data || $data === '') {
+  //   return false;
+  // } else {
+  //   return $data;
+  // }
+}
+
 ?>

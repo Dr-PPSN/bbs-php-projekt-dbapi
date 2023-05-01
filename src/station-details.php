@@ -3,6 +3,7 @@ session_start();
 require_once "../hv-html-engine/hv-html-engine.php";
 require_once "../hv-html-engine/hv-station-details.php";
 require_once "../hv-html-engine/hv-fahrplan.php";
+require_once "../hv-html-engine/hv-map.php";
 require_once '../db/DB.php';
 require_once '../db/sql.php';
 require_once '../db/user.php';
@@ -14,6 +15,11 @@ function getAktuellenFahrplan($stationData): array|string {
   $evaNumber = getMainEvaNumber($stationData["evaNumbers"]);
   [$datum, $stunde] = getAktuellesDatumUndStunde();
   return getFahrplan($evaNumber, $datum, $stunde);
+}
+
+function _getFahrplanAenderungen($stationData): array|string {
+  $evaNumber = getMainEvaNumber($stationData["evaNumbers"]);
+  return getFahrplanAenderungen($evaNumber);
 }
 
 //functions calls
@@ -28,11 +34,11 @@ if (isset($_GET['stationID'])) {
   $facilityStatus = getFacilityStatus($_GET['stationID']);
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($_GET['stationID']));
   $aktuellerFahrplan = getAktuellenFahrplan($stationData);
+  $fahrplanAenderungen = _getFahrplanAenderungen($stationData);
 
-  $fahrplanAenderungen = null;
-  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, $fahrplanAenderungen, "fahrplan", "", "");
   $details = new HV_StationsDetails($stationData, $facilityStatus, "stations-details", "", "");
-  $details->getDetails();
+  $map = new HV_Map($details->getCoordinates(), "map", "map", "");
+  $fahrplan = new HV_Fahrplan($aktuellerFahrplan, $fahrplanAenderungen, "fahrplan", "", "");
 } else {
   routeZurIndex();
 }
@@ -55,12 +61,8 @@ if (isset($notification)) {
     integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
   <link rel="stylesheet" href="../assets/style/style.css">
   <link rel="stylesheet" href="../assets/style/stationdetails.css">
-  <style>
-    .bg-station-pic {
-      background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
-      background-size: cover;
-    }
-  </style>
+  <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
+  <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 </head>
 
 <body class="bg-white">
@@ -112,14 +114,14 @@ if (isset($notification)) {
 
       <div class="col-md-8 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
+          
           <?php
+          echo $map->getMap();
           echo $fahrplan->getFahrplan();
-          // echo $details->getDetails();
           ?>
         </div>
         <div class="col-md-8 col-sm-12 d-flex justify-content-center">
           <?php
-          // echo $fahrplan->getFahrplan();
           echo $details->getDetails();
           ?>
         </div>

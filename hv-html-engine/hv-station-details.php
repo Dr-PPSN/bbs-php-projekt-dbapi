@@ -128,7 +128,7 @@ class HV_StationsDetails extends HV_HTML
     }
   }
 
-  public function getCoordinates(): array | null {
+  public function getCoordinates(): array {
     $evaNumbers = $this->staionData["evaNumbers"];
     foreach ($evaNumbers as $evaNumber) {
       if ($evaNumber["isMain"] == true) {
@@ -138,7 +138,7 @@ class HV_StationsDetails extends HV_HTML
         return $coordinates;
       }
     }
-    return null;
+    return array();
   }
 }
 
