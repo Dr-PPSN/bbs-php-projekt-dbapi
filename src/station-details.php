@@ -116,8 +116,8 @@ if (isset($notification)) {
           <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
-
-        <div class="row mb-5">   
+        <hr>
+        <div class="row mb-5 my-5">   
           <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
             <div class="w-100">
               <?php
