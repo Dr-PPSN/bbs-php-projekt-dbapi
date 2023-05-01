@@ -53,6 +53,9 @@ if (isset($notification)) {
         background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
         background-size: cover;
     }
+    .ol-unselectable {
+      border: 1px solid black;
+    }
   </style>
   <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 </head>
@@ -99,22 +102,32 @@ if (isset($notification)) {
       </div>
     </div>
     <div class="row pt-4">
-      <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end">
-      </div>
+      <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
       
       <!-- TODO: hier Abfahrtszeiten eintragen -->
 
-      <div class="col-md-8 col-sm-12 d-flex justify-content-center DbahnBorder kastenBG">
-        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
-          <?php
-          echo $map->getMap();
-          echo $fahrplan->getFahrplan();
-          ?>
+      <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG">
+        <div class="row mb-5">   
+          <div class="col-md-8 col-sm-8 d-flex justify-content-center">
+            
+            <?php
+            echo $map->getMap();
+            ?>
+          </div>
+          <div class="col-md-4 col-sm-4 mt-5 d-flex justify-content-center">
+            <?php
+            echo $details->getDetails();
+            ?>
+          </div>
         </div>
-        <div class="col-md-8 col-sm-12 d-flex justify-content-center">
-          <?php
-          echo $details->getDetails();
-          ?>
+        <hr>
+        <div class="row mt-4">
+          <div class="col-md-12 col-sm-12 d-flex justify-content-center">
+            
+            <?php
+            echo $fahrplan->getFahrplan();
+            ?>
+          </div>
         </div>
       </div>
       <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
