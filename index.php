@@ -91,6 +91,15 @@
         </div>
     </div>
     <!-- /Bahnhof suche -->
+    <div class="container-fluid position-relative DbahnBackground" id="container_p_1">
+      <div class="row p-4 ">
+        <div class="col-6">
+          <video id="hero-intro-video" class="inline-media hero-intro-video-video" width="100%" height="100%" aria-hidden="true" preload="none" data-load-timeout="3000" muted="" playsinline="" autoplay="" loop="" src="https://hevor.de/vid/db1.mp4"></video>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-center">
+          <h1 class="text-white" id="ueberschrift2">Willkommen bei der Deutschen-Bahn</h1>
+      </div>
+    </div>
     <!-- /Content -->
     <!-- footer -->
     <div class="row fixed-bottom DbahnBackground">
@@ -163,6 +172,7 @@
     <!-- /Modal Registrieren -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    <script src="assets/script/script.js"></script>
 </body>
 </html>
 <?php
