@@ -5,13 +5,21 @@ require_once '../api/helper.php';
 
 class HV_Suchergebnisse extends HV_HTML
 {
-  protected $items = array();
+  protected string $searchInput = "";
+  protected array $items = array();
 
-  public function __construct($items, $class, $id, $style)
+  public function __construct($searchInput, $class, $id, $style)
   {
-    $this->items = $items["stopPlaces"];
+    $this->searchInput = $searchInput;
+    $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
+
+  protected function init()
+  {
+    $this->items = searchStopPlace($this->searchInput)["stopPlaces"];
+  }
+
   public function getList()
   {
     $list = "<ul" . $this->getMainTagAttributes() . ">";

@@ -18,7 +18,8 @@ if (phpVersionZuAlt()) {
 
 //if´s
 if (isset($_GET['searchStation'])) {
-  $suchergebnisse = searchStopPlace($_GET['searchStation']);
+  $searchInput = $_GET['searchStation'];
+  $stopPlaces = new HV_Suchergebnisse($searchInput, "suchergebnisse", "", "");
 } else {
   routeZurIndex();
 }
@@ -112,8 +113,7 @@ if (isset($notification)) {
   <!-- Bahnhof suche Ergebnisse -->
   <div class="bahnhof-suche-ergebnisse">
     <?php
-    $suchErgebnisse_HTML = new HV_Suchergebnisse($suchergebnisse, "suchergebnisse", "", "");
-    echo $suchErgebnisse_HTML->getList();
+    echo $stopPlaces->getList();
     ?>
   </div>
   <!-- /Bahnhof suche Ergebnisse -->
