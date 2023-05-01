@@ -18,15 +18,19 @@ class HV_Suchergebnisse extends HV_HTML
   protected function init(): void
   {
     $this->items = searchStopPlace($this->searchInput)["stopPlaces"];
-    printPretty($this->items);
   }
 
   public function getList(): string
   {
-    $list = "<ul" . $this->getMainTagAttributes() . ">";
-    $list .= $this->getItems();
-    $list .= "</ul>";
-    return $list;
+    $items = $this->getItems();
+    if ($items === "") {
+      return "<div class='keineErgebnisse'>Keine Ergebnisse gefunden!</div>";
+    } else {
+      $list = "<ul" . $this->getMainTagAttributes() . ">";
+      $list .= $items;
+      $list .= "</ul>";
+      return $list;
+    }
   }
 
   private function getItems(): string
@@ -34,21 +38,21 @@ class HV_Suchergebnisse extends HV_HTML
     $items = "";
     foreach ($this->items as $item) {
       $name = $item["names"]["DE"]["nameLong"];
-      $evaNumber = $item["evaNumber"];
-      if (isset($item["stationID"])) {
-        $stationID = $item["stationID"];
-      }
+
       $listObject = "<div class='suchergebnisItem'>";
       if (isset($stationID)) {
+        $stationID = $item["stationID"];
         $icon = getIcon('bahnhof.png', 'Bahnhof');
         $link = "station-details.php?stationID=" . $stationID;
       } else {
+        $evaNumber = $item["evaNumber"];
         $icon = getIcon('bench.png', 'Haltestelle');
         $link = "haltestelle-details.php?evaNumber=" . $evaNumber;
       }
       $listObject .= $icon;
       $listObject .= "<a href='" . $link . "'>" . $name . "</a>";
       $listObject .= "</div>";
+
       $items .= "<li>" . $listObject . "</li>";
     }
     return $items;
