@@ -19,11 +19,17 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['stationID'])) {
   $stationID = $_GET['stationID'];
+  if (isset($_GET['zeit'])) {
+    $zeit = $_GET['zeit'];
+  } else {
+    $zeit = null;
+  }
+
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
 
   $details = new HV_StationsDetails($stationID, "stations-details", "", "");
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), null, "fahrplan", "", "");
+  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan", "", "");
   $fahrplan->getFahrplan();
 } else {
   routeZurIndex();
@@ -104,7 +110,6 @@ if (isset($notification)) {
     <div class="row pt-4">
       <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
       
-      <!-- TODO: hier Abfahrtszeiten eintragen -->
 
       <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG">
         <div class="row mb-5">   
@@ -123,7 +128,7 @@ if (isset($notification)) {
         <hr>
         <div class="row mt-4">
           <div class="col-md-12 col-sm-12 d-flex justify-content-center">
-            
+            <!-- TODO: Input für andere Zeiten -->
             <?php
             echo $fahrplan->getFahrplan();
             ?>
@@ -134,16 +139,6 @@ if (isset($notification)) {
     </div>
   </div>
   <!-- /station details -->
-
-  <!-- rote linie 1 -->
-  <!-- <div class="container-fluid">
-    <div class="row">
-      <div class="col-12 d-flex justify-content-center DbahnBackground">
-        <br>
-      </div>
-    </div>
-  </div> -->
-  <!-- /rote linie 1 -->
 
   <!-- /Content -->
 
