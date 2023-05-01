@@ -67,7 +67,7 @@ function getMainEvaNumber($evaNumbers) {
 function formatFahrplanZeit(string $datumZeit): string {
   if ($datumZeit !== "") {
     $date = DateTime::createFromFormat('ymdHi', $datumZeit);
-    $formatiertesDatumZeit = $date->format('d.m.Y H:i');
+    $formatiertesDatumZeit = $date->format('H:i');
     return $formatiertesDatumZeit;
   } else {
     return "";

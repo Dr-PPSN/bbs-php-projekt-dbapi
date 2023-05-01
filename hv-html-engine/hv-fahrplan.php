@@ -81,12 +81,20 @@ class HV_Fahrplan extends HV_HTML
     }
     
     $result = "<li class='fahrplanItem'>";
-    $result .= "<span class='zugBezeichnung'>" . $zugBezeichnung . "</span>";
-    $result .= "<div class='zugZeiten'>";
-    $result .= "<span class='ankunftZeit'>" . formatFahrplanZeit($ankunftZeit) . "</span>";
-    $result .= "<span> - </span>";
+    $result .= "
+      <div class='d-flex justify-content-between'>
+        <div class='gleis'>Gleis " . $ankunftGleis . "</div>
+        <span class='zugBezeichnung'>
+          <b>" . $zugBezeichnung . "</b>
+        </span>
+        <div class='gleis'>Gleis " . $abfahrtGleis . "</div>
+      </div>";
+    
+    $result .= "<div class='zugZeiten d-flex justify-content-between'>";
+    $result .= "<span class='zeit'>" . formatFahrplanZeit($ankunftZeit) . "</span>";
     $result .= "<span class='abfahrtZeit'>" . formatFahrplanZeit($abfahrtZeit) . "</span>";
     $result .= "</div>";
+
     $result .= "</li>";
     return $result;
   }
