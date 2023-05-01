@@ -95,8 +95,7 @@ if (isset($notification)) {
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
-        <h2 class="my-5 DbahnText" id="an2">Ergebnisse:</h2>
-        <div class="bahnhof-suche-ergebnisse">
+        <div class="bahnhof-suche-ergebnisse my-5 px-5">
           <?php
             echo $stopPlaces->getList();
           ?>

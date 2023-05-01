@@ -49,7 +49,7 @@ class HV_Suchergebnisse extends HV_HTML
         $link = "haltestelle-details.php?evaNumber=" . $evaNumber;
       }
       $listObject = "<a class='searchResultLink' href='" . $link . "'>";
-      $listObject .= "<div class='suchergebnisItem mt-2'><center>";
+      $listObject .= "<div class='suchergebnisItem mt-2 p-3'><center>";
       $listObject .= $icon. $name;
       $listObject .= "</center></div></a>";
 
