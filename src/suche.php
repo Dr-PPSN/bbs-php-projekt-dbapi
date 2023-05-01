@@ -92,7 +92,6 @@ if (isset($notification)) {
         <form action="" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
           <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
-          <input type="time" placeholder="Zeit" name="time" id="time" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
       </div>
