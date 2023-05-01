@@ -19,7 +19,7 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['searchStation'])) {
   $searchInput = $_GET['searchStation'];
-  $stopPlaces = new HV_Suchergebnisse($searchInput, "suchergebnisse", "", "");
+  $stopPlaces = new HV_Suchergebnisse($searchInput, "suchergebnisse p-0", "", "");
 } else {
   routeZurIndex();
 }
@@ -89,16 +89,15 @@ if (isset($notification)) {
     <div class="row pt-4">
       <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
       <div class="col-md-6 col-sm-12  justify-content-center DbahnBorder kastenBG">
-        <form action="" method="GET">
+        <form action="suche.php" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
-          <input type="text" placeholder="Bahnhof" name="station" id="station" class="form-control mb-4">
+          <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
-
-        <!-- Suchergebnisse -->
-        <div class="bahnhof-suche-ergebnisse">
+        <hr>
+        <div class="bahnhof-suche-ergebnisse my-5 px-5">
           <?php
-          echo $stopPlaces->getList();
+            echo $stopPlaces->getList();
           ?>
         </div>
         <!-- /Suchergebnisse -->

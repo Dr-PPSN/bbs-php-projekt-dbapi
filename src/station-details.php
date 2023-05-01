@@ -123,6 +123,8 @@ if (isset($notification)) {
             <?php
             echo $map->getMap();
             ?>
+            <br>
+            
           </div>
           <div class="col-md-4 col-sm-4 mt-5 d-flex justify-content-center">
             <?php
@@ -130,9 +132,8 @@ if (isset($notification)) {
             ?>
           </div>
         </div>
-        <hr>
         <div class="row mt-4">
-          <div class="col-md-12 col-sm-12 d-flex justify-content-center">
+          <div class="col-md-12 col-sm-12 pl-5">
             <!-- TODO: Input für andere Zeiten -->
             <?php
             echo $fahrplan->getFahrplan();
