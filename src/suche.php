@@ -88,7 +88,7 @@ if (isset($notification)) {
     </div>
     <div class="row pt-4">
       <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
-      <div class="col-md-6 col-sm-12  justify-content-center DbahnBorder kastenBG">
+      <div class="col-md-6 col-sm-12 justify-content-center DbahnBorder kastenBG">
         <form action="suche.php" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
           <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
