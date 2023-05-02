@@ -11,7 +11,7 @@ class HV_StationsDetails extends HV_HTML
   protected int $evaNumber = 0;
   protected $stationData = array();
   protected $facilityData = array();
-  protected $parkmoeglichkeiten = array();
+  protected $parkplaetze = array();
 
   public function __construct(int $stationID, $class, $id, $style)
   {
@@ -24,23 +24,26 @@ class HV_StationsDetails extends HV_HTML
     $this->stationData = getStationData($this->stationID)["result"][0];
     $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);
     $this->facilityData = getFacilityStatus($this->stationID);
-    $this->holeParkmoeglichkeitenMitCapacity();
+    $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
   }
 
-  protected function holeParkmoeglichkeitenMitCapacity() {
+  protected function holeParkmoeglichkeitenMitCapacity(): array {
+    $result = array();
     $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber)["_embedded"];
-    
-    foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
-      $facilityID = $parkMoeglichkeit["id"];
-      $name = getParkingFacilityName($parkMoeglichkeit["name"]);
-      $capacityObj = getParkingCapacities($facilityID);
-      [$capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
 
-      $this->parkmoeglichkeiten []= array(
+    foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
+      $name = getParkingFacilityName($parkMoeglichkeit["name"]);
+      $facilityID = $parkMoeglichkeit["id"];
+      $capacityObj = getParkingCapacities($facilityID)["_embedded"];
+      [$isAvailable, $capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
+
+      $result []= array(
+        "isAvailable" => $isAvailable,
         "name" => $name,
         "capacity" => $capacity,
         "availableCapacity" => $availableCapacity);
     }
+    return $result;
   }
 
   public function getEvaNumber(): int {
@@ -61,6 +64,7 @@ class HV_StationsDetails extends HV_HTML
     $result .= $this->getAdress();
     $result .= $this->getOeffnungszeiten();
     $result .= $this->getHasElevator();
+    $result .= $this->getHasParking();
     $result .= $this->getWeitereInformationen();
     $result .= "</div>";
     return $result;
@@ -122,6 +126,32 @@ class HV_StationsDetails extends HV_HTML
         $result .= "<div class='has-elevator'>";
         $result .= getIcon("aufzug.png");
         $result .= "<span>" . $facility["description"] . "</span>";
+        $result .= "</div>";
+      }
+    }
+    return $result;
+  }
+
+  protected function getHasParking(): string {
+    $result = "";
+    $hasParking = $this->_getHasParking();
+    if ($hasParking !== "") {
+      $result = "<div class='detail-section'>";
+      $result .= "<span class='detail-sub-header'>Parkmöglichkeiten</span>";
+      $result .= $hasParking;
+      $result .= "</div>";
+    }
+    return $result;
+  }
+
+  protected function _getHasParking() {
+    $result = "";
+    foreach ($this->parkplaetze as $parkplatz) {
+      if ($parkplatz["isAvailable"]) {
+        $result .= "<div class='has-parking'>";
+        $result .= getIcon("parkplatz.png");
+        $result .= "<span>" . $parkplatz["name"] . "</span>";
+        $result .= "<span class='parking-capacity'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>";
         $result .= "</div>";
       }
     }

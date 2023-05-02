@@ -101,15 +101,16 @@ function getParkingFacilityName($parkingFacilityNameObj): string {
   return $result;
 }
 
-function getParkingFacilityCapacity($facilityID): array {
-  $capacity = 0;
-  $availableCapacity = 0;
-  $parkingFacilityCapacity = getParkingCapacities($facilityID);
-  if (isset($parkingFacilityCapacity)) {
-    $capacity = $parkingFacilityCapacity["capacity"];
-    $availableCapacity = $parkingFacilityCapacity["availableCapacity"];
+function getParkingFacilityCapacity(array $parkingFacilityCapacityObj): array { 
+  foreach ($parkingFacilityCapacityObj as $facility) {
+    if (isset($facility["type"]) && $facility["type"] == "PARKING") {
+      $isAvailable = $facility["available"];
+      $totalCapacity = $facility["total"];
+      $availableCapacity = $facility["free"]["text"];
+      return array($isAvailable, $totalCapacity, $availableCapacity);
+    }
   }
-  return array($capacity, $availableCapacity);
+  return array(false, 0, 0);
 }
 
 ?>
