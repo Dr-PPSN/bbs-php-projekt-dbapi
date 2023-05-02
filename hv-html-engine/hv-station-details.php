@@ -174,8 +174,8 @@ class HV_StationsDetails extends HV_HTML
   private function _getWeitereInformationen(): array {
     $result = [];
     $result []= $this->getHasWifi();
+    $result []= $this->getHasLockers();
     // TODO: hier noch was ausdenken
-    // Schließfächer
     return $result;
   }
   
@@ -184,6 +184,18 @@ class HV_StationsDetails extends HV_HTML
       $result = "<div class='has-wifi'>";
       $result .= getIcon("w-lan.png");
       $result .= "<span>hat WLAN</span>";
+      $result .= "</div>";
+      return $result;
+    } else {
+      return "";
+    }
+  }
+
+  protected function getHasLockers(): string {
+    if (isset($this->stationData["hasLockerSystem"])) {
+      $result = "<div class='has-lockerSystem'>";
+      $result .= getIcon("locker.png");
+      $result .= "<span>hat Schließfächer</span>";
       $result .= "</div>";
       return $result;
     } else {

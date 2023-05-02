@@ -30,7 +30,6 @@ if (isset($_GET['stationID'])) {
   $details = new HV_StationsDetails($stationID, "stations-details vw-100", "", "");
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
   $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan mt-4", "", "");
-  $fahrplan->getFahrplan();
 } else {
   routeZurIndex();
 }
