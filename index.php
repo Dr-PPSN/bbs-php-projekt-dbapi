@@ -12,11 +12,6 @@
     //functions calls
     checkPHPVersion();
     
-    //if´s
-    if (isset($notification)) {
-      echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
-    }
-    
     //functions
     function checkPHPVersion() {
         if (version_compare(phpversion(), '8.1.0', '<')) {
@@ -36,6 +31,11 @@
     <link rel="stylesheet" href="assets/style/style.css">
   </head>
 <body class="bg-white">
+  <?php
+    if (isset($notification)) {
+        echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+      }
+  ?>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
       <div class="container-fluid">
