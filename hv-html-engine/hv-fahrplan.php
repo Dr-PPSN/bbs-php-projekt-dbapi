@@ -147,24 +147,23 @@ class HV_Fahrplan extends HV_HTML
     $result .= "<div class='row gleis-row'>";
     if (isset($ankunftRoute)) {
       $result .= "
-        <div class='col-2'>
+        <div class='col-6'>
           <div class='gleis'>Gleis " . $ankunftGleis . "
           </div>
         </div>";
     } else {
       $result .= "
-        <div class='col-2'></div>";
+        <div class='col-6'></div>";
     }
-    $result .= "<div class='col-8'></div>";
     if (isset($abfahrtRoute)) {
       $result .= "
-        <div class='col-2 abfahrt'>
+        <div class='col-6 abfahrt'>
           <div class='gleis'>Gleis " . $abfahrtGleis . "
           </div>
         </div>";
     } else {
       $result .= "
-        <div class='col-2'></div>";
+        <div class='col-6'></div>";
     }
     $result .= "</div>";
 
