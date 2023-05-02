@@ -128,7 +128,7 @@ if (isset($_GET['evaNumber'])) {
               ?>
             </div>
           </div>
-          <div class="col-md-3 col-sm-4 mt-3 d-flex justify-content-center">
+          <div class="col-md-3 col-sm-4 d-flex justify-content-center">
             <?php
             echo $haltestelleDetails->getDetails();
             ?>
