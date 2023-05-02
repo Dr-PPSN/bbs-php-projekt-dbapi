@@ -49,7 +49,7 @@
             />
             <!-- /Left side -->
             <!-- middle -->
-            <span class="navbar-text h5 align-items-center" style='margin: auto'>
+            <span class="navbar-text h5 align-items-center ml-2" style='margin: auto'>
               API-Projekt
             </span>
           <!-- /middle -->

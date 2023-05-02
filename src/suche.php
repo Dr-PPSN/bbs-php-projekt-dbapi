@@ -50,13 +50,13 @@ if (isset($notification)) {
   <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
     <div class="container-fluid">
       <!-- Left side -->
-      <a class="navbar-brand align-items-center" href="../index.php">
+      <a class="navbar-brand align-items-center" href="../index.php" style="display: flex">
         <img
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Deutsche_Bahn_AG-Logo.svg/1024px-Deutsche_Bahn_AG-Logo.svg.png"
           height="28" alt="DB Logo" loading="lazy" />
         <!-- /Left side -->
         <!-- middle -->
-        <span class="navbar-text h5 align-items-center">
+        <span class="navbar-text h5 align-items-center ml-2" style='margin: auto'>
           API-Projekt
         </span>
         <!-- /middle -->
