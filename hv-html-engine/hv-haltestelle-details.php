@@ -7,8 +7,10 @@ require_once '../api/api-service.php';
 
 class HV_HaltestelleDetails extends HV_HTML
 {
+  protected bool $keineDatenGefunden = false;
   protected int $evaNumber = 0;
   protected $stopPlaceDetails = array();
+  protected string $stopPlaceName = "";
   protected $facilityData = array();
   protected $parkplaetze = array();
 
@@ -19,11 +21,24 @@ class HV_HaltestelleDetails extends HV_HTML
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
 
+  public function getKeineDatenGefunden(): bool {
+    return $this->keineDatenGefunden;
+  }
+
+  public function getStopPlaceName(): string {
+    return $this->stopPlaceName;
+  }
+
   protected function init() {
-    $this->stopPlaceDetails = getStopPlacesByEvaNumber($this->evaNumber)["stopPlaces"][0];
-    // printPretty($this->stopPlaceDetails);
-    // $this->facilityData = getFacilityStatus($this->stationID);
-    // $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
+    $this->stopPlaceDetails = getStopPlacesByEvaNumber($this->evaNumber);
+    if (count($this->stopPlaceDetails["stopPlaces"]) > 0) {
+      $this->stopPlaceDetails = $this->stopPlaceDetails["stopPlaces"][0];
+      $this->stopPlaceName = $this->stopPlaceDetails["names"]["DE"]["nameLong"];
+      // $this->facilityData = getFacilityStatus($this->stationID);
+      // $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
+    } else {
+      $this->keineDatenGefunden = true;
+    }
   }
 
   protected function holeParkmoeglichkeitenMitCapacity(): array {

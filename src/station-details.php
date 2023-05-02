@@ -25,9 +25,12 @@ if (isset($_GET['stationID'])) {
     $zeit = null;
   }
 
-  $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
-
   $details = new HV_StationsDetails($stationID, "stations-details vw-100", "", "");
+  if ($details->getKeineDatenGefunden()) {
+    // TODO: Fehlerseite anzeigen, dass Fehler beim Laden der Daten aufgetreten ist
+  }
+
+  $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
   $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan mt-4", "", "");
 } else {
@@ -117,7 +120,8 @@ if (isset($_GET['stationID'])) {
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
-        <div class="row mb-5 my-5">   
+        <h1 class='ml-3 mb-3'><?php echo $details->getStationName(); ?></h1>
+        <div class="row mb-5">
           <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
             <div class="w-100">
               <?php

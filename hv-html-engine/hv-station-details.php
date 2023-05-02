@@ -7,8 +7,10 @@ require_once '../api/api-service.php';
 
 class HV_StationsDetails extends HV_HTML
 {
+  protected bool $keineDatenGefunden = false;
   protected int | null $stationID = null;
   protected int $evaNumber = 0;
+  protected string $stationName = "";
   protected $stationData = array();
   protected $facilityData = array();
   protected $parkplaetze = array();
@@ -20,15 +22,24 @@ class HV_StationsDetails extends HV_HTML
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
 
+  public function getKeineDatenGefunden(): bool {
+    return $this->keineDatenGefunden;
+  }
+
+  public function getStationName(): string {
+    return $this->stationName;
+  }
+
   protected function init() {
     $this->stationData = getStationData($this->stationID);
     if (count($this->stationData["result"]) > 0) {
       $this->stationData = $this->stationData["result"][0];
+      $this->stationName = $this->stationData["name"];
       $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);
       $this->facilityData = getFacilityStatus($this->stationID);
       $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
     } else {
-      // TODO: Fehlerhandling ausdenken
+      $this->keineDatenGefunden = true;
     }
   }
 
@@ -58,7 +69,6 @@ class HV_StationsDetails extends HV_HTML
   public function getDetails()
   {
     $details = "<div" . $this->getMainTagAttributes() . ">";
-    $details .= "<h1>" . $this->stationData["name"] . "</h1>";
     $details .= $this->_getDetails();
     $details .= "</div>";
     return $details;
