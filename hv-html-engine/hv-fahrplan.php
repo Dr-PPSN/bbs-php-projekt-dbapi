@@ -29,10 +29,14 @@ class HV_Fahrplan extends HV_HTML
   protected function init() {
     [$datum, $stunde] = $this->dateTime;
     $_fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
-    // $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
-    $this->stationName = $_fahrplan["@attributes"]["station"];
-    $this->fahrplan = $_fahrplan["s"];
-    $this->sortiereFahrplanNachAnkunft();
+
+    if (count($_fahrplan) == 0) {
+      $this->fahrplan = array();
+    } else {
+      $this->fahrplan = $_fahrplan["s"];
+      $this->sortiereFahrplanNachAnkunft();
+      // $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
+    }
   }
 
   protected function sortiereFahrplanNachAnkunft() {
@@ -65,12 +69,13 @@ class HV_Fahrplan extends HV_HTML
 
     [$datum, $stunde] = $this->dateTime;
     if ($this->istAktuelleZeit) {
+      // TODO: Zeitraum angeben
       $fahrplan .= "<h1>Aktueller Fahrplan heute " . $stunde . "</h1>";
     } else {
       $fahrplan .= "<h1>Fahrplan</h1>";
     }
     $fahrplan .= "
-      <div class='row'>
+      <div class='row mt-3'>
         <div class='col-2 fahrplan-header' style='padding-left: 50px'>Ankunft</div>
         <div class='col-3 fahrplan-header'><center>aus</center></div>
         <div class='col-2 fahrplan-header'><center>Zug</center></div>
@@ -84,9 +89,16 @@ class HV_Fahrplan extends HV_HTML
   }
   
   protected function _getFahrplan(): string {
-    $result = "<ul class='fahrplan'>";
-    foreach ($this->fahrplan as $zug) {
-      $result .= $this->getZugDaten($zug);
+    $result = "<ul class='fahrplan mb-5'>";
+    if (count($this->fahrplan) > 0) {
+      foreach ($this->fahrplan as $zug) {
+        $result .= $this->getZugDaten($zug);
+      }
+    } else {
+      $result .= "
+        <div class='keinFahrplanVorhanden mt-5'>
+          <center>Hier ist nichts los.<center>
+        </div>";
     }
     $result .= "</ul>";
     return $result;

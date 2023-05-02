@@ -5,31 +5,25 @@ require_once '../api/helper.php';
 require_once '../src/helper.php';
 require_once '../api/api-service.php';
 
-class HV_StationsDetails extends HV_HTML
+class HV_HaltestelleDetails extends HV_HTML
 {
-  protected int | null $stationID = null;
   protected int $evaNumber = 0;
-  protected $stationData = array();
+  protected $stopPlaceDetails = array();
   protected $facilityData = array();
   protected $parkplaetze = array();
 
-  public function __construct(int $stationID, $class, $id, $style)
+  public function __construct(int $evaNumber, $class, $id, $style)
   {
-    $this->stationID = $stationID;
+    $this->evaNumber = $evaNumber;
     $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
 
   protected function init() {
-    $this->stationData = getStationData($this->stationID);
-    if (count($this->stationData["result"]) > 0) {
-      $this->stationData = $this->stationData["result"][0];
-      $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);
-      $this->facilityData = getFacilityStatus($this->stationID);
-      $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
-    } else {
-      // TODO: Fehlerhandling ausdenken
-    }
+    $this->stopPlaceDetails = getStopPlacesByEvaNumber($this->evaNumber)["stopPlaces"][0];
+    // printPretty($this->stopPlaceDetails);
+    // $this->facilityData = getFacilityStatus($this->stationID);
+    // $this->parkplaetze = $this->holeParkmoeglichkeitenMitCapacity();
   }
 
   protected function holeParkmoeglichkeitenMitCapacity(): array {
@@ -58,8 +52,8 @@ class HV_StationsDetails extends HV_HTML
   public function getDetails()
   {
     $details = "<div" . $this->getMainTagAttributes() . ">";
-    $details .= "<h1>" . $this->stationData["name"] . "</h1>";
-    $details .= $this->_getDetails();
+    // $details .= "<h1>" . $this->stationData["name"] . "</h1>";
+    // $details .= $this->_getDetails();
     $details .= "</div>";
     return $details;
   }
@@ -179,8 +173,6 @@ class HV_StationsDetails extends HV_HTML
   private function _getWeitereInformationen(): array {
     $result = [];
     $result []= $this->getHasWifi();
-    $result []= $this->getHasLockers();
-    // TODO: hier noch was ausdenken
     return $result;
   }
   
@@ -196,29 +188,11 @@ class HV_StationsDetails extends HV_HTML
     }
   }
 
-  protected function getHasLockers(): string {
-    if (isset($this->stationData["hasLockerSystem"])) {
-      $result = "<div class='has-lockerSystem'>";
-      $result .= getIcon("locker.png");
-      $result .= "<span>hat Schließfächer</span>";
-      $result .= "</div>";
-      return $result;
-    } else {
-      return "";
-    }
-  }
-
   public function getCoordinates(): array {
-    $evaNumbers = $this->stationData["evaNumbers"];
-    foreach ($evaNumbers as $evaNumber) {
-      if ($evaNumber["isMain"] == true) {
-        $longitude = $evaNumber["geographicCoordinates"]["coordinates"][0];
-        $latitude = $evaNumber["geographicCoordinates"]["coordinates"][1];
-        $coordinates = array("latitude" => $latitude, "longitude" => $longitude);
-        return $coordinates;
-      }
-    }
-    return array();
+    $longitude = $this->stopPlaceDetails["position"]["longitude"];
+    $latitude = $this->stopPlaceDetails["position"]["latitude"];
+    $coordinates = array("latitude" => $latitude, "longitude" => $longitude);
+    return $coordinates;
   }
 }
 

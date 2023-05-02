@@ -22,6 +22,15 @@ function getStationData(int $stationID): array|string|bool {
   }
 }
 
+function getStopPlacesByEvaNumber(int $evaNumber): array|string|bool {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/ris-stations/v1/stop-places/" . $evaNumber, 'ris+json');
+  if (false === $data || $data === '') {
+    return false;
+  } else {
+    return $data;
+  }
+}
+
 function getFacilityStatus(int $stationID): array|string|bool {
   $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/fasta/v2/stations/" . $stationID);
   if (false === $data || $data === '') {
