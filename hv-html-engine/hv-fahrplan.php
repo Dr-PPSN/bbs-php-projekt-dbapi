@@ -28,9 +28,35 @@ class HV_Fahrplan extends HV_HTML
 
   protected function init() {
     [$datum, $stunde] = $this->dateTime;
-    $this->fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
+    $_fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
     // $this->fahrplanAenderungen = getFahrplanAenderungen($this->evaNumber);
-    $this->stationName = $this->fahrplan["@attributes"]["station"];
+    $this->stationName = $_fahrplan["@attributes"]["station"];
+    $this->fahrplan = $_fahrplan["s"];
+    $this->sortiereFahrplanNachAnkunft();
+  }
+
+  protected function sortiereFahrplanNachAnkunft() {
+    $fahrplan = $this->fahrplan;
+    usort($fahrplan, function($a, $b) {
+      if (isset($a["ar"])) {
+        $aZeit = $a["ar"]["@attributes"]["pt"];
+      } else if (isset($a["dp"])) {
+        $aZeit = $a["dp"]["@attributes"]["pt"];
+      } else {
+        $aZeit = INF;
+      }
+
+      if (isset($b["ar"])) {
+        $bZeit = $b["ar"]["@attributes"]["pt"];
+      } else if (isset($b["dp"])) {
+        $bZeit = $b["dp"]["@attributes"]["pt"];
+      } else {
+        $bZeit = INF;
+      }
+      return $aZeit <=> $bZeit;
+    });
+    $this->fahrplan = $fahrplan;
+
   }
 
   public function getFahrplan()
@@ -59,7 +85,7 @@ class HV_Fahrplan extends HV_HTML
   
   protected function _getFahrplan(): string {
     $result = "<ul class='fahrplan'>";
-    foreach ($this->fahrplan["s"] as $zug) {
+    foreach ($this->fahrplan as $zug) {
       $result .= $this->getZugDaten($zug);
     }
     $result .= "</ul>";
