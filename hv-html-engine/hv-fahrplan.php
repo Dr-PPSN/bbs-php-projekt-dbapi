@@ -90,7 +90,7 @@ class HV_Fahrplan extends HV_HTML
   
   protected function _getFahrplan(): string {
     $result = "<ul class='fahrplan mb-5'>";
-    if (count($this->fahrplan) > 0) {
+    if ($this->fahrplanVorhanden()) {
       foreach ($this->fahrplan as $zug) {
         $result .= $this->getZugDaten($zug);
       }
@@ -102,6 +102,17 @@ class HV_Fahrplan extends HV_HTML
     }
     $result .= "</ul>";
     return $result;
+  }
+
+  protected function fahrplanVorhanden(): bool {
+    if (count($this->fahrplan) > 0) {
+      foreach ($this->fahrplan as $zug) {
+        if (isset($zug["tl"])) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   protected function getZugDaten($zug): string {
