@@ -11,6 +11,7 @@ class HV_StationsDetails extends HV_HTML
   protected int $evaNumber = 0;
   protected $stationData = array();
   protected $facilityData = array();
+  protected $parkmoeglichkeiten = array();
 
   public function __construct(int $stationID, $class, $id, $style)
   {
@@ -23,6 +24,23 @@ class HV_StationsDetails extends HV_HTML
     $this->stationData = getStationData($this->stationID)["result"][0];
     $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);
     $this->facilityData = getFacilityStatus($this->stationID);
+    $this->holeParkmoeglichkeitenMitCapacity();
+  }
+
+  protected function holeParkmoeglichkeitenMitCapacity() {
+    $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber)["_embedded"];
+    
+    foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
+      $facilityID = $parkMoeglichkeit["id"];
+      $name = getParkingFacilityName($parkMoeglichkeit["name"]);
+      $capacityObj = getParkingCapacities($facilityID);
+      [$capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
+
+      $this->parkmoeglichkeiten []= array(
+        "name" => $name,
+        "capacity" => $capacity,
+        "availableCapacity" => $availableCapacity);
+    }
   }
 
   public function getEvaNumber(): int {

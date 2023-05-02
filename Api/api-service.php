@@ -59,4 +59,22 @@ function getFahrplanAenderungen(int $evaNr): array|string|bool {
   }
 }
 
+function getParkmoeglichkeiten(int $evaNr): array | string | bool {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/parking-information/db-bahnpark/v2/parking-facilities?stopPlaceId=" . $evaNr, 'json');
+  if (false === $data || $data === '') {
+    return false;
+  } else {
+    return $data;
+  }
+}
+
+function getParkingCapacities(int $facilityID): array | string | bool {
+  $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/parking-information/db-bahnpark/v2/parking-facilities/" . $facilityID . "/capacities", 'json');
+  if (false === $data || $data === '') {
+    return false;
+  } else {
+    return $data;
+  }
+}
+
 ?>

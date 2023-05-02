@@ -86,4 +86,30 @@ function getAbfahrtNach(string $toPath): string {
   return $last_element;
 }
 
+function getParkingFacilityName($parkingFacilityNameObj): string {
+  $result = '';
+  if (isset($parkingFacilityNameObj)) {
+    foreach ($parkingFacilityNameObj as $name) {
+      if ($name["context"] == "DISPLAY") {
+        return $name["name"];
+      }
+      if ($name["context"] == "NAME") {
+        $result = $name["name"];
+      }
+    }
+  }
+  return $result;
+}
+
+function getParkingFacilityCapacity($facilityID): array {
+  $capacity = 0;
+  $availableCapacity = 0;
+  $parkingFacilityCapacity = getParkingCapacities($facilityID);
+  if (isset($parkingFacilityCapacity)) {
+    $capacity = $parkingFacilityCapacity["capacity"];
+    $availableCapacity = $parkingFacilityCapacity["availableCapacity"];
+  }
+  return array($capacity, $availableCapacity);
+}
+
 ?>
