@@ -89,7 +89,7 @@ if (isset($_GET['stationID'])) {
         <div class="d-flex align-items-center">
           <?php
           if (isset($_SESSION['userName'])) {
-            echo ("<p class='h3'>Hallo " . $_SESSION['userName'] . "</p>");
+            echo ("<p class='h3' style='margin: auto'>Hallo " . $_SESSION['userName'] . "</p>");
             echo ("<a class='btn btn-outline-dark ml-4 text-white DbahnBackground' href='..db/logout.php'>Logout</a>");
           } else {
             echo ("<a type='button' class='btn btn-outline-dark mr-5' data-toggle='modal' data-target='#loginModal'>Login</a>");
