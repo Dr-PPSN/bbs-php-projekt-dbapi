@@ -30,6 +30,14 @@ class HV_StationsDetails extends HV_HTML
     return $this->stationName;
   }
 
+  public function getParkplaetzeCoordinates(): array {
+    $result = array();
+    foreach ($this->parkplaetze as $parkplatz) {
+      $result []= $parkplatz["coordinates"];
+    }
+    return $result;
+  }
+
   protected function init() {
     $this->stationData = getStationData($this->stationID);
     if ($this->stationData !== false && count($this->stationData["result"]) > 0) {
@@ -52,12 +60,18 @@ class HV_StationsDetails extends HV_HTML
       $facilityID = $parkMoeglichkeit["id"];
       $capacityObj = getParkingCapacities($facilityID)["_embedded"];
       [$isAvailable, $capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
+      $coordinates = array(
+        "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
+        "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
+      );
 
       $result []= array(
         "isAvailable" => $isAvailable,
         "name" => $name,
         "capacity" => $capacity,
-        "availableCapacity" => $availableCapacity);
+        "availableCapacity" => $availableCapacity,
+        "coordinates" => $coordinates
+      );
     }
     return $result;
   }
