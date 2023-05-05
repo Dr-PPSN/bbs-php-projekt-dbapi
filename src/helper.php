@@ -118,4 +118,14 @@ function getParkingFacilityCapacity(array $parkingFacilityCapacityObj): array {
   return array(false, 0, 0);
 }
 
+function formatTimeSlice(string | int $sliceStart): string {
+  $sliceStart = (int)$sliceStart;
+  if ($sliceStart < 23) {
+    $sliceEnd = $sliceStart + 1;
+  } else {
+    $sliceEnd = 0;
+  }
+  return $sliceStart . ':00 - ' . $sliceEnd . ':00';
+}
+
 ?>

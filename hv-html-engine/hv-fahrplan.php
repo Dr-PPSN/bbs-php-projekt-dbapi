@@ -70,7 +70,7 @@ class HV_Fahrplan extends HV_HTML
     [$datum, $stunde] = $this->dateTime;
     if ($this->istAktuelleZeit) {
       // TODO: Zeitraum angeben
-      $fahrplan .= "<h1>Aktueller Fahrplan heute " . $stunde . "</h1>";
+      $fahrplan .= "<h1>Aktueller Fahrplan " . formatTimeSlice($stunde) . "</h1>";
     } else {
       $fahrplan .= "<h1>Fahrplan</h1>";
     }
