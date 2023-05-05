@@ -27,7 +27,7 @@ if (isset($_GET['evaNumber'])) {
 
   $haltestelleDetails = new HV_HaltestelleDetails($evaNumber, "haltestelle-details vw-100", "", "");
   if ($haltestelleDetails->getKeineDatenGefunden()) {
-    // TODO: Fehlerseite anzeigen, dass Fehler beim Laden der Daten aufgetreten ist
+    routeZurFehlerSeite();
   }
 
   $map = new HV_Map($haltestelleDetails->getCoordinates(), "map", "map", "");

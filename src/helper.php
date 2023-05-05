@@ -15,6 +15,11 @@ function routeZurIndex() {
   exit();
 }
 
+function routeZurFehlerSeite() {
+  header('Location: ./not-found.php');
+  exit();
+}
+
 function bauePictureUrlZusammen($stationPictureURLObj): string {
   $photoBaseUrl = $stationPictureURLObj['photoBaseUrl'];
   $path = $stationPictureURLObj['stations'][0]['photos'][0]['path'];

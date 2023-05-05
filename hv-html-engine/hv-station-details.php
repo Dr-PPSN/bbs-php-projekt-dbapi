@@ -32,7 +32,7 @@ class HV_StationsDetails extends HV_HTML
 
   protected function init() {
     $this->stationData = getStationData($this->stationID);
-    if (count($this->stationData["result"]) > 0) {
+    if ($this->stationData !== false && count($this->stationData["result"]) > 0) {
       $this->stationData = $this->stationData["result"][0];
       $this->stationName = $this->stationData["name"];
       $this->evaNumber = getMainEvaNumber($this->stationData["evaNumbers"]);

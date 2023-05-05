@@ -1,40 +1,20 @@
 <?php
 session_start();
+//includes
 require_once "../hv-html-engine/hv-html-engine.php";
-require_once "../hv-html-engine/hv-station-details.php";
-require_once "../hv-html-engine/hv-fahrplan.php";
-require_once "../hv-html-engine/hv-map.php";
 require_once '../db/DB.php';
 require_once '../db/sql.php';
 require_once '../db/user.php';
-require_once '../api/api-service.php';
-require_once './helper.php';
-require_once '../api/helper.php';
 
 //functions calls
-if (phpVersionZuAlt()) {
-  exit();
-}
+checkPHPVersion();
 
-//if´s
-if (isset($_GET['stationID'])) {
-  $stationID = $_GET['stationID'];
-  if (isset($_GET['zeit'])) {
-    $zeit = $_GET['zeit'];
-  } else {
-    $zeit = null;
+//functions
+function checkPHPVersion() {
+  if (version_compare(phpversion(), '8.1.0', '<')) {
+    echo 'PHP Version is too old. Please update to 8.1.0 or higher.';
+    exit();
   }
-
-  $details = new HV_StationsDetails($stationID, "stations-details vw-100", "", "");
-  if ($details->getKeineDatenGefunden()) {
-    routeZurFehlerSeite();
-  }
-
-  $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
-  $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan mt-4", "", "");
-} else {
-  routeZurIndex();
 }
 
 ?>
@@ -53,15 +33,6 @@ if (isset($_GET['stationID'])) {
   <link rel="stylesheet" href="../assets/style/stationdetails.css">
   <link rel="stylesheet" href="../assets/style/fahrplan.css">
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
-  <style>
-    .bg-station-pic {
-        background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
-        background-size: cover;
-    }
-    .ol-unselectable {
-      border: 1px solid black;
-    }
-  </style>
   <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
 </head>
 
@@ -105,7 +76,7 @@ if (isset($_GET['stationID'])) {
 
   <!-- Content -->
   <!-- station details -->
-  <div class='container-fluid bg-station-pic'>
+  <div class='container-fluid bg-ice1'>
     <div class="row pt-4">
       <div class="col-12 d-flex justify-content-center">
         <br>
@@ -113,46 +84,13 @@ if (isset($_GET['stationID'])) {
     </div>
     <div class="row pt-4">
       <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
-      <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG">
-        <form action="suche.php" method="GET">
-          <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
-          <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
-          <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
-        </form>
-        <hr>
-        <div class="row mb-3">
-          <h1 class='col-8 pl-4'><?php echo $details->getStationName(); ?></h1>
-          <div class='col-4' style='display: flex'>
-            <form action="" method="GET" style='margin: auto'>
-              <button class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground mb-4">
-                <div class="favourite-icon">&#9829;</div>
-              </button>
-            </form>
+      <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG" style="display: flex">
+        <div style='margin: auto' style="display: flex">
+          <div class='fehlermeldung' style="margin: auto">
+            Ups, ein Fehler beim Laden der Daten ist aufgetreten. 
           </div>
+          <a href='../index.php' style="margin: auto">Zurück zur Hauptseite</a>
         </div>
-        <div class="row mb-5">
-          <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
-            <div class="w-100">
-              <?php
-              echo $map->getMap();
-              ?>
-              
-              <?php
-              echo $fahrplan->getFahrplan();
-              ?>
-            </div>
-          </div>
-          <div class="col-md-3 col-sm-4 d-flex justify-content-center">
-            <?php
-            echo $details->getDetails();
-            ?>
-          </div>
-        </div>
-        <!-- <div class="row">
-          <div class="col-md-12 col-sm-12 pl-5 pr-5">
-            TODO: Input für andere Zeiten
-          </div>
-        </div> -->
       </div>
       <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>

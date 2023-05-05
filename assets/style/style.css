@@ -67,3 +67,15 @@
     color: black;
     text-decoration: none;
 }
+
+.fehlermeldung {
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.favourite-icon {
+    line-height: 2rem;
+    font-weight: 600;
+    font-size: 2rem;
+    height: 2.8rem;
+}
