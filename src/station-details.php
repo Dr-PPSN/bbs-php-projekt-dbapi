@@ -32,7 +32,7 @@ if (isset($_GET['stationID'])) {
 
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan mt-4", "", "");
+  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan  ", "", "");
 } else {
   routeZurIndex();
 }
@@ -137,6 +137,14 @@ if (isset($_GET['stationID'])) {
               echo $map->getMap();
               ?>
               
+              <div>
+                <form class="row">
+                  <input type="hidden" name="stationID" value="<?php echo $stationID; ?>">
+                  <input type="time" placeholder="Zeit" name="zeit" id="time" class="col-5 form-control mb-4">
+                  <input type="submit" value="Suchen" class="col-5 form-control btn btn-outline-dark text-white DbahnBackground mb-4">
+                </form>
+              </div>
+
               <?php
               echo $fahrplan->getFahrplan();
               ?>
