@@ -5,6 +5,7 @@
     border-left: 6px solid var(--DbahnRot);
     border-top: 6px solid var(--DbahnRot);
     border-right: 6px solid var(--DbahnRot);
+    border-bottom: 6px solid var(--DbahnRot);
 }
 .DbahnBorderBottom {
     border-bottom: 2px solid var(--DbahnRot);
@@ -37,6 +38,13 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    padding-bottom: 450px;
+
+    /* Set a specific height */
+    width: 100%;
+    
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
 }
 
 .bg-station {
@@ -70,3 +78,14 @@
     color: black;
     text-decoration: none;
 }
+.parallax{
+    /* Set a specific height */
+    min-height: 1fr;
+    width: 100%;
+  
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
