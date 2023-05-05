@@ -31,10 +31,6 @@ if (isset($_GET['evaNr'])) {
   routeZurIndex();
 }
 
-if (isset($notification)) {
-  echo ("<div style='background:orange; position:fixed; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: " . $notification . "</div>");
-}
-
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +54,11 @@ if (isset($notification)) {
 </head>
 
 <body class="bg-white">
+  <?php
+    if (isset($notification)) {
+        echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+      }
+  ?>
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
     <div class="container-fluid">
