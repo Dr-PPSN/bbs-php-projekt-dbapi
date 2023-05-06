@@ -151,7 +151,7 @@ class HV_StationsDetails extends HV_HTML
   private function _getHasElevator() {
     $result = "";
     foreach ($this->facilityData["facilities"] as $facility) {
-      if ((isset($facility["type"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
+      if ((isset($facility["type"]) && isset($facility["description"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
         $result .= "<div class='has-elevator'>";
         $result .= getIcon("aufzug.png");
         $result .= "<span>" . $facility["description"] . "</span>";
