@@ -53,9 +53,11 @@ class HV_StationsDetails extends HV_HTML
 
   protected function holeParkmoeglichkeitenMitCapacity(): array {
     $result = array();
-    $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber)["_embedded"];
+    $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber);
     
     if ($parkMoeglichkeiten !== false && count($parkMoeglichkeiten) > 0) {
+      $parkMoeglichkeiten = $parkMoeglichkeiten["_embedded"];
+
       foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
         $name = getParkingFacilityName($parkMoeglichkeit["name"]);
         $facilityID = $parkMoeglichkeit["id"];
