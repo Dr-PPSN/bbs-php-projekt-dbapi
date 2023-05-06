@@ -59,22 +59,25 @@ class HV_StationsDetails extends HV_HTML
       foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
         $name = getParkingFacilityName($parkMoeglichkeit["name"]);
         $facilityID = $parkMoeglichkeit["id"];
-        $capacityObj = getParkingCapacities($facilityID)["_embedded"];
-        printPretty($capacityObj);
-        [$isAvailable, $capacity, $availableCapacity, $capacityColor] = getParkingFacilityCapacity($capacityObj);
-        $coordinates = array(
-          "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
-          "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
-        );
-  
-        $result []= array(
-          "isAvailable" => $isAvailable,
-          "name" => $name,
-          "capacity" => $capacity,
-          "availableCapacity" => $availableCapacity,
-          "capacityColor" => $capacityColor,
-          "coordinates" => $coordinates
-        );
+
+        $capacityObj = getParkingCapacities($facilityID);
+        if ($capacityObj !== false && isset($capacityObj["_embedded"])) {
+          $capacityObj = $capacityObj["_embedded"];
+          [$isAvailable, $capacity, $availableCapacity, $capacityColor] = getParkingFacilityCapacity($capacityObj);
+          $coordinates = array(
+            "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
+            "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
+          );
+    
+          $result []= array(
+            "isAvailable" => $isAvailable,
+            "name" => $name,
+            "capacity" => $capacity,
+            "availableCapacity" => $availableCapacity,
+            "capacityColor" => $capacityColor,
+            "coordinates" => $coordinates
+          );
+        }
       }
     }
     return $result;
@@ -183,7 +186,7 @@ class HV_StationsDetails extends HV_HTML
       if ($parkplatz["isAvailable"]) {
         $result .= "
           <div class='has-parking'>" .
-            getIcon("parkplatz.png") . "<span>" . $parkplatz["name"] . "</span>
+            getIcon("parkplatz.png") . "<span><a href='https://www.google.de/maps/@" . $parkplatz["coordinates"]["latitude"] . "," . $parkplatz["coordinates"]["longitude"] . ",21z' target='_blank'>" . $parkplatz["name"] . "</a></span>
             <span class='parking-capacity " . $parkplatz["capacityColor"] . "'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>
           </div>";
       }
