@@ -14,14 +14,14 @@ class HV_Fahrplan extends HV_HTML
   protected $stationName = "";
   // protected $fahrplanAenderungen = array();
 
-  public function __construct(int $evaNumber, array | null $dateTime, $class, $id, $style)
+  public function __construct(int $evaNumber, string | null $dateTime, $class, $id, $style)
   {
     $this->evaNumber = $evaNumber;
     if ($dateTime == null) {
       $this->dateTime = getAktuellesDatumUndStunde();
       $this->istAktuelleZeit = true;
     } else {
-      $this->dateTime = $dateTime;
+      $this->dateTime = wandleDateStringInArrayUm($dateTime);
     }
     $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");

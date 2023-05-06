@@ -55,9 +55,18 @@ function getIcon(string $iconFilename, string $title = ''): string {
 
 function getAktuellesDatumUndStunde(): array {
   $timestamp = time();
-  $datum = date("ymd", $timestamp);
-  $stunde = date("H", $timestamp);
-  return array($datum, $stunde);
+  return array(
+    date("ymd", $timestamp),
+    date("H", $timestamp)
+  );
+}
+
+function wandleDateStringInArrayUm(string $dateString): array {
+  $dateTime = new DateTime($dateString);
+  return array(
+    $dateTime->format('ymd'),
+    $dateTime->format('H')
+  );
 }
 
 function getMainEvaNumber($evaNumbers) {

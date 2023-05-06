@@ -19,8 +19,8 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['stationID'])) {
   $stationID = $_GET['stationID'];
-  if (isset($_GET['zeit'])) {
-    $zeit = $_GET['zeit'];
+  if (isset($_GET['datetime'])) {
+    $zeit = $_GET['datetime'];
   } else {
     $zeit = null;
   }
