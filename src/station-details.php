@@ -55,7 +55,7 @@ if (isset($_GET['stationID'])) {
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
   <style>
     .bg-station-pic {
-        background: url('<?php echo $stationPictureURL; ?>') no-repeat center center fixed;
+        background: url('<?=$stationPictureURL;?>') no-repeat center center fixed;
         background-size: cover;
     }
     .ol-unselectable {
@@ -121,7 +121,7 @@ if (isset($_GET['stationID'])) {
         </form>
         <hr>
         <div class="row mb-3">
-          <h1 class='col-8 pl-4'><?php echo $details->getStationName(); ?></h1>
+          <h1 class='col-8 pl-4'><?=$details->getStationName();?></h1>
           <div class='col-4' style='display: flex'>
             <form action="" method="GET" style='margin: auto'>
               <button class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground mb-4">
@@ -130,30 +130,41 @@ if (isset($_GET['stationID'])) {
             </form>
           </div>
         </div>
+
+
         <div class="row mb-5">
           <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
             <div class="w-100">
-              <?php
-              echo $map->getMap();
-              ?>
-              
-              <div>
-                <form class="row">
-                  <input type="hidden" name="stationID" value="<?php echo $stationID; ?>">
-                  <input type="time" placeholder="Zeit" name="zeit" id="time" class="col-5 form-control mb-4">
-                  <input type="submit" value="Suchen" class="col-5 form-control btn btn-outline-dark text-white DbahnBackground mb-4">
-                </form>
+
+              <?=$map->getMap();?>
+
+              <div class="mt-4 mb-4">
+                <?=$fahrplan->getFahrplanHeader();?>
               </div>
 
-              <?php
-              echo $fahrplan->getFahrplan();
-              ?>
+              <div class="row" style='justify-content: center;'>
+                <div class="col-10 row fahrplan-navigation" style='justify-content: center;'>
+                  <div class="col-3 d-flex" style='justify-content: center;'>
+                    <a class="fahrplan-navigation-link justify-content-center align-self-center">1 Stunde früher</a>
+                  </div>
+                  <div class="col-6">
+                    <form class="row" style='justify-content: center;'>
+                      <input type="hidden" name="stationID" value="<?=$stationID; ?>">
+                      <input class="col-5 form-control" type="datetime-local" name="datetime" id="datetime">
+                      <input class="col-5 ml-3 form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="Suchen">
+                    </form>
+                  </div>
+                  <div class="col-3 d-flex fahrplan-navigation-later">
+                    <a class="fahrplan-navigation-link justify-content-center align-self-center">1 Stunde später</a>
+                  </div>
+                </div>
+              </div>
+
+              <?=$fahrplan->getFahrplan();?>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 d-flex justify-content-center">
-            <?php
-            echo $details->getDetails();
-            ?>
+            <?=$details->getDetails();?>
           </div>
         </div>
         <!-- <div class="row">

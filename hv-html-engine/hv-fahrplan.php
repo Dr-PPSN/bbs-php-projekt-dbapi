@@ -60,20 +60,21 @@ class HV_Fahrplan extends HV_HTML
       return $aZeit <=> $bZeit;
     });
     $this->fahrplan = $fahrplan;
+  }
 
+  public function getFahrplanHeader(): string {
+    [$datum, $stunde] = $this->dateTime;
+    if ($this->istAktuelleZeit) {
+      return "<h1>Aktueller Fahrplan " . formatTimeSlice($stunde) . "</h1>";
+    }
+    return "<h1>Fahrplan</h1>";
   }
 
   public function getFahrplan()
   {
     $fahrplan = "<div" . $this->getMainTagAttributes() . ">";
 
-    [$datum, $stunde] = $this->dateTime;
-    if ($this->istAktuelleZeit) {
-      // TODO: Zeitraum angeben
-      $fahrplan .= "<h1>Aktueller Fahrplan " . formatTimeSlice($stunde) . "</h1>";
-    } else {
-      $fahrplan .= "<h1>Fahrplan</h1>";
-    }
+    
     $fahrplan .= "
       <div class='row mt-3'>
         <div class='col-2 fahrplan-header' style='padding-left: 50px'>Ankunft</div>
