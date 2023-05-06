@@ -54,24 +54,31 @@ class HV_StationsDetails extends HV_HTML
   protected function holeParkmoeglichkeitenMitCapacity(): array {
     $result = array();
     $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber)["_embedded"];
+    
+    if ($parkMoeglichkeiten !== false && count($parkMoeglichkeiten) > 0) {
+      foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
+        $name = getParkingFacilityName($parkMoeglichkeit["name"]);
+        $facilityID = $parkMoeglichkeit["id"];
 
-    foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
-      $name = getParkingFacilityName($parkMoeglichkeit["name"]);
-      $facilityID = $parkMoeglichkeit["id"];
-      $capacityObj = getParkingCapacities($facilityID)["_embedded"];
-      [$isAvailable, $capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
-      $coordinates = array(
-        "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
-        "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
-      );
-
-      $result []= array(
-        "isAvailable" => $isAvailable,
-        "name" => $name,
-        "capacity" => $capacity,
-        "availableCapacity" => $availableCapacity,
-        "coordinates" => $coordinates
-      );
+        $capacityObj = getParkingCapacities($facilityID);
+        if ($capacityObj !== false && isset($capacityObj["_embedded"])) {
+          $capacityObj = $capacityObj["_embedded"];
+          [$isAvailable, $capacity, $availableCapacity, $capacityColor] = getParkingFacilityCapacity($capacityObj);
+          $coordinates = array(
+            "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
+            "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
+          );
+    
+          $result []= array(
+            "isAvailable" => $isAvailable,
+            "name" => $name,
+            "capacity" => $capacity,
+            "availableCapacity" => $availableCapacity,
+            "capacityColor" => $capacityColor,
+            "coordinates" => $coordinates
+          );
+        }
+      }
     }
     return $result;
   }
@@ -151,7 +158,7 @@ class HV_StationsDetails extends HV_HTML
   private function _getHasElevator() {
     $result = "";
     foreach ($this->facilityData["facilities"] as $facility) {
-      if ((isset($facility["type"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
+      if ((isset($facility["type"]) && isset($facility["description"]) && $facility["type"] == "ELEVATOR") && (isset($facility["state"]) && $facility["state"] == "ACTIVE")) {
         $result .= "<div class='has-elevator'>";
         $result .= getIcon("aufzug.png");
         $result .= "<span>" . $facility["description"] . "</span>";
@@ -177,11 +184,11 @@ class HV_StationsDetails extends HV_HTML
     $result = "";
     foreach ($this->parkplaetze as $parkplatz) {
       if ($parkplatz["isAvailable"]) {
-        $result .= "<div class='has-parking'>";
-        $result .= getIcon("parkplatz.png");
-        $result .= "<span>" . $parkplatz["name"] . "</span>";
-        $result .= "<span class='parking-capacity'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>";
-        $result .= "</div>";
+        $result .= "
+          <div class='has-parking'>" .
+            getIcon("parkplatz.png") . "<span><a href='https://www.google.de/maps/@" . $parkplatz["coordinates"]["latitude"] . "," . $parkplatz["coordinates"]["longitude"] . ",21z' target='_blank'>" . $parkplatz["name"] . "</a></span>
+            <span class='parking-capacity " . $parkplatz["capacityColor"] . "'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>
+          </div>";
       }
     }
     return $result;

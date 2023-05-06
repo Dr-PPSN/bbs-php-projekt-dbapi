@@ -112,7 +112,12 @@ function getParkingFacilityCapacity(array $parkingFacilityCapacityObj): array {
       $isAvailable = $facility["available"];
       $totalCapacity = $facility["total"];
       $availableCapacity = $facility["free"]["text"];
-      return array($isAvailable, $totalCapacity, $availableCapacity);
+      if ($facility["free"]["category"] == "MORE_THAN_FIFTY") {
+        $capacityColor = "parking-capacity-green";
+      } else {
+        $capacityColor = "parking-capacity-orange";
+      }
+      return array($isAvailable, $totalCapacity, $availableCapacity, $capacityColor);
     }
   }
   return array(false, 0, 0);

@@ -100,7 +100,7 @@ if (isset($_GET['evaNumber'])) {
 
   <!-- Content -->
   <!-- station details -->
-  <div class='container-fluid'>
+  <div class='container-fluid bg-stopplace-pic'>
     <div class="row pt-4">
       <div class="col-12 d-flex justify-content-center">
         <br>
