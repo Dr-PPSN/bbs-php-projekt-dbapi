@@ -19,10 +19,15 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['stationID'])) {
   $stationID = $_GET['stationID'];
+  
   if (isset($_GET['datetime'])) {
-    $zeit = $_GET['datetime'];
+    try {
+      $dateTime = new DateTime($_GET['datetime']);
+    } catch (Exception $e) {
+      $dateTime = null;
+    }
   } else {
-    $zeit = null;
+    $dateTime = null;
   }
 
   $details = new HV_StationsDetails($stationID, "stations-details vw-100", "", "");
@@ -32,7 +37,7 @@ if (isset($_GET['stationID'])) {
 
   $stationPictureURL = bauePictureUrlZusammen(getStationPictureURL($stationID));
   $map = new HV_Map($details->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $zeit, "fahrplan  ", "", "");
+  $fahrplan = new HV_Fahrplan($details->getEvaNumber(), $dateTime, "fahrplan  ", "", "");
 } else {
   routeZurIndex();
 }
@@ -147,7 +152,7 @@ if (isset($_GET['stationID'])) {
                   <div class="col-3 d-flex">
                     <form>
                       <input type="hidden" name="stationID" value="<?=$stationID; ?>">
-                      <input type="hidden" name="datetime" value="1 stunde später">
+                      <input type="hidden" name="datetime" value="<?=vorherigeStunde($dateTime); ?>">
                       <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde früher">
                     </form>
                   </div>
@@ -162,7 +167,7 @@ if (isset($_GET['stationID'])) {
                     <div class="d-flex fahrplan-navigation-later">
                       <form style="margin-right: 0px; margin-left: auto;">
                         <input type="hidden" name="stationID" value="<?=$stationID; ?>">
-                        <input type="hidden" name="datetime" value="1 stunde später">
+                        <input type="hidden" name="datetime" value="<?=naechsteStunde($dateTime); ?>">
                         <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde später">
                       </form>
                     </div>

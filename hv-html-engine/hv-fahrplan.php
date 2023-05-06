@@ -8,27 +8,27 @@ class HV_Fahrplan extends HV_HTML
 {
   protected bool $keineDatenGefunden = false;
   protected int | null $evaNumber = null;
-  protected array $dateTime = array();
+  protected array $dateTimeArray = array();
   protected bool $istAktuelleZeit = false;
   protected $fahrplan = array();
   protected $stationName = "";
   // protected $fahrplanAenderungen = array();
 
-  public function __construct(int $evaNumber, string | null $dateTime, $class, $id, $style)
+  public function __construct(int $evaNumber, DateTime | null $dateTime, $class, $id, $style)
   {
     $this->evaNumber = $evaNumber;
     if ($dateTime == null) {
-      $this->dateTime = getAktuellesDatumUndStunde();
+      $this->dateTimeArray = getAktuellesDatumUndStunde();
       $this->istAktuelleZeit = true;
     } else {
-      $this->dateTime = wandleDateStringInArrayUm($dateTime);
+      $this->dateTimeArray = wandleDateTimeInArrayUm($dateTime);
     }
     $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
 
   protected function init() {
-    [$datum, $stunde] = $this->dateTime;
+    [$datum, $stunde] = $this->dateTimeArray;
     $_fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
 
     if ($_fahrplan === false || count($_fahrplan) == 0) {
@@ -65,7 +65,7 @@ class HV_Fahrplan extends HV_HTML
   }
 
   public function getFahrplanHeader(): string {
-    [$datum, $stunde] = $this->dateTime;
+    [$datum, $stunde] = $this->dateTimeArray;
     if ($this->istAktuelleZeit) {
       return "<h1>Aktueller Fahrplan " . formatTimeSlice($stunde) . "</h1>";
     }

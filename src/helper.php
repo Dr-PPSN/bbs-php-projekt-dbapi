@@ -61,12 +61,27 @@ function getAktuellesDatumUndStunde(): array {
   );
 }
 
-function wandleDateStringInArrayUm(string $dateString): array {
-  $dateTime = new DateTime($dateString);
+function wandleDateTimeInArrayUm(DateTime $dateTime): array {
   return array(
     $dateTime->format('ymd'),
     $dateTime->format('H')
   );
+}
+
+function vorherigeStunde(DateTime | null $dateTime): string {
+  if ($dateTime == null) {
+    $dateTime = time();
+  }
+  $dateTime->sub(new DateInterval('PT1H'));
+  return $dateTime->format('Y-m-d\TH:i');
+}
+
+function naechsteStunde(DateTime | null $dateTime): string {
+  if ($dateTime == null) {
+    $dateTime = time();
+  }
+  $dateTime->add(new DateInterval('PT2H'));
+  return $dateTime->format('Y-m-d\TH:i');
 }
 
 function getMainEvaNumber($evaNumbers) {
