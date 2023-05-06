@@ -54,24 +54,28 @@ class HV_StationsDetails extends HV_HTML
   protected function holeParkmoeglichkeitenMitCapacity(): array {
     $result = array();
     $parkMoeglichkeiten = getParkmoeglichkeiten($this->evaNumber)["_embedded"];
-
-    foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
-      $name = getParkingFacilityName($parkMoeglichkeit["name"]);
-      $facilityID = $parkMoeglichkeit["id"];
-      $capacityObj = getParkingCapacities($facilityID)["_embedded"];
-      [$isAvailable, $capacity, $availableCapacity] = getParkingFacilityCapacity($capacityObj);
-      $coordinates = array(
-        "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
-        "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
-      );
-
-      $result []= array(
-        "isAvailable" => $isAvailable,
-        "name" => $name,
-        "capacity" => $capacity,
-        "availableCapacity" => $availableCapacity,
-        "coordinates" => $coordinates
-      );
+    
+    if ($parkMoeglichkeiten !== false && count($parkMoeglichkeiten) > 0) {
+      foreach ($parkMoeglichkeiten as $parkMoeglichkeit) {
+        $name = getParkingFacilityName($parkMoeglichkeit["name"]);
+        $facilityID = $parkMoeglichkeit["id"];
+        $capacityObj = getParkingCapacities($facilityID)["_embedded"];
+        printPretty($capacityObj);
+        [$isAvailable, $capacity, $availableCapacity, $capacityColor] = getParkingFacilityCapacity($capacityObj);
+        $coordinates = array(
+          "latitude" => $parkMoeglichkeit["address"]["location"]["latitude"],
+          "longitude" => $parkMoeglichkeit["address"]["location"]["longitude"]
+        );
+  
+        $result []= array(
+          "isAvailable" => $isAvailable,
+          "name" => $name,
+          "capacity" => $capacity,
+          "availableCapacity" => $availableCapacity,
+          "capacityColor" => $capacityColor,
+          "coordinates" => $coordinates
+        );
+      }
     }
     return $result;
   }
@@ -177,11 +181,11 @@ class HV_StationsDetails extends HV_HTML
     $result = "";
     foreach ($this->parkplaetze as $parkplatz) {
       if ($parkplatz["isAvailable"]) {
-        $result .= "<div class='has-parking'>";
-        $result .= getIcon("parkplatz.png");
-        $result .= "<span>" . $parkplatz["name"] . "</span>";
-        $result .= "<span class='parking-capacity'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>";
-        $result .= "</div>";
+        $result .= "
+          <div class='has-parking'>" .
+            getIcon("parkplatz.png") . "<span>" . $parkplatz["name"] . "</span>
+            <span class='parking-capacity " . $parkplatz["capacityColor"] . "'>" . $parkplatz["availableCapacity"] . " / " . $parkplatz["capacity"] . "</span>
+          </div>";
       }
     }
     return $result;
