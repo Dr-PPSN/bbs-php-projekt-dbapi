@@ -80,7 +80,7 @@ if (isset($_GET['searchStation'])) {
 
   <!-- Content -->
   <!-- Bahnhof suche -->
-  <div class="container-fluid bg-ice1">
+  <div class="container-fluid bg-suche-pic">
     <div class="row pt-4">
       <div class="col-12 d-flex justify-content-center">
         <br>

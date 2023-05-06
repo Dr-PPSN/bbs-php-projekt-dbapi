@@ -6,6 +6,7 @@ require_once '../src/helper.php';
 
 class HV_Fahrplan extends HV_HTML
 {
+  protected bool $keineDatenGefunden = false;
   protected int | null $evaNumber = null;
   protected array $dateTime = array();
   protected bool $istAktuelleZeit = false;
@@ -30,8 +31,9 @@ class HV_Fahrplan extends HV_HTML
     [$datum, $stunde] = $this->dateTime;
     $_fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
 
-    if (count($_fahrplan) == 0) {
+    if ($_fahrplan === false || count($_fahrplan) == 0) {
       $this->fahrplan = array();
+      $this->keineDatenGefunden = true;
     } else {
       $this->fahrplan = $_fahrplan["s"];
       $this->sortiereFahrplanNachAnkunft();
