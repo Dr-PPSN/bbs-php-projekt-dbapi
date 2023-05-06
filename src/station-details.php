@@ -144,8 +144,12 @@ if (isset($_GET['stationID'])) {
 
               <div class="row" style='justify-content: center;'>
                 <div class="col-10 row fahrplan-navigation" style='justify-content: center;'>
-                  <div class="col-3 d-flex" style='justify-content: center;'>
-                    <a class="fahrplan-navigation-link justify-content-center align-self-center">1 Stunde früher</a>
+                  <div class="col-3 d-flex">
+                    <form>
+                      <input type="hidden" name="stationID" value="<?=$stationID; ?>">
+                      <input type="hidden" name="datetime" value="1 stunde später">
+                      <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde früher">
+                    </form>
                   </div>
                   <div class="col-6">
                     <form class="row" style='justify-content: center;'>
@@ -154,8 +158,14 @@ if (isset($_GET['stationID'])) {
                       <input class="col-5 ml-3 form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="Suchen">
                     </form>
                   </div>
-                  <div class="col-3 d-flex fahrplan-navigation-later">
-                    <a class="fahrplan-navigation-link justify-content-center align-self-center">1 Stunde später</a>
+                  <div class="col-3">
+                    <div class="d-flex fahrplan-navigation-later">
+                      <form style="margin-right: 0px; margin-left: auto;">
+                        <input type="hidden" name="stationID" value="<?=$stationID; ?>">
+                        <input type="hidden" name="datetime" value="1 stunde später">
+                        <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde später">
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
