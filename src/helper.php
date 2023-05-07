@@ -70,7 +70,7 @@ function wandleDateTimeInArrayUm(DateTime $dateTime): array {
 
 function vorherigeStunde(DateTime | null $dateTime): string {
   if ($dateTime == null) {
-    $dateTime = time();
+    $dateTime = new DateTime();
   }
   $dateTime->sub(new DateInterval('PT1H'));
   return $dateTime->format('Y-m-d\TH:i');
@@ -78,7 +78,7 @@ function vorherigeStunde(DateTime | null $dateTime): string {
 
 function naechsteStunde(DateTime | null $dateTime): string {
   if ($dateTime == null) {
-    $dateTime = time();
+    $dateTime = new DateTime();
   }
   $dateTime->add(new DateInterval('PT2H'));
   return $dateTime->format('Y-m-d\TH:i');
