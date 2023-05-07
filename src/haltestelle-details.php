@@ -148,7 +148,7 @@ function checkIfIsFavorite2($stationID){
                             <form action="favorites.php" method="POST">
                               <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
                               <input type="hidden" name="stationName" value="'.$haltestelleDetails->getStopPlaceName().'"></input>
-                              <input type="hidden" name="type" value="isBahnhof"></input>
+                              <input type="hidden" name="type" value="isStation"></input>
                               <input type="submit" name="submit_add_2" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
                             </form>
                           </div>';}
