@@ -156,7 +156,7 @@ function checkIfIsFavorite2($stationID){
                 </div>
                 <div class="col-6">
                   <form class="row" style='justify-content: center;'>
-                    <input type="hidden" name="stationID" value="<?=$stationID; ?>">
+                    <input type="hidden" name="evaNumber" value="<?=$evaNumber; ?>">
                     <input class="col-5 form-control" type="datetime-local" name="datetime" id="datetime" value="<?=$dateTimeForInput; ?>">
                     <input class="col-5 ml-3 form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="Suchen">
                   </form>
