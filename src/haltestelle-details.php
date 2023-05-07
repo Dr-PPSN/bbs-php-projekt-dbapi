@@ -69,7 +69,7 @@ if (isset($_GET['evaNumber'])) {
 <body class="bg-white">
   <?php
     if (isset($notification)) {
-        echo("<div style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+        echo("<div id='infoDiv' style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
       }
   ?>
   <!-- Navbar -->
@@ -260,6 +260,7 @@ if (isset($_GET['evaNumber'])) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
     crossorigin="anonymous"></script>
+  <script src="../assets/script/script.js"></script>
 </body>
 
 </html>
