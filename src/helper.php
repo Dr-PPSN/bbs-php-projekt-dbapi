@@ -170,4 +170,13 @@ function getSliceTag(DateTime $input): string {
   return $sliceStart->format('d.m.');
 }
 
+function getDateTimeForInput(DateTime | null $input): string {
+  if ($input == null) {
+    $dateTime = new DateTime();
+  } else {
+    $dateTime = $input;
+  }
+  return $dateTime->format('Y-m-d\TH:i');
+}
+
 ?>
