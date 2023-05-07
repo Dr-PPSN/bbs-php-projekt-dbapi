@@ -65,7 +65,7 @@ if (isset($_GET['searchStation'])) {
           <?php
           if (isset($_SESSION['userName'])) {
             echo ("<p class='h3' style='margin: auto'>Hallo " . $_SESSION['userName'] . "</p>");
-            echo ("<a class='btn btn-outline-dark ml-4 text-white DbahnBackground' href='..db/logout.php'>Logout</a>");
+            echo ("<a class='btn btn-outline-dark ml-4 text-white DbahnBackground' href='../db/logout.php'>Logout</a>");
           } else {
             echo ("<a type='button' class='btn btn-outline-dark mr-5' data-toggle='modal' data-target='#loginModal'>Login</a>");
             echo ("<a type='button' class='btn btn-outline-dark mr-3 text-white DbahnBackground' data-toggle='modal' data-target='#registrierenModal'>Registrieren</a>");
