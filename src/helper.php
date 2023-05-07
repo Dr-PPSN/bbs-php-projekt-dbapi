@@ -154,11 +154,20 @@ function istHeute(DateTime $dateTime): bool {
   return $dateTime->format('Y-m-d') == $heute->format('Y-m-d');
 }
 
-function getSliceStunde(DateTime $sliceStart): string {
+function getSliceStunde(DateTime $input): string {
+  $sliceStart = clone $input;
   $sliceStart->setTime($sliceStart->format('H'), 0, 0);
   $sliceEnd = clone $sliceStart;
   $sliceEnd->add(new DateInterval('PT1H'));
   return $sliceStart->format('H:i') . ' - ' . $sliceEnd->format('H:i');
+}
+
+function getSliceTag(DateTime $input): string {
+  $sliceStart = clone $input;
+  $sliceStart->setTime(0, 0, 0);
+  $sliceEnd = clone $sliceStart;
+  $sliceEnd->add(new DateInterval('P1D'));
+  return $sliceStart->format('d.m.');
 }
 
 ?>

@@ -71,7 +71,7 @@ class HV_Fahrplan extends HV_HTML
     if (istHeute($this->dateTime)) {
       return "<h1>Fahrplan heute " . getSliceStunde($this->dateTime) . "</h1>";
     }
-    return "<h1>Fahrplan</h1>";
+    return "<h1>Fahrplan " . getSliceTag($this->dateTime) . " " . getSliceStunde($this->dateTime) . "</h1>";
   }
 
   public function getFahrplan()
