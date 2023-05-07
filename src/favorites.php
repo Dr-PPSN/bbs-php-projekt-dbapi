@@ -26,6 +26,31 @@ else if(isset($_POST['submit_delete'])&&isset($_POST['stationID'])){
     executeSQL($sql);
     header("Location: station-details.php?stationID=$stationID");
 }
+else if(isset($_POST['submit_add_2'])&&isset($_POST['stationID'])&&isset($_POST['stationName'])&&isset($_POST['type'])){
+    session_start();
+    require_once '../db/sql.php';
+    $stationID = $_POST['stationID'];
+    $stationName = $_POST['stationName'];
+    $userName = $_SESSION['userName'];
+    $type = $_POST['type'];
+    $userID = getUserID($userName);
+    $favoritesArray = getFavorites($userName);
+    if(!checkIfFavorite($stationID)){
+        $sql = "INSERT INTO favourite_stations (id_user, idStation, typ, stationName) VALUES ('$userID', '$stationID', '$type', '$stationName')";
+        executeSQL($sql);
+    }
+    header("Location: haltestelle-details.php?evaNumber=$stationID");
+}
+else if(isset($_POST['submit_delete_2'])&&isset($_POST['stationID'])){
+    session_start();
+    require_once '../db/sql.php';
+    $stationID = $_POST['stationID'];
+    $userName = $_SESSION['userName'];
+    $userID = getUserID($userName);
+    $sql = "DELETE FROM favourite_stations WHERE id_user = '$userID' AND idStation = '$stationID'";
+    executeSQL($sql);
+    header("Location: haltestelle-details.php?evaNumber=$stationID");
+}
 function checkIfFavorite($stationID){
     require_once '../db/sql.php';
     $userName = $_SESSION['userName'];
@@ -33,7 +58,6 @@ function checkIfFavorite($stationID){
     if($favoritesArray != null){
         foreach($favoritesArray as $favorite){
             if($favorite['idStation'] === $stationID){
-                echo "<br>TRUE:" . $favorite['idStation'] . " === " . $stationID . "<br>";
                 return true;
             }
         }

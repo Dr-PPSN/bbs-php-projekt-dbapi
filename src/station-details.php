@@ -44,6 +44,7 @@ if (isset($_GET['stationID'])) {
 }
 function checkIfIsFavorite($stationID){
   require_once '../db/sql.php';
+  require_once 'favorites.php';
   $userName = $_SESSION['userName'];
   $favoritesArray = getFavorites($userName);
   if($favoritesArray != null){

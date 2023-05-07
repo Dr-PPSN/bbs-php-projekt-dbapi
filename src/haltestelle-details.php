@@ -41,7 +41,20 @@ if (isset($_GET['evaNumber'])) {
 } else {
   routeZurIndex();
 }
-
+function checkIfIsFavorite2($stationID){
+  require_once '../db/sql.php';
+  require_once 'favorites.php';
+  $userName = $_SESSION['userName'];
+  $favoritesArray = getFavorites($userName);
+  if($favoritesArray != null){
+      foreach($favoritesArray as $favorite){
+          if($favorite['idStation'] == $stationID){
+              return true;
+          }
+      }
+  }
+  return false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -165,8 +178,27 @@ if (isset($_GET['evaNumber'])) {
           </div>
           <div class="col-md-3 col-sm-4 d-flex justify-content-center">
             <?php
-            echo $haltestelleDetails->getDetails();
-            ?>
+              echo $haltestelleDetails->getDetails();
+              if(isset($_SESSION['userName'])){
+                if(!checkIfIsFavorite2($evaNumber)){
+                  echo '<div class="mt-5">
+                        <form action="favorites.php" method="POST">
+                          <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
+                          <input type="hidden" name="stationName" value="'.$haltestelleDetails->getStopPlaceName().'"></input>
+                          <input type="hidden" name="type" value="isBahnhof"></input>
+                          <input type="submit" name="submit_add_2" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                        </form>
+                      </div>';}
+                else{
+                  echo '<div class="mt-5">
+                        <form action="favorites.php" method="POST">
+                          <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
+                          <input type="submit" name="submit_delete_2" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                        </form>
+                      </div>';
+                  }
+                }
+              ?>
           </div>
         </div>
         <!-- <div class="row">
