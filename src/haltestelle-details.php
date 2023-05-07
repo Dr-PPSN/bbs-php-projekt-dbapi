@@ -19,10 +19,15 @@ if (phpVersionZuAlt()) {
 //if´s
 if (isset($_GET['evaNumber'])) {
   $evaNumber = $_GET['evaNumber'];
-  if (isset($_GET['zeit'])) {
-    $zeit = $_GET['zeit'];
+
+  if (isset($_GET['datetime'])) {
+    try {
+      $dateTime = new DateTime($_GET['datetime']);
+    } catch (Exception $e) {
+      $dateTime = null;
+    }
   } else {
-    $zeit = null;
+    $dateTime = null;
   }
 
   $haltestelleDetails = new HV_HaltestelleDetails($evaNumber, "haltestelle-details vw-100", "", "");
@@ -31,7 +36,8 @@ if (isset($_GET['evaNumber'])) {
   }
 
   $map = new HV_Map($haltestelleDetails->getCoordinates(), "map", "map", "");
-  $fahrplan = new HV_Fahrplan($evaNumber, $zeit, "fahrplan mt-4", "", "");
+  $fahrplan = new HV_Fahrplan($evaNumber, $dateTime, "fahrplan mt-4", "", "");
+  $dateTimeForInput = getDateTimeForInput($dateTime);
 } else {
   routeZurIndex();
 }
@@ -118,14 +124,43 @@ if (isset($_GET['evaNumber'])) {
         <h1 class='ml-3 mb-3'><?php echo $haltestelleDetails->getStopPlaceName(); ?></h1>
         <div class="row mb-5">   
           <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
-            <div class="w-100">
-              <?php
-              echo $map->getMap();
-              ?>
-              
-              <?php
-              echo $fahrplan->getFahrplan();
-              ?>
+          <div class="w-100">
+
+            <?=$map->getMap();?>
+
+            <div class="mt-4 mb-4">
+              <?=$fahrplan->getFahrplanHeader();?>
+            </div>
+
+            <div class="row" style='justify-content: center;'>
+              <div class="col-10 row fahrplan-navigation" style='justify-content: center;'>
+                <div class="col-3 d-flex">
+                  <form>
+                    <input type="hidden" name="evaNumber" value="<?=$evaNumber; ?>">
+                    <input type="hidden" name="datetime" value="<?=vorherigeStunde($dateTime); ?>">
+                    <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde früher">
+                  </form>
+                </div>
+                <div class="col-6">
+                  <form class="row" style='justify-content: center;'>
+                    <input type="hidden" name="stationID" value="<?=$stationID; ?>">
+                    <input class="col-5 form-control" type="datetime-local" name="datetime" id="datetime" value="<?=$dateTimeForInput; ?>">
+                    <input class="col-5 ml-3 form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="Suchen">
+                  </form>
+                </div>
+                <div class="col-3">
+                  <div class="d-flex fahrplan-navigation-later">
+                    <form style="margin-right: 0px; margin-left: auto;">
+                      <input type="hidden" name="evaNumber" value="<?=$evaNumber; ?>">
+                      <input type="hidden" name="datetime" value="<?=naechsteStunde($dateTime); ?>">
+                      <input class="form-control btn btn-outline-dark text-white DbahnBackground" type="submit" value="1 Stunde später">
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <?=$fahrplan->getFahrplan();?>
             </div>
           </div>
           <div class="col-md-3 col-sm-4 d-flex justify-content-center">
