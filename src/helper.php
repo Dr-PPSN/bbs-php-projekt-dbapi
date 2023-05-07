@@ -21,9 +21,13 @@ function routeZurFehlerSeite() {
 }
 
 function bauePictureUrlZusammen($stationPictureURLObj): string {
-  $photoBaseUrl = $stationPictureURLObj['photoBaseUrl'];
-  $path = $stationPictureURLObj['stations'][0]['photos'][0]['path'];
-  return $photoBaseUrl . $path;
+  if (($stationPictureURLObj !== false) && (isset($stationPictureURLObj['photoBaseUrl']))) {
+    $photoBaseUrl = $stationPictureURLObj['photoBaseUrl'];
+    $path = $stationPictureURLObj['stations'][0]['photos'][0]['path'];
+    return $photoBaseUrl . $path;
+  } else {
+    return '/assets/pics/ice1.jpg';
+  }
 }
 
 function dayToDeutsch($day): string {
