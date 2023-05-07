@@ -5,6 +5,7 @@
     require_once 'db/DB.php';
     require_once 'db/sql.php';
     require_once 'db/user.php';
+    require_once 'src/showFavorites.php';
 
     //variables
     $hv_html_engine = new HV_HTML_Engine();
@@ -14,7 +15,7 @@
     
     //if´s
     if (isset($notification)) {
-      echo("<div id='' style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
+      echo("<div id='infoDiv' style='background:orange; bottom:20px; left:0px; z-index:999; padding:10px;'>Info: ".$notification."</div>");
     }
     
     //functions
@@ -34,16 +35,9 @@
     <title>BBS Projekt BahnAPI</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/style/style.css">
-    <link rel="stylesheet" href="assets/style/favoritenOverlay.css">
   </head>
 <body class="bg-white">
     <video id="background-video" class="inline-media hero-intro-video-video parallax" width="100%" height="100%" aria-hidden="true" preload="none" data-load-timeout="3000" muted="" playsinline="" autoplay="" loop="" src="https://hevor.de/vid/db2.mp4"></video>
-    <!-- Sidebar -->
-    
-    <!-- /Sidebar -->
-    <!-- Dark Overlay element -->
-    <div class="overlay"></div>
-    <!-- /Dark Overlay element -->
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top bg-white DbahnBorderBottom" id="navBar">
       <div class="container-fluid">
@@ -66,6 +60,7 @@
             <?php
               if (isset($_SESSION['userName'])) {
                 echo("<p class='h3'>Hallo ".$_SESSION['userName']."</p>");
+                echo("<a type='button' class='btn btn-outline-dark mx-3' data-toggle='modal' data-target='#favoritenModal'>Favoriten</a>");
                 echo("<a class='btn btn-outline-dark ml-4 text-white DbahnBackground' href='db/logout.php'>Logout</a>");
               } 
               else {
@@ -371,6 +366,31 @@
       </div>
     </div>
     <!-- /Modal Registrieren -->
+    <!-- Modal Favoriten -->
+    <div class="modal fade" id="favoritenModal" tabindex="-1" role="dialog" aria-labelledby="favoritenModal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalCenterTitle">Favoriten Bahnhöfe / Stationen</h5>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">X</button>
+          </div>
+          <form action="index.php" method="post">
+            <div class="modal-body">
+              <div class="form-group row d-flex justify-content-center">
+                <?php
+                  if (isset($_SESSION['userName'])) {
+                    echo showFavorites();
+                  }
+                  else {
+                    echo '<div class="col-sm-12 d-flex justify-content-center align-items-center">Bitte einloggen um Favoriten zu sehen!</div>';
+                  }
+                ?>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- /Modal Favoriten -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     <script src="assets/script/script.js"></script>
