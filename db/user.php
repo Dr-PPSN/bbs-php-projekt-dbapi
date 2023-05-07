@@ -28,7 +28,7 @@ function createUser($userName, $password){
         $pepper = "P1H2P3e4t5r6i7e8";
         $salt = random_string(12);
         $password = hash("sha256",$salt . $password . $pepper); // Damit das  Passwort schön Gewürzt ist und gut schmeckt
-        $sql = "INSERT INTO user (userName, password, salt, favorite_stations) VALUES ('$userName', '$password', '$salt', null)";
+        $sql = "INSERT INTO user (name, password, salt) VALUES ('$userName', '$password', '$salt')";
         executeSQL($sql);
         $notification = "Benutzer erfolgreich erstellt";
     }
@@ -36,7 +36,7 @@ function createUser($userName, $password){
 function checkLogin($userName, $password){
     $x = checkUserName($userName);
     if(isset($x[0]["userName"]) && $x[0]["userName"] == $userName){
-        $result = executeSQL("SELECT * FROM user WHERE userName = '$userName'");
+        $result = executeSQL("SELECT * FROM user WHERE name = '$userName'");
         $pepper = "P1H2P3e4t5r6i7e8";
         $salt = $result[0]["salt"];
         $hashedPassword = $result[0]["password"];
@@ -53,7 +53,7 @@ function checkLogin($userName, $password){
 }
 function checkUserName($userName){
     if(strlen($userName) < 25 && strlen($userName) > 2){
-        $sql = "SELECT userName FROM user WHERE userName = '$userName'";
+        $sql = "SELECT name AS userName FROM user WHERE name = '$userName'";
         $result = executeSQL($sql);
         return $result;
     }   
