@@ -91,7 +91,7 @@ if (isset($_GET['searchStation'])) {
       <div class="col-md-6 col-sm-12 justify-content-center DbahnBorder kastenBG">
         <form action="suche.php" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
-          <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
+          <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4" value="<?=$searchInput;?>">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
