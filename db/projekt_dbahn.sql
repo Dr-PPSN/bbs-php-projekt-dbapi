@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 10. Mrz 2023 um 19:44
+-- Erstellungszeit: 07. Mai 2023 um 20:26
 -- Server-Version: 10.4.27-MariaDB
 -- PHP-Version: 8.1.12
 
@@ -20,19 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Datenbank: `projekt_dbahn`
 --
-CREATE DATABASE IF NOT EXISTS `projekt_dbahn` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
-USE `projekt_dbahn`;
 
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `favorite_station`
+-- Tabellenstruktur für Tabelle `favourite_stations`
 --
 
-DROP TABLE IF EXISTS `favorite_station`;
-CREATE TABLE IF NOT EXISTS `favorite_station` (
-  `eva` int(18) NOT NULL COMMENT 'Nummer der Haltestelle',
-  `name` varchar(25) NOT NULL
+CREATE TABLE `favourite_stations` (
+  `idFavourite_stations` int(255) NOT NULL,
+  `id_user` int(255) NOT NULL,
+  `idStation` int(20) NOT NULL,
+  `typ` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -41,15 +40,44 @@ CREATE TABLE IF NOT EXISTS `favorite_station` (
 -- Tabellenstruktur für Tabelle `user`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE IF NOT EXISTS `user` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
-  `userName` varchar(25) NOT NULL,
+CREATE TABLE `user` (
+  `idUser` int(255) NOT NULL,
+  `name` varchar(25) NOT NULL,
   `password` varchar(65) NOT NULL,
-  `salt` varchar(12) NOT NULL,
-  `favorite_stations` text NULL,
-  UNIQUE KEY `id` (`id`)
+  `salt` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indizes der exportierten Tabellen
+--
+
+--
+-- Indizes für die Tabelle `favourite_stations`
+--
+ALTER TABLE `favourite_stations`
+  ADD PRIMARY KEY (`idFavourite_stations`);
+
+--
+-- Indizes für die Tabelle `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`idUser`);
+
+--
+-- AUTO_INCREMENT für exportierte Tabellen
+--
+
+--
+-- AUTO_INCREMENT für Tabelle `favourite_stations`
+--
+ALTER TABLE `favourite_stations`
+  MODIFY `idFavourite_stations` int(255) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT für Tabelle `user`
+--
+ALTER TABLE `user`
+  MODIFY `idUser` int(255) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
