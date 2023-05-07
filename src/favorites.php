@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 if(isset($_POST['submit'])&&isset($_POST['stationID'])){
     require_once '../db/sql.php';
