@@ -60,21 +60,25 @@ function wandleDatumUndStundeInApiFormatUm(DateTime $dateTime): array {
   );
 }
 
-function vorherigeStunde(DateTime | null $dateTime): string {
-  if ($dateTime == null) {
+function vorherigeStunde(DateTime | null $input): string {
+  if ($input == null) {
     $dateTime = new DateTime();
+  } else {
+    $dateTime = clone $input;
   }
   $dateTime->setTime($dateTime->format('H'), 0, 0);
   $dateTime->sub(new DateInterval('PT1H'));
   return $dateTime->format('Y-m-d\TH:i');
 }
 
-function naechsteStunde(DateTime | null $dateTime): string {
-  if ($dateTime == null) {
+function naechsteStunde(DateTime | null $input): string {
+  if ($input == null) {
     $dateTime = new DateTime();
+  } else {
+    $dateTime = clone $input;
   }
   $dateTime->setTime($dateTime->format('H'), 0, 0);
-  $dateTime->add(new DateInterval('PT2H'));
+  $dateTime->add(new DateInterval('PT1H'));
   return $dateTime->format('Y-m-d\TH:i');
 }
 
