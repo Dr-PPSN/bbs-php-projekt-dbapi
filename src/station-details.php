@@ -78,7 +78,7 @@ if (isset($_GET['stationID'])) {
       }
   ?>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom" id="navBar">
+  <nav class="navbar navbar-expand-lg navbar-light bg-white DbahnBorderBottom sticky-top" id="navBar">
     <div class="container-fluid">
       <!-- Left side -->
       <a class="navbar-brand align-items-center" href="../index.php" style='display: flex'>
