@@ -5,7 +5,7 @@
     require_once 'db/DB.php';
     require_once 'db/sql.php';
     require_once 'db/user.php';
-    require_once 'src/showFavorites.php';
+    require_once 'src/favorites.php';
 
     //variables
     $hv_html_engine = new HV_HTML_Engine();

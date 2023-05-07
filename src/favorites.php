@@ -1,10 +1,28 @@
 <?php
-require_once "./hv-html-engine/hv-html-engine.php";
-require_once './db/sql.php';
+session_start();
 
-//variables
-$hv_html_engine = new HV_HTML_Engine();
+if(isset($_POST['submit'])&&isset($_POST['stationID'])){
+    require_once '../db/sql.php';
+    $stationID = $_POST['stationID'];
+    $userName = $_SESSION['userName'];
+    $result = getFavorites($userName)[0]['favorite_stations'];
+    if($result != null){
+        $favoritesEvaNr = explode(",", $result);
+        if(!in_array($stationID, $favoritesEvaNr)){
+            array_push($favoritesEvaNr, $stationID);
+            $favoritesEvaNr = implode(",", $favoritesEvaNr);
+            $sql = "UPDATE user SET favorite_stations = '$favoritesEvaNr' WHERE userName = '$userName'";
+            executeSQL($sql);
+        }
+    }
+    else{
+        $sql = "UPDATE user SET favorite_stations = '$stationID' WHERE userName = '$userName'";
+        executeSQL($sql);
+    }
+    header("Location: station-details.php?stationID=$stationID");
+}
 function showFavorites(){
+    require_once './db/sql.php';
     $favoritesDetailsArray = array();
     $result = getFavorites($_SESSION['userName'])[0]['favorite_stations'];
     if($result != null){

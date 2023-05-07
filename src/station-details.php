@@ -126,14 +126,11 @@ if (isset($_GET['stationID'])) {
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
-        <div class="row mb-3">
-          <h1 class='col-8 pl-4'><?=$details->getStationName();?></h1>
-          <div class='col-4' style='display: flex'>
-            <form action="" method="GET" style='margin: auto'>
-              <button class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground mb-4">
-                <div class="favourite-icon">&#9829;</div>
-              </button>
-            </form>
+        <div class="row my-2">
+          <div class="col-9 d-flex justify-content-right pl-4">
+            <h1><?=$details->getStationName();?></h1>
+          </div>
+          <div class='col-3'>
           </div>
         </div>
 
@@ -180,17 +177,22 @@ if (isset($_GET['stationID'])) {
             </div>
           </div>
           <div class="col-md-3 col-sm-4 d-flex justify-content-center">
-            <?=$details->getDetails();?>
+              <?=$details->getDetails();?>
+              <?php
+              if(isset($_SESSION['userName'])){
+                echo '<div class="mt-5">
+                        <form action="favorites.php" method="POST">
+                          <input type="hidden" name="stationID" value="'.$stationID.'"></input>
+                          <input type="submit" name="submit" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                        </form>
+                      </div>';}
+              ?>
+              
+            </div>
           </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-md-12 col-sm-12 pl-5 pr-5">
-            TODO: Input für andere Zeiten
-          </div>
-        </div> -->
+        <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
       </div>
-      <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
-    </div>
   </div>
   <!-- /station details -->
 
