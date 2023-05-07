@@ -4,7 +4,6 @@ require_once("hv-html.php");
 require_once '../api/helper.php';
 require_once '../src/helper.php';
 require_once '../api/api-service.php';
-require_once '../src/favorites.php';
 
 class HV_StationsDetails extends HV_HTML
 {
