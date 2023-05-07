@@ -139,11 +139,37 @@ function checkIfIsFavorite($stationID){
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
-        <div class="row my-2">
-          <div class="col-9 d-flex justify-content-right pl-4">
-            <h1><?=$details->getStationName();?></h1>
+        <div class="row mb-3">
+          <div class="col-6">
+            <h1 class='ml-3 mb-3'><?=$details->getStationName();?></h1>
           </div>
-          <div class='col-3'>
+
+          <div class="col-6 mb-3">
+              <!-- Favoriten Button -->
+              <div class="d-flex">
+                <?php
+                if(isset($_SESSION['userName'])){
+                  if(!checkIfIsFavorite($stationID)){
+                    echo '<div style="margin-right: 0px; margin-left: auto;">
+                          <form action="favorites.php" method="POST">
+                            <input type="hidden" name="stationID" value="'.$stationID.'"></input>
+                            <input type="hidden" name="stationName" value="'.$details->getStationName().'"></input>
+                            <input type="hidden" name="type" value="isBahnhof"></input>
+                            <input type="submit" name="submit_add" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                          </form>
+                        </div>';}
+                  else{
+                    echo '<div style="margin-right: 0px; margin-left: auto;">
+                          <form action="favorites.php" method="POST">
+                            <input type="hidden" name="stationID" value="'.$stationID.'"></input>
+                            <input type="submit" name="submit_delete" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                          </form>
+                        </div>';
+                    }
+                  }
+                ?>
+              </div>
+              <!-- /Favoriten Button -->
           </div>
         </div>
 
@@ -190,30 +216,8 @@ function checkIfIsFavorite($stationID){
             </div>
           </div>
           <div class="col-md-3 col-sm-4 d-flex justify-content-center">
-              <?=$details->getDetails();?>
-              <?php
-              if(isset($_SESSION['userName'])){
-                if(!checkIfIsFavorite($stationID)){
-                  echo '<div class="mt-5">
-                        <form action="favorites.php" method="POST">
-                          <input type="hidden" name="stationID" value="'.$stationID.'"></input>
-                          <input type="hidden" name="stationName" value="'.$details->getStationName().'"></input>
-                          <input type="hidden" name="type" value="isBahnhof"></input>
-                          <input type="submit" name="submit_add" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
-                        </form>
-                      </div>';}
-                else{
-                  echo '<div class="mt-5">
-                        <form action="favorites.php" method="POST">
-                          <input type="hidden" name="stationID" value="'.$stationID.'"></input>
-                          <input type="submit" name="submit_delete" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
-                        </form>
-                      </div>';
-                  }
-                }
-              ?>
-              
-            </div>
+            <?=$details->getDetails();?>
+          </div>
           </div>
         </div>
         <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>

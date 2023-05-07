@@ -118,7 +118,6 @@ function checkIfIsFavorite2($stationID){
 
 
   <!-- Content -->
-  <!-- station details -->
   <div class='container-fluid bg-stopplace-pic'>
     <div class="row pt-4">
       <div class="col-12 d-flex justify-content-center">
@@ -126,17 +125,52 @@ function checkIfIsFavorite2($stationID){
       </div>
     </div>
     <div class="row pt-4">
-      <div class="col-md-2 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
-      <div class="col-md-8 col-sm-12 pt-3 DbahnBorder kastenBG">
+      <div class="col-md-3 col-sm-0 px-0 pt-5 mt-5 d-flex align-self-end"></div>
+      <div class="col-md-6 col-sm-12 pt-3 DbahnBorder kastenBG">
         <form action="suche.php" method="GET">
           <h1 class="my-4 DbahnText" id="an1">Bahnhof-Suche</h1>
           <input type="text" placeholder="Bahnhof" name="searchStation" id="station" class="form-control mb-4">
           <input type="submit" value="Suchen" class="form-control btn btn-outline-dark text-white DbahnBackground mb-4">
         </form>
         <hr>
-        <h1 class='ml-3 mb-3'><?php echo $haltestelleDetails->getStopPlaceName(); ?></h1>
+        <div>
+          <div class="row">
+            <div class="col-6">
+              <h1 class='ml-3 mb-3'><?php echo $haltestelleDetails->getStopPlaceName(); ?></h1>
+            </div>
+            <div class="col-6 mb-3">
+              <!-- Favoriten Button -->
+              <div class="d-flex">
+                <?php
+                  if(isset($_SESSION['userName'])){
+                    if(!checkIfIsFavorite2($evaNumber)){
+                      echo '<div class="" style="margin-right: 0px; margin-left: auto;">
+                            <form action="favorites.php" method="POST">
+                              <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
+                              <input type="hidden" name="stationName" value="'.$haltestelleDetails->getStopPlaceName().'"></input>
+                              <input type="hidden" name="type" value="isBahnhof"></input>
+                              <input type="submit" name="submit_add_2" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                            </form>
+                          </div>';}
+                    else{
+                      echo '<div class="" style="margin-right: 0px; margin-left: auto;">
+                            <form action="favorites.php" method="POST">
+                              <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
+                              <input type="submit" name="submit_delete_2" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                            </form>
+                          </div>';
+                      }
+                    }
+                  ?>
+              </div>
+              <!-- /Favoriten Button -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Haltestelle Content -->
         <div class="row mb-5">   
-          <div class="col-md-9 col-sm-8 pl-4 d-flex justify-content-center">
+          <div class="col-md-12 col-sm-8 pl-4 d-flex justify-content-center">
           <div class="w-100">
 
             <?=$map->getMap();?>
@@ -176,42 +210,12 @@ function checkIfIsFavorite2($stationID){
             <?=$fahrplan->getFahrplan();?>
             </div>
           </div>
-          <div class="col-md-3 col-sm-4 d-flex justify-content-center">
-            <?php
-              echo $haltestelleDetails->getDetails();
-              if(isset($_SESSION['userName'])){
-                if(!checkIfIsFavorite2($evaNumber)){
-                  echo '<div class="mt-5">
-                        <form action="favorites.php" method="POST">
-                          <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
-                          <input type="hidden" name="stationName" value="'.$haltestelleDetails->getStopPlaceName().'"></input>
-                          <input type="hidden" name="type" value="isBahnhof"></input>
-                          <input type="submit" name="submit_add_2" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
-                        </form>
-                      </div>';}
-                else{
-                  echo '<div class="mt-5">
-                        <form action="favorites.php" method="POST">
-                          <input type="hidden" name="stationID" value="'.$evaNumber.'"></input>
-                          <input type="submit" name="submit_delete_2" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
-                        </form>
-                      </div>';
-                  }
-                }
-              ?>
-          </div>
         </div>
-        <!-- <div class="row">
-          <div class="col-md-12 col-sm-12 pl-5 pr-5">
-            TODO: Input für andere Zeiten
-          </div>
-        </div> -->
+        <!-- Haltestelle Content -->
       </div>
       <div class="col-md-2 col-sm-0 px-0 py-5 my-5 d-flex align-self-end"></div>
     </div>
   </div>
-  <!-- /station details -->
-
   <!-- /Content -->
 
 
