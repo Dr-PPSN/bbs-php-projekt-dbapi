@@ -42,7 +42,19 @@ if (isset($_GET['stationID'])) {
 } else {
   routeZurIndex();
 }
-
+function checkIfIsFavorite($stationID){
+  require_once '../db/sql.php';
+  $userName = $_SESSION['userName'];
+  $favoritesArray = getFavorites($userName);
+  if($favoritesArray != null){
+      foreach($favoritesArray as $favorite){
+          if($favorite['idStation'] == $stationID){
+              return true;
+          }
+      }
+  }
+  return false;
+}
 ?>
 
 <!DOCTYPE html>
@@ -180,12 +192,24 @@ if (isset($_GET['stationID'])) {
               <?=$details->getDetails();?>
               <?php
               if(isset($_SESSION['userName'])){
-                echo '<div class="mt-5">
+                if(!checkIfIsFavorite($stationID)){
+                  echo '<div class="mt-5">
                         <form action="favorites.php" method="POST">
                           <input type="hidden" name="stationID" value="'.$stationID.'"></input>
-                          <input type="submit" name="submit" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                          <input type="hidden" name="stationName" value="'.$details->getStationName().'"></input>
+                          <input type="hidden" name="type" value="isBahnhof"></input>
+                          <input type="submit" name="submit_add" value="Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
                         </form>
                       </div>';}
+                else{
+                  echo '<div class="mt-5">
+                        <form action="favorites.php" method="POST">
+                          <input type="hidden" name="stationID" value="'.$stationID.'"></input>
+                          <input type="submit" name="submit_delete" value="Un-Favorisieren &#9829" class="favourite-icon form-control btn btn-outline-dark text-white DbahnBackground"></input>
+                        </form>
+                      </div>';
+                  }
+                }
               ?>
               
             </div>
