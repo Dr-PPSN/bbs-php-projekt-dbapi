@@ -8,7 +8,7 @@ class HV_Fahrplan extends HV_HTML
 {
   protected bool $keineDatenGefunden = false;
   protected int | null $evaNumber = null;
-  protected array $dateTimeArray = array();
+  protected DateTime $dateTime;
   protected bool $istAktuelleZeit = false;
   protected $fahrplan = array();
   protected $stationName = "";
@@ -18,18 +18,17 @@ class HV_Fahrplan extends HV_HTML
   {
     $this->evaNumber = $evaNumber;
     if ($dateTime == null) {
-      $this->dateTimeArray = getAktuellesDatumUndStunde();
+      $this->dateTime = new DateTime();
       $this->istAktuelleZeit = true;
     } else {
-      $this->dateTimeArray = wandleDateTimeInArrayUm($dateTime);
+      $this->dateTime = $dateTime;
     }
     $this->init();
     parent::__construct("", "", $class, $id, $style, "", "", "");
   }
 
   protected function init() {
-    [$datum, $stunde] = $this->dateTimeArray;
-    $_fahrplan = getFahrplan($this->evaNumber, $datum, $stunde);
+    $_fahrplan = getFahrplan($this->evaNumber, $this->dateTime);
 
     if ($_fahrplan === false || count($_fahrplan) == 0) {
       $this->fahrplan = array();
@@ -65,9 +64,12 @@ class HV_Fahrplan extends HV_HTML
   }
 
   public function getFahrplanHeader(): string {
-    [$datum, $stunde] = $this->dateTimeArray;
     if ($this->istAktuelleZeit) {
-      return "<h1>Aktueller Fahrplan " . formatTimeSlice($stunde) . "</h1>";
+      return "<h1>Aktueller Fahrplan " . getSliceStunde($this->dateTime) . "</h1>";
+    }
+
+    if (istHeute($this->dateTime)) {
+      return "<h1>Fahrplan heute " . getSliceStunde($this->dateTime) . "</h1>";
     }
     return "<h1>Fahrplan</h1>";
   }
@@ -75,7 +77,6 @@ class HV_Fahrplan extends HV_HTML
   public function getFahrplan()
   {
     $fahrplan = "<div" . $this->getMainTagAttributes() . ">";
-
     
     $fahrplan .= "
       <div class='row mt-3'>

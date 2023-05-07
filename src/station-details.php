@@ -60,8 +60,8 @@ if (isset($_GET['stationID'])) {
   <link rel="stylesheet" href="https://openlayers.org/en/v4.6.5/css/ol.css" type="text/css">
   <style>
     .bg-station-pic {
-        background: url('<?=$stationPictureURL;?>') no-repeat center center fixed;
-        background-size: cover;
+      background: url('<?=$stationPictureURL;?>') no-repeat center center fixed;
+      background-size: cover;
     }
     .ol-unselectable {
       border: 1px solid black;

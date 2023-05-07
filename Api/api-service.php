@@ -50,7 +50,8 @@ function getStationPictureURL(int $stationID): array|string|bool {
 }
 
 
-function getFahrplan(int $evaNr, string $date, string $hour): array|string|bool {
+function getFahrplan(int $evaNr, dateTime $dateTime): array|string|bool {
+  [$date, $hour] = wandleDatumUndStundeInApiFormatUm($dateTime);
   $data = getData("https://apis.deutschebahn.com/db-api-marketplace/apis/timetables/v1/plan/" . $evaNr . "/" . $date . "/" . $hour, 'xml');
   if (false === $data || $data === '') {
     return false;

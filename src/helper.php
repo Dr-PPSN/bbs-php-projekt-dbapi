@@ -53,15 +53,7 @@ function getIcon(string $iconFilename, string $title = ''): string {
   return '<img class="icon" src="../assets/pics/' . $iconFilename . '" title="'. $title . '">';
 }
 
-function getAktuellesDatumUndStunde(): array {
-  $timestamp = time();
-  return array(
-    date("ymd", $timestamp),
-    date("H", $timestamp)
-  );
-}
-
-function wandleDateTimeInArrayUm(DateTime $dateTime): array {
+function wandleDatumUndStundeInApiFormatUm(DateTime $dateTime): array {
   return array(
     $dateTime->format('ymd'),
     $dateTime->format('H')
@@ -72,6 +64,7 @@ function vorherigeStunde(DateTime | null $dateTime): string {
   if ($dateTime == null) {
     $dateTime = new DateTime();
   }
+  $dateTime->setTime($dateTime->format('H'), 0, 0);
   $dateTime->sub(new DateInterval('PT1H'));
   return $dateTime->format('Y-m-d\TH:i');
 }
@@ -80,6 +73,7 @@ function naechsteStunde(DateTime | null $dateTime): string {
   if ($dateTime == null) {
     $dateTime = new DateTime();
   }
+  $dateTime->setTime($dateTime->format('H'), 0, 0);
   $dateTime->add(new DateInterval('PT2H'));
   return $dateTime->format('Y-m-d\TH:i');
 }
@@ -147,14 +141,16 @@ function getParkingFacilityCapacity(array $parkingFacilityCapacityObj): array {
   return array(false, 0, 0);
 }
 
-function formatTimeSlice(string | int $sliceStart): string {
-  $sliceStart = (int)$sliceStart;
-  if ($sliceStart < 23) {
-    $sliceEnd = $sliceStart + 1;
-  } else {
-    $sliceEnd = 0;
-  }
-  return $sliceStart . ':00 - ' . $sliceEnd . ':00';
+function istHeute(DateTime $dateTime): bool {
+  $heute = new DateTime();
+  return $dateTime->format('Y-m-d') == $heute->format('Y-m-d');
+}
+
+function getSliceStunde(DateTime $sliceStart): string {
+  $sliceStart->setTime($sliceStart->format('H'), 0, 0);
+  $sliceEnd = clone $sliceStart;
+  $sliceEnd->add(new DateInterval('PT1H'));
+  return $sliceStart->format('H:i') . ' - ' . $sliceEnd->format('H:i');
 }
 
 ?>
