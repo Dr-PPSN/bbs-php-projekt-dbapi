@@ -50,6 +50,12 @@
 .bg-suche-pic {
     background: url('/assets/pics/ice1.jpg') no-repeat center center fixed;
     background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-bottom: 450px;
+    width: 100%;
+    background-attachment: fixed;
 }
 
 .bg-stopplace-pic {
