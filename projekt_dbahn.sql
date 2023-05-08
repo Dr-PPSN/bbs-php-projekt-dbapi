@@ -21,6 +21,10 @@ SET time_zone = "+00:00";
 -- Datenbank: `projekt_dbahn`
 --
 
+DROP DATABASE IF EXISTS `projekt_dbahn`;
+CREATE DATABASE IF NOT EXISTS `projekt_dbahn` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `projekt_dbahn`;
+
 -- --------------------------------------------------------
 
 --

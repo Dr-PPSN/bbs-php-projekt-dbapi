@@ -38,8 +38,8 @@ function selectDB() {
 function resetDB() {
   global $conn;
   global $notification;
-  if (file_exists('./db/projekt_dbahn.sql')) {
-    $filename = './db/projekt_dbahn.sql';
+  if (file_exists('projekt_dbahn.sql')) {
+    $filename = 'projekt_dbahn.sql';
   } else {
     $notification = 'Error: Keine Datenbankdatei gefundenXXX';
     return;
